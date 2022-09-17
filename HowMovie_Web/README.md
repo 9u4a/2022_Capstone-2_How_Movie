@@ -39,9 +39,9 @@
 
 ## Convention
 
-1. html 태그가 들어간 .js 는 .jsx 확장자로 작성
+1. html 태그가 들어간 .ts 는 .tsx 확장자로 작성
 2. 모든 components 는 React Arrow Function Component 로 작성한다.
-3. components 경우 중첩 컨포넌트의 경우 폴더 내의 index.js에 통합
+3. components 경우 중첩 컨포넌트의 경우 폴더 내의 index.ts에 통합
 4. components 의 파일명은 UpperCamelCase로 작성 권장
 
 ## Before Starting
