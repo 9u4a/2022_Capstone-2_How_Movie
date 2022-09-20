@@ -7,11 +7,11 @@ const BackgroundMovie: NextPage = () => {
       <div className="relative w-full pb-[56%]">
         <iframe
           className="w-full h-full absolute bg-gradient-to-b from-gray-900"
-          src="https://www.youtube.com/embed/g4qQXXtaMqc?autoplay=1&mute=1&fs=0&modestbranding=1&disablekb=1&controls=0&iv_load_policy=3&loop=1"
+          src="https://www.youtube.com/embed/g4qQXXtaMqc?autoplay=1&mute=1&fs=0&modestbranding=1&disablekb=1&controls=0&amp;playlist=g4qQXXtaMqc&loop=1"
           title="YouTube video player"
-          allow="accelerometer; autoplay; muted; controls=false; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allow="accelerometer; autoplay; muted; encrypted-media; gyroscope; picture-in-picture"
         ></iframe>
-        <div className="absolute w-full pb-[56%] bg-gradient-to-b from-black via-transparent to-black z-10 opacity-60"></div>
+        <div className="absolute w-full pb-[56%] bg-gradient-to-b from-black via-transparent to-[#141414] z-10 opacity-40"></div>
       </div>
     </>
   );
