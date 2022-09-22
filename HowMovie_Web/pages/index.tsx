@@ -10,6 +10,7 @@ const Home: NextPage = () => {
       <BackgroundMovie />
       <div className="absolute top-[60%] w-full h-full">
         <MovieList />
+        <MovieList />
         <div>HowMovie</div>
       </div>
     </div>
