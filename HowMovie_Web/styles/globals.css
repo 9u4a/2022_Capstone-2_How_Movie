@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+/* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap'); */
+
 html,
 body {
   padding: 0;
@@ -20,6 +22,7 @@ a {
 * {
   box-sizing: border-box;
 }
+
 h1 {
   font-size: 50px;
 }
