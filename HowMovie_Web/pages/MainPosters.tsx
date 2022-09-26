@@ -17,9 +17,6 @@ const MainPosters = () => {
             className="border hidden duration-700 ease-in-out"
             data-carousel-item
           >
-            <span className="absolute text-2xl font-semibold text-white -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 sm:text-3xl dark:text-gray-800">
-              First Slide
-            </span>
             <Image
               src="/asset/image/image 2.png"
               width="152"
@@ -53,21 +50,21 @@ const MainPosters = () => {
         <div className="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
           <button
             type="button"
-            className="w-3 h-3 rounded-full bg-gray-800 hover:bg-gray-800/50"
+            className="w-3 h-3 rounded-full bg-gray-800 hover:bg-gray-800/50 focus:bg-gray-800/50"
             aria-current="false"
             aria-label="Slide 1"
             data-carousel-slide-to="0"
           ></button>
           <button
             type="button"
-            className="w-3 h-3 rounded-full bg-gray-800 hover:bg-gray-800/50"
+            className="w-3 h-3 rounded-full bg-gray-800 hover:bg-gray-800/50 focus:bg-gray-800/50"
             aria-current="false"
             aria-label="Slide 2"
             data-carousel-slide-to="1"
           ></button>
           <button
             type="button"
-            className="w-3 h-3 rounded-full bg-gray-800 hover:bg-gray-800/50"
+            className="w-3 h-3 rounded-full bg-gray-800 hover:bg-gray-800/50 focus:bg-gray-800/50"
             aria-current="false"
             aria-label="Slide 3"
             data-carousel-slide-to="2"
@@ -95,7 +92,6 @@ const MainPosters = () => {
                 d="M15 19l-7-7 7-7"
               ></path>
             </svg>
-            <span className="sr-only">Previous</span>
           </span>
         </button>
         <button
@@ -119,7 +115,6 @@ const MainPosters = () => {
                 d="M9 5l7 7-7 7"
               ></path>
             </svg>
-            <span className="sr-only">Next</span>
           </span>
         </button>
       </div>
