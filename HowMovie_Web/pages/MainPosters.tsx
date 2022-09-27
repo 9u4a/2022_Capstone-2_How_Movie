@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
-
+import { Carousel } from 'flowbite-react';
 const MainPosters = () => {
   return (
     <>
@@ -11,38 +11,32 @@ const MainPosters = () => {
         data-carousel="static"
       >
         {/* <!-- Carousel wrapper --> */}
-        <div className="relative h-56 overflow-hidden rounded-lg md:h-96">
+        <div className="relative h-56 md:h-96 overflow-hidden flex justify-center items-center">
           {/* <!-- Item 1 --> */}
           <div
-            className="border hidden duration-700 ease-in-out"
+            className="duration-700 ease-in-out w-[157px] md:w-[270px] h-full"
             data-carousel-item
           >
             <Image
               src="/asset/image/image 2.png"
-              width="152"
-              height="216"
+              width="100%"
+              height="100%"
+              layout="fill"
+              objectFit="contain"
               alt="이미지"
-              className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
             />
           </div>
-          {/* <!-- Item 2 --> */}
-          <div className="hidden duration-700 ease-in-out" data-carousel-item>
+          <div
+            className="duration-700 ease-in-out w-[157px] md:w-[270px] h-full"
+            data-carousel-item
+          >
             <Image
               src="/asset/image/image 2.png"
-              width="152"
-              height="216"
+              width="100%"
+              height="100%"
+              layout="fill"
+              objectFit="contain"
               alt="이미지"
-              className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-            />
-          </div>
-          {/* <!-- Item 3 --> */}
-          <div className="hidden duration-700 ease-in-out" data-carousel-item>
-            <Image
-              src="/asset/image/image 2.png"
-              width="152"
-              height="216"
-              alt="이미지"
-              className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
             />
           </div>
         </div>
@@ -118,6 +112,7 @@ const MainPosters = () => {
           </span>
         </button>
       </div>
+
       {/* <div className="group h-[500px] border">
         <Image
           src="/asset/image/image 2.png"

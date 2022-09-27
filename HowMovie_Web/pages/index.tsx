@@ -2,8 +2,8 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import BackgroundMovie from './BackgroundMovie';
+import MainPosters from './MainPosters';
 import MovieList from './MovieList';
-import MainPosters from './mainPosters';
 
 const Home: NextPage = () => {
   return (
