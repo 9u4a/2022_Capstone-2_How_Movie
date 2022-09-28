@@ -34,6 +34,10 @@ function MovieList({ type, setDetailOpen }: MovieDetailProps) {
       image: '/asset/image/image 2.png',
     },
   ];
+
+  const showDetail = () => {
+    setDetailOpen(true);
+  };
   return (
     <div className="relative z-20">
       {/* <h1 className="px-[30px] font-semibold drop-shadow-lg">
