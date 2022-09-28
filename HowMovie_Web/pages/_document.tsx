@@ -1,5 +1,5 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
-import Script from 'next/script';
+
 export default class CustomDocument extends Document {
   render() {
     return (
@@ -11,7 +11,6 @@ export default class CustomDocument extends Document {
           <Main />
         </body>
         <NextScript />
-        <Script src="../path/to/flowbite/dist/flowbite.js"></Script>
       </Html>
     );
   }
