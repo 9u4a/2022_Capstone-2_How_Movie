@@ -1,13 +1,19 @@
 import { NextPage } from 'next';
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
+import MovieDetail from '../components/MovieDetail';
 
-export type propsType = {
+type MovieDetailProps = {
+  setDetailOpen: (param: boolean) => void;
   type: string;
 };
 
-const MovieList = ({ type }: propsType) => {
+function MovieList({ type, setDetailOpen }: MovieDetailProps) {
   console.log(type);
+
+  const showDetail = () => {
+    setDetailOpen(true);
+  };
   return (
     <div className="relative z-20">
       {/* <h1 className="px-[30px] font-semibold drop-shadow-lg">
@@ -26,6 +32,9 @@ const MovieList = ({ type }: propsType) => {
             height="216"
             alt="이미지"
             className="relative"
+            onClick={() => {
+              showDetail();
+            }}
           />
           {type === 'top' && (
             <h1 className="relative z-30 ml-[10px] top-[-230px] italic font-semibold text-shadow-2xl">
@@ -106,6 +115,6 @@ const MovieList = ({ type }: propsType) => {
       </div>
     </div>
   );
-};
+}
 
 export default MovieList;
