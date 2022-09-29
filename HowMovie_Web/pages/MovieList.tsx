@@ -52,7 +52,12 @@ function MovieList({ type, setDetailOpen }: MovieDetailProps) {
         {listBox.map((e) => {
           return (
             <>
-              <div className="relative snap-center shrink-0 md:w-[152px] md:h-[216px] w-[140px] h-[199px] duration-700">
+              <div
+                className="relative snap-center shrink-0 md:w-[152px] md:h-[216px] w-[140px] h-[199px] duration-700 cursor-pointer"
+                onClick={() => {
+                  showDetail();
+                }}
+              >
                 <Image
                   src={e.image}
                   width={100}
@@ -61,9 +66,6 @@ function MovieList({ type, setDetailOpen }: MovieDetailProps) {
                   layout="fill"
                   objectFit="contain"
                   className="relative"
-                  onClick={() => {
-                    showDetail();
-                  }}
                 />
                 {type === 'top' && (
                   <h1 className="relative z-30 ml-[10px] top-[-5px] italic font-semibold text-shadow-2xl">
