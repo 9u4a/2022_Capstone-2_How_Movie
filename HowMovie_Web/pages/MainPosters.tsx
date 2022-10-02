@@ -1,14 +1,21 @@
 import Image from 'next/image';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 
 type MyPostersProps = {};
-type moveWidthType = {
-  [key: number]: string;
-};
 
 function MainPosters() {
-  const IMG_WIDTH = 320;
+  var initialWidth = 0;
+  if (typeof window !== 'undefined') {
+    initialWidth = window.innerWidth;
+  }
+  const [innerWidth, setInnerWidth] = useState(initialWidth);
+  useEffect(() => {
+    const resizeListener = () => {
+      setInnerWidth(window.innerWidth);
+    };
+    window.addEventListener('resize', resizeListener);
+  }, [innerWidth]);
   const moveWidth = [
     [
       'translate-x-[0px]',
@@ -17,6 +24,10 @@ function MainPosters() {
       'translate-x-[-660px]',
       'translate-x-[-880px]',
       'translate-x-[-1100px]',
+      'translate-x-[-1320px]',
+      'translate-x-[-1540px]',
+      'translate-x-[-1760px]',
+      'translate-x-[-1980px]',
     ],
     [
       'translate-x-[0px]',
@@ -25,6 +36,10 @@ function MainPosters() {
       'translate-x-[-870px]',
       'translate-x-[-1160px]',
       'translate-x-[-1450px]',
+      'translate-x-[-1740px]',
+      'translate-x-[-2030px]',
+      'translate-x-[-2320px]',
+      'translate-x-[-2610px]',
     ],
     [
       'translate-x-[0px]',
@@ -32,7 +47,11 @@ function MainPosters() {
       'translate-x-[-640px]',
       'translate-x-[-960px]',
       'translate-x-[-1280px]',
-      'translate-x-[-1640px]',
+      'translate-x-[-1600px]',
+      'translate-x-[-1920px]',
+      'translate-x-[-2240px]',
+      'translate-x-[-2560px]',
+      'translate-x-[-2880px]',
     ],
   ];
   const images = [
@@ -69,8 +88,12 @@ function MainPosters() {
   ];
   const [move, setMove] = useState(0);
   const moveRight = () => {
-    setMove(move + 1);
-    console.log('moveRight');
+    if (move < moveWidth[0].length - 1) {
+      setMove(move + 1);
+      console.log('moveRight');
+    } else if (move === moveWidth[0].length - 1) {
+      setMove(0);
+    }
   };
   const moveLeft = () => {
     if (move != 0) {
@@ -78,40 +101,45 @@ function MainPosters() {
       console.log('moveLeft');
     }
   };
-  // const moveRight = () => {
-  //   if (move >= -(images.length * IMG_WIDTH) + IMG_WIDTH * 3) {
-  //     setMove(move - IMG_WIDTH);
-  //     console.log('moveRight');
-  //   }
-  // };
-  // const moveLeft = () => {
-  //   if (move <= -IMG_WIDTH) {
-  //     setMove(move + IMG_WIDTH);
-  //     console.log('moveLeft');
-  //   }
-  // };
-  // const moveWidth: moveWidthType = { 0: `translate-x-[${move}px]` };
-  console.log(moveWidth);
 
   return (
     <div className="border overflow-hidden group">
       <div
-        className={`${moveWidth[0][move]} md:${moveWidth[1][move]} lg:${moveWidth[2][move]} w-full h-[400px] md:h-[600px] border flex items-center duration-700 space-x-5`}
+        className={`${
+          innerWidth >= 1024
+            ? moveWidth[2][move]
+            : innerWidth >= 768
+            ? moveWidth[1][move]
+            : moveWidth[0][move]
+        } w-full h-[400px] md:h-[600px] flex items-center duration-700 space-x-5 lg:ml-[41%] md:ml-[32%] ml-[33%]`}
       >
         <>
           {images.map((e, i) => {
             return (
               <div key={i}>
-                <div className="relative flex w-[200px] h-[284px] md:w-[270px] md:h-[384px] lg:w-[300px] lg:h-[426px] duration-700 shrink-0">
-                  <Image
-                    src={e.src}
-                    sizes="100%"
-                    alt="이미지"
-                    layout="fill"
-                    objectFit="contain"
-                    priority
-                  />
-                </div>
+                {i === move ? (
+                  <div className="relative flex w-[220px] h-[313px] md:w-[300px] md:h-[426px] lg:w-[350px] lg:h-[497px] duration-700 shrink-0">
+                    <Image
+                      src={e.src}
+                      sizes="100%"
+                      alt="이미지"
+                      layout="fill"
+                      objectFit="contain"
+                      priority
+                    />
+                  </div>
+                ) : (
+                  <div className="relative flex w-[200px] h-[284px] md:w-[270px] md:h-[384px] lg:w-[300px] lg:h-[426px] duration-700 shrink-0">
+                    <Image
+                      src={e.src}
+                      sizes="100%"
+                      alt="이미지"
+                      layout="fill"
+                      objectFit="contain"
+                      priority
+                    />
+                  </div>
+                )}
               </div>
             );
           })}
