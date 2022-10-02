@@ -1,13 +1,12 @@
 from django.http import JsonResponse
 from rest_framework.views import APIView
-from API.GetData.Trend import Trend
+from API.GetData.Popular import Popular
 
 
-class TrendingView(APIView):
+class PopularView(APIView):
     def get(self, request):
-        
+
         response = {
-            'result': Trend(request)
+            'result': Popular(request)
         }
         return JsonResponse(response)
-

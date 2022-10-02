@@ -16,9 +16,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from API.Views.NowPlayingView import NowPlayingView
+from API.Views.TopRatedView import TopRatedView
 from API.Views.TrendingView import TrendingView
+from API.Views.PopularView import PopularView
+from API.Views.UpComingView import UpComingView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', TrendingView.as_view()),
+    path('trend/', TrendingView.as_view()),
+    path('popular/', PopularView.as_view()),
+    path('upcoming/', UpComingView.as_view()),
+    path('nowplaying/', NowPlayingView.as_view()),
+    path('toprated/', TopRatedView.as_view()),
+
 ]

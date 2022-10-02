@@ -1,13 +1,12 @@
 from django.http import JsonResponse
 from rest_framework.views import APIView
-from API.GetData.Trend import Trend
+from API.GetData.NowPlaying import NowPlaying
 
 
-class TrendingView(APIView):
+class NowPlayingView(APIView):
     def get(self, request):
-        
+
         response = {
-            'result': Trend(request)
+            'result': NowPlaying(request)
         }
         return JsonResponse(response)
-
