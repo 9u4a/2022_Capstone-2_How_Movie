@@ -3,9 +3,9 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useState } from 'react';
 import MovieDetail from '../components/MovieDetail';
-import BackgroundMovie from './BackgroundMovie';
-import MainPosters from './MainPosters';
-import MovieList from './MovieList';
+import BackgroundMovie from '../components/BackgroundMovie';
+import MainPosters from '../components/MainPosters';
+import MovieList from '../components/MovieList';
 
 const Home: NextPage = () => {
   const [detailOpen, setDetailOpen] = useState<boolean>(false);

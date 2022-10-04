@@ -1,5 +1,5 @@
 import React from 'react';
-import BackgroundMovie from '../pages/BackgroundMovie';
+import BackgroundMovie from './BackgroundMovie';
 
 type MovieDetailProps = {
   setDetailOpen: (param: boolean) => void;
