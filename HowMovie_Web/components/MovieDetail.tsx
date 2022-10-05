@@ -11,7 +11,7 @@ function MovieDetail({ setDetailOpen }: MovieDetailProps) {
   };
 
   return (
-    <div className="flex justify-center items-center bg-black/80 w-full h-screen absolute z-50 border border-red-600">
+    <div className="flex justify-center items-center bg-black/80 w-full h-screen absolute z-50">
       <div className="flex flex-col items-end w-[80%] h-[850px] bg-gray-900 rounded-xl">
         <div className="flex justify-end absolute">
           <button
