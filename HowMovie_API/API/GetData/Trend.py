@@ -21,7 +21,7 @@ def Trend(request):
                 'backdrop_path': i['backdrop_path']
             }
         )
-    res = {
+    response = {
         'trend': result
     }
-    return res
+    return response
