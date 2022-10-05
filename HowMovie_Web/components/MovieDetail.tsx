@@ -1,5 +1,6 @@
 import React from 'react';
-import BackgroundMovie from '../pages/BackgroundMovie';
+import BackgroundMovie from './BackgroundMovie';
+import { XMarkIcon } from '@heroicons/react/24/solid';
 
 type MovieDetailProps = {
   setDetailOpen: (param: boolean) => void;
@@ -12,13 +13,13 @@ function MovieDetail({ setDetailOpen }: MovieDetailProps) {
 
   return (
     <div className="flex justify-center items-center bg-black/80 w-full h-screen absolute z-50">
-      <div className="flex flex-col items-end w-[80%] h-[850px] bg-gray-900 rounded-xl">
+      <div className="flex flex-col items-end w-[1000px] max-w-[80%] h-[850px] bg-gray-900 rounded-xl">
         <div className="flex justify-end absolute">
           <button
-            className="w-[30px] h-[30px] m-5 rounded-full z-50 right-[80px] bg-slate-300"
+            className="w-[40px] h-[40px] m-5 z-50 right-[80px] bg-slate-600 rounded-full p-2"
             onClick={closeDetail}
           >
-            X
+            <XMarkIcon />
           </button>
         </div>
         <div className="w-full h-full max-h-[350px]">
