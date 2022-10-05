@@ -9,6 +9,7 @@ function MainPosters() {
   if (typeof window !== 'undefined') {
     initialWidth = window.innerWidth;
   }
+
   const [innerWidth, setInnerWidth] = useState(initialWidth);
   useEffect(() => {
     const resizeListener = () => {
@@ -16,6 +17,7 @@ function MainPosters() {
     };
     window.addEventListener('resize', resizeListener);
   }, [innerWidth]);
+
   const moveWidth = [
     [
       'translate-x-[0px]',
@@ -54,6 +56,7 @@ function MainPosters() {
       'translate-x-[-2880px]',
     ],
   ];
+
   const images = [
     {
       src: '/asset/image/image 2.png',
@@ -103,7 +106,7 @@ function MainPosters() {
   };
 
   return (
-    <div className="border overflow-hidden group">
+    <div className="overflow-hidden group z-40">
       <div
         className={`${
           innerWidth >= 1024
@@ -111,14 +114,14 @@ function MainPosters() {
             : innerWidth >= 768
             ? moveWidth[1][move]
             : moveWidth[0][move]
-        } w-full h-[400px] md:h-[600px] flex items-center duration-700 space-x-5 lg:ml-[41%] md:ml-[32%] ml-[33%]`}
+        } w-full h-[400px] md:h-[600px] flex items-center duration-700 space-x-5 ml-[50%]`}
       >
         <>
           {images.map((e, i) => {
             return (
               <div key={i}>
                 {i === move ? (
-                  <div className="relative flex w-[220px] h-[313px] md:w-[300px] md:h-[426px] lg:w-[350px] lg:h-[497px] duration-700 shrink-0">
+                  <div className="relative flex w-[220px] h-[313px] md:w-[300px] md:h-[426px] lg:w-[350px] lg:h-[497px] duration-700 shrink-0 left-[-50%]">
                     <Image
                       src={e.src}
                       sizes="100%"
@@ -129,7 +132,9 @@ function MainPosters() {
                     />
                   </div>
                 ) : (
-                  <div className="relative flex w-[200px] h-[284px] md:w-[270px] md:h-[384px] lg:w-[300px] lg:h-[426px] duration-700 shrink-0">
+                  <div
+                    className={`relative flex w-[200px] h-[284px] md:w-[270px] md:h-[384px] lg:w-[300px] lg:h-[426px] duration-700 shrink-0 left-[-55%] md:left-[-55.5%] lg:left-[-58.5%]`}
+                  >
                     <Image
                       src={e.src}
                       sizes="100%"
