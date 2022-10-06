@@ -1,6 +1,7 @@
 import { NextPage } from 'next';
 import Image from 'next/image';
 import React from 'react';
+import testAPI from '../pages/api/testAPI.json';
 
 type MovieDetailProps = {
   setDetailOpen: (param: boolean) => void;
@@ -12,6 +13,7 @@ type listType = {
 };
 
 function MovieList({ type, setDetailOpen }: MovieDetailProps) {
+  const baseUrl = 'https://image.tmdb.org/t/p/original';
   const listBox: listType[] = [
     {
       id: 1,
@@ -49,7 +51,7 @@ function MovieList({ type, setDetailOpen }: MovieDetailProps) {
         <h2 className="px-[30px] font-semibold text-shadow-2xl">최신 영화</h2>
       )}
       <div className="mb-[30px] px-[30px] flex w-full snap-x snap-mandatory overflow-x-scroll z-20 bg-gradient-to-b from-[trasparent] via-black/80 to-[#141414]/80 space-x-5 scrollbar-hide">
-        {listBox.map((e, i) => {
+        {testAPI.result[0].popular?.map((e, i) => {
           return (
             <div key={i}>
               <div
@@ -59,7 +61,7 @@ function MovieList({ type, setDetailOpen }: MovieDetailProps) {
                 }}
               >
                 <Image
-                  src={e.image}
+                  src={baseUrl + e.poster_path}
                   alt="이미지"
                   layout="fill"
                   objectFit="contain"
@@ -67,7 +69,7 @@ function MovieList({ type, setDetailOpen }: MovieDetailProps) {
                 />
                 {type === 'top' && (
                   <h1 className="relative z-30 ml-[10px] top-[-5px] italic font-semibold text-shadow-2xl">
-                    {e.id}
+                    {i + 1}
                   </h1>
                 )}
               </div>
