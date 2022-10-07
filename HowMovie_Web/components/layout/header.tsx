@@ -1,6 +1,8 @@
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
+import Login from '../../pages/Login';
+import Link from 'next/link';
 
 const Header = () => {
   const headerType = [
@@ -8,28 +10,34 @@ const Header = () => {
     { id: 1, title: '최신', type: 'latest' },
     { id: 2, title: '인기', type: 'popular' },
   ];
+
   return (
     <>
       <div className="flex w-full h-[50px] bg-black justify-between items-center px-[50px]">
-        <div className="flex items-center">
-          <Image
-            src="/asset/image/clapperboard.png"
-            alt="icon"
-            width={25}
-            height={25}
-          />
-          <h4 className="ml-[5px] mr-[70px] font-semibold">무비어때</h4>
-          <div className="flex space-x-[20px] text-gray-500 ">
-            <div className="text-white">홈</div>
-            <div>최신</div>
-            <div>인기</div>
-          </div>
-        </div>
+        <Link href="/">
+          <a className="flex items-center">
+            <Image
+              src="/asset/image/clapperboard.png"
+              alt="icon"
+              width={25}
+              height={25}
+            />
+            <h4 className="ml-[5px] mr-[70px] font-semibold">무비어때</h4>
+            <div className="flex space-x-[20px] text-gray-500 ">
+              <div className="text-white">홈</div>
+              <div>최신</div>
+              <div>인기</div>
+            </div>
+          </a>
+        </Link>
         <div className="flex items-center">
           <MagnifyingGlassIcon className="w-[20px] h-[20px] mr-[20px]" />
-          <div>로그인</div>
+          <Link href="/Login">
+            <a>로그인</a>
+          </Link>
         </div>
       </div>
+      {/* {isLoginOpen && <Login setIsLoginOpen={setIsLoginOpen} />} */}
     </>
   );
 };
