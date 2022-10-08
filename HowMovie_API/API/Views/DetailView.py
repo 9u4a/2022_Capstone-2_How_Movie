@@ -13,7 +13,7 @@ class DetailView(APIView):
         api_key = '?api_key=' + getattr(settings, 'API_KEY', None)[0]
         language = '&language=ko-KR'
 
-        movie_id = str(request.GET.get('id'))
+        movie_id = str(request.GET.get('movie_id'))
         print(movie_id)
         res = requests.get(url + movie_id + api_key + language)
         data = res.json()

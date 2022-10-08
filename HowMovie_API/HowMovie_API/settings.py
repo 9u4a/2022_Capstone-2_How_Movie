@@ -88,8 +88,8 @@ DATABASES = {
         'NAME': 'hmdata',
         'USER': 'postgres',
         'PASSWORD': '1234',
-        'HOST': 'localhost',
-        'PORT': '',
+        'HOST': 'postgres',
+        'PORT': 5432,
     }
 }
 

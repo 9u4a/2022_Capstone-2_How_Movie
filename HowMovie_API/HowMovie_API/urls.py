@@ -25,13 +25,13 @@ from API.Views.PopularView import PopularView
 from API.Views.UpComingView import UpComingView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('trend/', TrendingView.as_view()),
-    path('popular/', PopularView.as_view()),
-    path('upcoming/', UpComingView.as_view()),
-    path('nowplaying/', NowPlayingView.as_view()),
-    path('toprated/', TopRatedView.as_view()),
-    path('main/', MainView.as_view()),
-    path('detail/', DetailView.as_view()),
+    path('admin', admin.site.urls),
+    path('trend', TrendingView.as_view()),
+    path('popular', PopularView.as_view()),
+    path('upcoming', UpComingView.as_view()),
+    path('nowplaying', NowPlayingView.as_view()),
+    path('toprated', TopRatedView.as_view()),
+    path('main', MainView.as_view()),
+    path('detail', DetailView.as_view()),
 
 ]
