@@ -1,46 +1,95 @@
 import React from 'react';
 import BackgroundMovie from './BackgroundMovie';
+import axios from 'axios';
+import testAPI from '../pages/api/testAPI.json';
+import { XMarkIcon } from '@heroicons/react/24/solid';
 
 type MovieDetailProps = {
   setDetailOpen: (param: boolean) => void;
+  currID: number;
 };
 
-function MovieDetail({ setDetailOpen }: MovieDetailProps) {
+function MovieDetail({ setDetailOpen, currID }: MovieDetailProps) {
   const closeDetail = () => {
     setDetailOpen(false);
   };
 
+  console.log(currID);
+  const test = {
+    result: [
+      {
+        genres: [
+          {
+            id: 28,
+            name: '액션',
+          },
+          {
+            id: 35,
+            name: '코미디',
+          },
+          {
+            id: 53,
+            name: '스릴러',
+          },
+        ],
+        title: '불릿 트레인',
+        overview:
+          '운이 없기로 유명한 킬러 레이디버그는 초고속 열차에 탑승해 의문의 서류 가방을 가져오라는 미션을 받는다. 생각보다 쉽게 미션을 클리어한 후 열차에서 내리려는 그를 가로막는 것이 있었으니,  그것은 바로 전세계에서 몰려든 초특급 킬러들. 열차에서 내릴 수 없다면 목숨을 걸고 가방을 지켜야만 한다. 과연 레이디버그는 무사히 열차에서 내려 미션을 완수할 수 있을까?',
+        poster_path: '/msh4N8dxHk4FeEPZ8VBqHQFQYjI.jpg',
+        backdrop_path: '/y2Ca1neKke2mGPMaHzlCNDVZqsK.jpg',
+        release_date: '2022-07-03',
+        vote_average: 7.469,
+        vote_count: 1373,
+        status: 'Released',
+        runtime: 127,
+        tagline: '누구도 멈출 수 없는 논스톱 액션 블록버스터',
+        video: [
+          {
+            video: '4OJVhxRXvMU',
+          },
+          {
+            video: 'pVnq1vuXfMQ',
+          },
+          {
+            video: '_ics0ClH5TQ',
+          },
+          {
+            video: 'Parm2gQvHiA',
+          },
+          {
+            video: 'vR5cn7O46TU',
+          },
+        ],
+      },
+    ],
+  };
+
   return (
-    <div className="border flex justify-center items-center bg-black/80 w-full h-full absolute z-30 top-[-50px]">
+    <div className="flex justify-center items-center bg-black/80 w-full h-screen absolute z-50">
       <div className="flex flex-col items-end w-[80%] h-[850px] bg-gray-900 rounded-xl">
         <div className="flex justify-end absolute">
           <button
-            className="w-[30px] h-[30px] m-5 rounded-full z-50 right-[80px] bg-slate-300"
+            className="w-[30px] h-[30px] m-5 rounded-full z-50 right-[80px] p-1 bg-slate-300"
             onClick={closeDetail}
           >
-            X
+            <XMarkIcon />
           </button>
         </div>
-        <div className="w-full h-full max-h-[350px]">
-          <BackgroundMovie />
-        </div>
-        <div className="w-full mt-5 p-5">
-          <h2>공조 2</h2>
-          <h3>줄거리</h3>
-          <p>
-            공조 이즈 백! 이번엔 삼각 공조다! 남한으로 숨어든 글로벌 범죄 조직을
-            잡기 위해 새로운 공조 수사에 투입된 북한 형사 림철령(현빈). 수사
-            중의 실수로 사이버수사대로 전출됐던 남한 형사 강진태(유해진)는
-            광수대 복귀를 위해 모두가 기피하는 철령의 파트너를 자청한다.
-            <br />
-            이렇게 다시 공조하게 된 철령과 진태! 철령과 재회한 민영(임윤아)의
-            마음도 불타오르는 가운데, 철령과 진태는 여전히 서로의 속내를
-            의심하면서도 나름 그럴싸한 공조 수사를 펼친다. <br />
-            드디어 범죄 조직 리더인 장명준(진선규)의 은신처를 찾아내려는 찰나,
-            미국에서 날아온 FBI 소속 잭(다니엘 헤니)이 그들 앞에 나타나는데…!
-            아직도 짠내 나는 남한 형사, 여전한 엘리트 북한 형사, . . .
-          </p>
-        </div>
+        {test.result.map((e, i) => {
+          return (
+            <div key={i}>
+              <div className="w-full h-full max-h-[350px]">
+                <BackgroundMovie />
+              </div>
+              <div className="w-full mt-5 p-5">
+                <h2>{e.title}</h2>
+                <h3>줄거리</h3>
+                <p>{e.overview}</p>
+              </div>
+            </div>
+          );
+        })}
+        ;
       </div>
     </div>
   );

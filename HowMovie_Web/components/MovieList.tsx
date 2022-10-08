@@ -5,18 +5,49 @@ import testAPI from '../pages/api/testAPI.json';
 
 type MovieDetailProps = {
   setDetailOpen: (param: boolean) => void;
-  listType: string;
+  setCurrID: (param: number) => void;
+  type: string;
+};
+type listType = {
+  id: number;
+  image: string;
 };
 
-function MovieList({ listType, setDetailOpen }: MovieDetailProps) {
+function MovieList({ type, setDetailOpen, setCurrID }: MovieDetailProps) {
   const baseUrl = 'https://image.tmdb.org/t/p/original';
+  const listBox: listType[] = [
+    {
+      id: 1,
+      image: '/asset/image/image 2.png',
+    },
+    {
+      id: 2,
+      image: '/asset/image/image 2.png',
+    },
+    {
+      id: 3,
+      image: '/asset/image/image 2.png',
+    },
+    {
+      id: 4,
+      image: '/asset/image/image 2.png',
+    },
+    {
+      id: 5,
+      image: '/asset/image/image 2.png',
+    },
+  ];
 
   const showDetail = () => {
     setDetailOpen(true);
   };
+
   return (
     <div className="relative z-20">
-      {listType === 'top' ? (
+      {/* <h1 className="px-[30px] font-semibold drop-shadow-lg">
+        {type === 'top' ? 'Top 10' : '최신 영화'}
+      </h1> */}
+      {type === 'top' ? (
         <h1 className="px-[30px] font-semibold text-shadow-2xl">Top 10</h1>
       ) : (
         <h2 className="px-[30px] font-semibold text-shadow-2xl">최신 영화</h2>
@@ -29,6 +60,7 @@ function MovieList({ listType, setDetailOpen }: MovieDetailProps) {
                 className="relative snap-center shrink-0 md:w-[152px] md:h-[216px] w-[140px] h-[199px] duration-700 cursor-pointer"
                 onClick={() => {
                   showDetail();
+                  setCurrID(e.id);
                 }}
               >
                 <Image
@@ -36,9 +68,9 @@ function MovieList({ listType, setDetailOpen }: MovieDetailProps) {
                   alt="이미지"
                   layout="fill"
                   objectFit="contain"
-                  className="rounded-lg"
+                  className="relative"
                 />
-                {listType === 'top' && (
+                {type === 'top' && (
                   <h1 className="relative z-30 ml-[10px] top-[-5px] italic font-semibold text-shadow-2xl">
                     {i + 1}
                   </h1>
