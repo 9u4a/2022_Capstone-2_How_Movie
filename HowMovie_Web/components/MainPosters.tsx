@@ -59,33 +59,40 @@ function MainPosters() {
 
   const images = [
     {
+      title: '영화1',
       src: '/asset/image/image 2.png',
     },
     {
+      title: '영화2',
       src: '/asset/image/image 2.png',
     },
     {
+      title: '영화3',
       src: '/asset/image/image 2.png',
     },
     {
+      title: '영화4',
       src: '/asset/image/image 12.png',
     },
     {
+      title: '영화5',
       src: '/asset/image/image 12.png',
     },
     {
+      title: '영화6',
       src: '/asset/image/image 12.png',
     },
     {
+      title: '영화7',
+      src: '/asset/image/image 15.png',
+    },
+    { title: '영화8', src: '/asset/image/image 15.png' },
+    {
+      title: '영화9',
       src: '/asset/image/image 15.png',
     },
     {
-      src: '/asset/image/image 15.png',
-    },
-    {
-      src: '/asset/image/image 15.png',
-    },
-    {
+      title: '영화10',
       src: '/asset/image/image 15.png',
     },
   ];
@@ -121,7 +128,7 @@ function MainPosters() {
             return (
               <div key={i}>
                 {i === move ? (
-                  <div className="relative flex w-[220px] h-[313px] md:w-[300px] md:h-[426px] lg:w-[350px] lg:h-[497px] duration-700 shrink-0 left-[-50%]">
+                  <div className="relative flex  w-[220px] h-[313px] md:w-[300px] md:h-[426px] lg:w-[350px] lg:h-[497px] duration-700 shrink-0 left-[-50%]">
                     <Image
                       src={e.src}
                       sizes="100%"
@@ -130,6 +137,7 @@ function MainPosters() {
                       objectFit="contain"
                       priority
                     />
+                    <h3 className="absolute top-[100%]">{e.title}</h3>
                   </div>
                 ) : (
                   <div

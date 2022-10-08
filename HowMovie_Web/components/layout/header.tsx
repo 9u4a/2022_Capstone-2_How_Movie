@@ -40,13 +40,29 @@ const Header = () => {
           />
           <input
             className={`absolute ${
-              isToggle ? 'w-[200px] px-[10px]' : 'w-0'
-            } h-[30px]  text-black right-[110px] rounded-lg bg-slate-300 duration-500`}
+              isToggle ? 'w-[200px] md:w-[250px] lg:w-[300px] px-[10px]' : 'w-0'
+            } h-[30px]  text-black right-[125px] rounded-lg bg-slate-300 duration-500`}
             placeholder="영화를 검색하세요..."
             id="search"
           ></input>
+          {isToggle && (
+            <div className="absolute top-[40px] right-[125px] w-[200px] md:w-[250px] lg:w-[300px] rounded-lg bg-white z-10 divide-y border border-slate-400 duration-500">
+              <div className="text-black p-1 cursor-pointer hover:font-semibold">
+                공조
+              </div>
+              <div className="text-black p-1 cursor-pointer hover:font-semibold">
+                공조
+              </div>
+              <div className="text-black p-1 cursor-pointer hover:font-semibold">
+                공조
+              </div>
+            </div>
+          )}
+
           <Link href="/Login">
-            <a>로그인</a>
+            <a className="flex justify-center items-center rounded-md w-[60px] h-[30px] bg-slate-800 cursor-pointer hover:bg-slate-600 active:bg-slate-900">
+              로그인
+            </a>
           </Link>
         </div>
       </div>
