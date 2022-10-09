@@ -68,7 +68,7 @@ function MovieList({ type, setDetailOpen, setCurrID }: MovieDetailProps) {
                   alt="이미지"
                   layout="fill"
                   objectFit="contain"
-                  className="relative"
+                  className="rounded-lg"
                 />
                 {type === 'top' && (
                   <h1 className="relative z-30 ml-[10px] top-[-5px] italic font-semibold text-shadow-2xl">

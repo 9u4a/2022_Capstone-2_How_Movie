@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  env: (NEXT_SHARP_PATH = `/tmp/node_modules/sharp next start`),
+  env: { NEXT_SHARP_PATH: `/tmp/node_modules/sharp next start` },
 };
 
 module.exports = {
