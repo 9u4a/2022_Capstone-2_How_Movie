@@ -66,8 +66,9 @@ function MovieList({ type, setDetailOpen, setCurrID }: MovieDetailProps) {
                 <Image
                   src={baseUrl + e.poster_path}
                   alt="이미지"
+                  sizes="100%"
                   layout="fill"
-                  objectFit="contain"
+                  objectFit="fill"
                   className="rounded-lg"
                 />
                 {type === 'top' && (
