@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from API.Views.DetailView import DetailView
+from API.Views.MovieDetailView import MovieDetailView
 from API.Views.MainView import MainView
 from API.Views.NowPlayingView import NowPlayingView
 from API.Views.SearchView import SearchView
@@ -33,7 +33,7 @@ urlpatterns = [
     path('nowplaying', NowPlayingView.as_view()),
     path('toprated', TopRatedView.as_view()),
     path('main', MainView.as_view()),
-    path('detail', DetailView.as_view()),
+    path('moviedetail', MovieDetailView.as_view()),
     path('search', SearchView.as_view()),
 
 ]
