@@ -1,10 +1,14 @@
 import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
+import { detailListType, listType } from './MovieList';
 
-type MyPostersProps = {};
+interface PropsType {
+  listType: listType;
+}
 
-function MainPosters() {
+function MainPosters({ listType }: PropsType) {
+  const baseUrl = 'https://image.tmdb.org/t/p/original';
   var initialWidth = 0;
   if (typeof window !== 'undefined') {
     initialWidth = window.innerWidth;
@@ -57,45 +61,6 @@ function MainPosters() {
     ],
   ];
 
-  const images = [
-    {
-      title: '영화1',
-      src: '/asset/image/image 2.png',
-    },
-    {
-      title: '영화2',
-      src: '/asset/image/image 2.png',
-    },
-    {
-      title: '영화3',
-      src: '/asset/image/image 2.png',
-    },
-    {
-      title: '영화4',
-      src: '/asset/image/image 12.png',
-    },
-    {
-      title: '영화5',
-      src: '/asset/image/image 12.png',
-    },
-    {
-      title: '영화6',
-      src: '/asset/image/image 12.png',
-    },
-    {
-      title: '영화7',
-      src: '/asset/image/image 15.png',
-    },
-    { title: '영화8', src: '/asset/image/image 15.png' },
-    {
-      title: '영화9',
-      src: '/asset/image/image 15.png',
-    },
-    {
-      title: '영화10',
-      src: '/asset/image/image 15.png',
-    },
-  ];
   const [move, setMove] = useState(0);
   const moveRight = () => {
     if (move < moveWidth[0].length - 1) {
@@ -111,7 +76,7 @@ function MainPosters() {
       console.log('moveLeft');
     }
   };
-
+  console.log(listType);
   return (
     <div className="overflow-hidden group z-40">
       <div
@@ -121,41 +86,46 @@ function MainPosters() {
             : innerWidth >= 768
             ? moveWidth[1][move]
             : moveWidth[0][move]
-        } w-full h-[400px] md:h-[600px] flex items-center duration-700 space-x-5 ml-[50%]`}
+        } w-full h-[450px] md:h-[700px] flex items-center duration-700 space-x-5 ml-[50%] mt-[-50px]`}
       >
         <>
-          {images.map((e, i) => {
-            return (
-              <div key={i}>
-                {i === move ? (
-                  <div className="relative flex  w-[220px] h-[313px] md:w-[300px] md:h-[426px] lg:w-[350px] lg:h-[497px] duration-700 shrink-0 left-[-50%]">
-                    <Image
-                      src={e.src}
-                      sizes="100%"
-                      alt="이미지"
-                      layout="fill"
-                      objectFit="contain"
-                      priority
-                    />
-                    <h3 className="absolute top-[100%]">{e.title}</h3>
-                  </div>
-                ) : (
-                  <div
-                    className={`relative flex w-[200px] h-[284px] md:w-[270px] md:h-[384px] lg:w-[300px] lg:h-[426px] duration-700 shrink-0 left-[-55%] md:left-[-55.5%] lg:left-[-58.5%]`}
-                  >
-                    <Image
-                      src={e.src}
-                      sizes="100%"
-                      alt="이미지"
-                      layout="fill"
-                      objectFit="contain"
-                      priority
-                    />
-                  </div>
-                )}
-              </div>
-            );
-          })}
+          {listType &&
+            listType.map((e, i) => {
+              return (
+                <div key={i}>
+                  {i === move ? (
+                    <div className="relative flex  w-[220px] h-[313px] md:w-[300px] md:h-[426px] lg:w-[350px] lg:h-[497px] duration-700 shrink-0 left-[-50%]">
+                      <Image
+                        src={baseUrl + e.poster_path}
+                        sizes="100%"
+                        alt="이미지"
+                        layout="fill"
+                        objectFit="fill"
+                        priority
+                        className="rounded-xl"
+                      />
+                      <div className="text-center text-[20px] md:text-[30px] lg:text-[30px] relative top-[100%] mx-auto">
+                        {e.title}
+                      </div>
+                    </div>
+                  ) : (
+                    <div
+                      className={`relative flex w-[200px] h-[284px] md:w-[270px] md:h-[384px] lg:w-[300px] lg:h-[426px] duration-700 shrink-0 left-[-55%] md:left-[-55.5%] lg:left-[-58.5%]`}
+                    >
+                      <Image
+                        src={baseUrl + e.poster_path}
+                        sizes="100%"
+                        alt="이미지"
+                        layout="fill"
+                        objectFit="fill"
+                        priority
+                        className="rounded-xl"
+                      />
+                    </div>
+                  )}
+                </div>
+              );
+            })}
         </>
       </div>
       <div className="top-[15%] md:top-[20%] absolute invisible group-hover:visible flex justify-between items-center w-full">
