@@ -27,20 +27,11 @@ const Home: NextPage = () => {
     };
     fetchPosters();
   }, []);
-  useEffect(() => {
-    const fetchBackgroundPath = async () => {
-      const res = await axios.get(
-        'http://localhost:8000/moviedetail?movieid={id값}'
-      );
-      try {
-        setCurrID(0);
-      } catch (e) {}
-    };
-  });
+
   loading && <div>로딩중</div>;
   error && <div>에러 발생</div>;
   !posters && null;
-  console.log(posters);
+  // console.log(posters);
   const onClick = () => {};
   return (
     <div className="relative">

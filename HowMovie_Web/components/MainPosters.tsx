@@ -76,7 +76,7 @@ function MainPosters({ listType }: PropsType) {
       console.log('moveLeft');
     }
   };
-  console.log(listType);
+  // console.log(listType);
   return (
     <div className="overflow-hidden group z-40">
       <div

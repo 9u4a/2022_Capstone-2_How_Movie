@@ -14,7 +14,6 @@ function MovieDetail({ setDetailOpen, currID }: MovieDetailProps) {
     setDetailOpen(false);
   };
 
-  console.log(currID);
   const test = {
     result: [
       {
@@ -79,7 +78,7 @@ function MovieDetail({ setDetailOpen, currID }: MovieDetailProps) {
           return (
             <div key={i}>
               <div className="w-full h-full max-h-[350px] rounded-t-xl">
-                <BackgroundMovie />
+                <BackgroundMovie currID={currID} />
               </div>
               <div className="w-full mt-5 p-5">
                 <h2>{e.title}</h2>

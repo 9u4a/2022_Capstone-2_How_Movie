@@ -1,6 +1,7 @@
+import axios from 'axios';
 import { NextPage } from 'next';
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import testAPI from '../pages/api/testAPI.json';
 import MovieDetail from './MovieDetail';
 
@@ -32,19 +33,18 @@ function MovieList({
   listType,
 }: MovieDetailProps) {
   const [detailOpen, setDetailOpen] = useState<boolean>(false);
-  const [currID, setCurrID] = useState(0);
+  const [currID, setCurrID] = useState<number>(0);
   const baseUrl = 'https://image.tmdb.org/t/p/original';
+
   const showDetail = () => {
     setDetailOpen(true);
   };
 
   return (
     <>
-      <div className="w-full h-full absolute top-[50px]">
-        {detailOpen && (
-          <MovieDetail setDetailOpen={setDetailOpen} currID={currID} />
-        )}
-      </div>
+      {detailOpen && (
+        <MovieDetail setDetailOpen={setDetailOpen} currID={currID} />
+      )}
       <div className="relative z-20">
         {type === 'toprated' ? (
           <h1 className="px-[30px] font-semibold text-shadow-2xl">Top 10</h1>
