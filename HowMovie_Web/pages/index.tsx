@@ -27,9 +27,17 @@ const Home: NextPage = () => {
     };
     fetchPosters();
   }, []);
+  useEffect(() => {
+    const fetchBackgroundPath = async () => {
+      try {
+        setCurrID(0);
+      } catch (e) {}
+    };
+  });
   loading && <div>로딩중</div>;
   error && <div>에러 발생</div>;
   !posters && null;
+  console.log(posters);
   return (
     <div className="relative">
       {detailOpen && (
