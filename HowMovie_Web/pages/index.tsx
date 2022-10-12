@@ -29,6 +29,9 @@ const Home: NextPage = () => {
   }, []);
   useEffect(() => {
     const fetchBackgroundPath = async () => {
+      const res = await axios.get(
+        'http://localhost:8000/moviedetail?movieid={id값}'
+      );
       try {
         setCurrID(0);
       } catch (e) {}
@@ -38,11 +41,12 @@ const Home: NextPage = () => {
   error && <div>에러 발생</div>;
   !posters && null;
   console.log(posters);
+  const onClick = () => {};
   return (
     <div className="relative">
-      {detailOpen && (
+      {/* {detailOpen && (
         <MovieDetail setDetailOpen={setDetailOpen} currID={currID} />
-      )}
+      )} */}
       <MainPosters listType={posters ? posters.result[3].upcoming : null} />
       <div className=" w-full ">
         <MovieList
