@@ -27,7 +27,18 @@ function Login() {
               <p className="md:text-lg">구글 로그인</p>
               <div className="w-[30px]" />
             </div>
-            <div className="flex justify-between items-center rounded-md w-[300px] md:w-[400px] lg:w-[500px] h-[50px] md:h-[55px] lg:h-[60px] space-x-5 px-[10px] hover:cursor-pointer hover:border-white border border-white/50 hover:text-white text-white/50 hover:font-semibold hover:duration-75 duration-700">
+            <div className="flex justify-between items-center rounded-md w-[300px] md:w-[400px] lg:w-[500px] h-[50px] md:h-[55px] lg:h-[60px] space-x-5 px-[15px] hover:cursor-pointer hover:border-white border border-white/50 hover:text-white text-white/50 hover:font-semibold hover:duration-75 duration-700">
+              <Image
+                src="/asset/image/naver_logo.png"
+                width={20}
+                height={20}
+                alt="login"
+                className=""
+              />
+              <p className="md:text-lg">네이버 로그인</p>
+              <div className="w-[40px]" />
+            </div>
+            {/* <div className="flex justify-between items-center rounded-md w-[300px] md:w-[400px] lg:w-[500px] h-[50px] md:h-[55px] lg:h-[60px] space-x-5 px-[10px] hover:cursor-pointer hover:border-white border border-white/50 hover:text-white text-white/50 hover:font-semibold hover:duration-75 duration-700">
               <Image
                 src="/asset/image/github_logo_white.svg"
                 width={30}
@@ -37,7 +48,7 @@ function Login() {
               />
               <p className="md:text-lg">깃허브 로그인</p>
               <div className="w-[40px]" />
-            </div>
+            </div> */}
             <div className="flex justify-between  items-center rounded-md w-[300px] md:w-[400px] lg:w-[500px] h-[50px] md:h-[55px] lg:h-[60px] space-x-5 px-[15px] hover:cursor-pointer hover:border-white border border-white/50 hover:text-white text-white/50 hover:font-semibold hover:duration-75 duration-700">
               <Image
                 src="/asset/image/kakaoTalk_logo.svg"

@@ -59,7 +59,7 @@ const Header = () => {
               isToggle && `w-[200px] md:w-[250px] lg:w-[300px]`
             } rounded-lg bg-white z-10 divide-y ${
               isSearch && `border border-slate-400`
-            } duration-500 z-[60] max-h-[500px] overflow-scroll`}
+            } duration-500 z-[60] max-h-[500px] overflow-y-scroll scrollbar-hide`}
           >
             {isSearch &&
               testAPI.result[2].nowplaying
