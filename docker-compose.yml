@@ -32,4 +32,11 @@ services:
       && python manage.py makemigrations API
       && python manage.py migrate API
       && python manage.py runserver 0.0.0.0:8000"
-
+  next:
+    container_name: how-movie-web
+    build:
+      context: ./HowMovie_Web/
+      dockerfile: ./Dockerfile
+    ports:
+      - "3000:3000"
+      
