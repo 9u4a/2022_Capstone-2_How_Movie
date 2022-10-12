@@ -37,8 +37,9 @@
 ## API Information (Git Document)
 
 ---
+<details>
+<summary>메인화면(/main)</summary>
 
-### 1. 메인화면 (/main)
 ### Request Form
 
 |     TAG     |  value  | required |
@@ -58,20 +59,16 @@
                     "id": 760161,
                     "title": "오펀: 천사의 탄생",
                     "poster_path": "/vKIhsEVEtLTwTkmLSDNi230Zr3Q.jpg",
-                    "backdrop_path": "/5GA3vV1aWWHTSDO5eno8V5zDo8r.jpg"
+                    "backdrop_path": "/5GA3vV1aWWHTSDO5eno8V5zDo8r.jpg",
+                    "release_date": "2022-07-27"
                 },
                 {
                     "id": 642885,
                     "title": "호커스 포커스 2",
                     "poster_path": "/xpDdvIaTHn38F17pPseL1MQI05B.jpg",
-                    "backdrop_path": "/iS9U3VHpPEjTWnwmW56CrBlpgLj.jpg"
-                },
-                {
-                    "id": 985939,
-                    "title": "폴: 600미터",
-                    "poster_path": "/1OdA3gOq8N5KWwXsZhYVHbeyx8l.jpg",
-                    "backdrop_path": "/hT3OqvzMqCQuJsUjZnQwA5NuxgK.jpg"
-                },
+                    "backdrop_path": "/iS9U3VHpPEjTWnwmW56CrBlpgLj.jpg",
+                    "release_date": "2022-09-27"
+                }
             ]
         },
         {
@@ -80,20 +77,16 @@
                     "id": 238,
                     "title": "대부",
                     "poster_path": "/cOwVs8eYA4G9ZQs7hIRSoiZr46Q.jpg",
-                    "backdrop_path": "/rSPw7tgCH9c6NqICZef4kZjFOQ5.jpg"
+                    "backdrop_path": "/rSPw7tgCH9c6NqICZef4kZjFOQ5.jpg",
+                    "release_date": "1972-03-14"
                 },
                 {
                     "id": 278,
                     "title": "쇼생크 탈출",
                     "poster_path": "/oAt6OtpwYCdJI76AVtVKW1eorYx.jpg",
-                    "backdrop_path": "/kXfqcdQKsToO0OUXHcrrNCHDBzO.jpg"
-                },
-                {
-                    "id": 240,
-                    "title": "대부 2",
-                    "poster_path": "/cj9UsJEN5bNf6ZoF1BbKjKN81hc.jpg",
-                    "backdrop_path": "/kGzFbGhp99zva6oZODW5atUtnqi.jpg"
-                },
+                    "backdrop_path": "/kXfqcdQKsToO0OUXHcrrNCHDBzO.jpg",
+                    "release_date": "1994-09-23"
+                }
             ]
         },
         {
@@ -102,20 +95,16 @@
                     "id": 760161,
                     "title": "오펀: 천사의 탄생",
                     "poster_path": "/vKIhsEVEtLTwTkmLSDNi230Zr3Q.jpg",
-                    "backdrop_path": "/5GA3vV1aWWHTSDO5eno8V5zDo8r.jpg"
+                    "backdrop_path": "/5GA3vV1aWWHTSDO5eno8V5zDo8r.jpg",
+                    "release_date": "2022-07-27"
                 },
                 {
                     "id": 985939,
                     "title": "폴: 600미터",
                     "poster_path": "/1OdA3gOq8N5KWwXsZhYVHbeyx8l.jpg",
-                    "backdrop_path": "/hT3OqvzMqCQuJsUjZnQwA5NuxgK.jpg"
-                },
-                {
-                    "id": 718930,
-                    "title": "불릿 트레인",
-                    "poster_path": "/msh4N8dxHk4FeEPZ8VBqHQFQYjI.jpg",
-                    "backdrop_path": "/83oeqwN64WtafGoITvsOzjKIQaM.jpg"
-                },
+                    "backdrop_path": "/hT3OqvzMqCQuJsUjZnQwA5NuxgK.jpg",
+                    "release_date": "2022-08-11"
+                }
             ]
         },
         {
@@ -124,28 +113,27 @@
                     "id": 985939,
                     "title": "폴: 600미터",
                     "poster_path": "/1OdA3gOq8N5KWwXsZhYVHbeyx8l.jpg",
-                    "backdrop_path": "/hT3OqvzMqCQuJsUjZnQwA5NuxgK.jpg"
+                    "backdrop_path": "/hT3OqvzMqCQuJsUjZnQwA5NuxgK.jpg",
+                    "release_date": "2022-08-11"
                 },
                 {
                     "id": 717728,
                     "title": "Jeepers Creepers: Reborn",
                     "poster_path": "/aGBuiirBIQ7o64FmJxO53eYDuro.jpg",
-                    "backdrop_path": "/tIX6j3NzadlwGcJ52nuWdmtOQkg.jpg"
-                },
-                {
-                    "id": 436270,
-                    "title": "블랙 아담",
-                    "poster_path": "/mEdMHGy1FfCUc7PskFO0tibm8jp.jpg",
-                    "backdrop_path": "/grATqZhXqK9wN7nH0BzjVIgatZD.jpg"
-                },
+                    "backdrop_path": "/tIX6j3NzadlwGcJ52nuWdmtOQkg.jpg",
+                    "release_date": "2022-09-15"
+                }
             ]
         }
     ]
 }
 ```
 </details>
+</details>
 
-### 2. 영화 세부화면 (/moviedetail)
+<details>
+<summary>영화 세부화면 (/moviedetail)</summary>
+
 ### Request Form
 
 |     TAG     |  value  | required |
@@ -248,3 +236,54 @@
     ]
 }    
 ```
+</details>
+</details>
+
+<details>
+
+<summary>영화검색(/search)</summary>
+
+### Request Form
+
+|     TAG     |  value  | required |
+| :---------: | :-----: | :------: |
+|   API URL   |  /search  |    -     |
+|   Method    |  GET   |    -     |
+|   query    |  string   |    ✔️     |
+|   page    |  integer   |    -     |
+
+### Response 
+<details><summary>Example</summary>
+
+```yaml
+{
+    "result": {
+        "search": [
+            {
+                "id": 1003598,
+                "title": "어벤져스: 시크릿 워즈",
+                "poster_path": "/8chwENebfUEJzZ7sMUA0nOgiCKk.jpg",
+                "backdrop_path": "/jqFC2WjYF07hx2X7cs0XmY9jBX6.jpg",
+                "release_date": "2026-05-01"
+            },
+            {
+                "id": 1003596,
+                "title": "어벤져스: 캉 다이너스티",
+                "poster_path": "/utZTb3VBrH0zR77BcISU67pHuAx.jpg",
+                "backdrop_path": "/uR952NrgispGuyqIdUbkR24vE0u.jpg",
+                "release_date": "2025-04-30"
+            },
+            {
+                "id": 521720,
+                "title": "어벤져스 그림: 시간 전쟁",
+                "poster_path": "/4ARjDBmYpOocL8kVTyWWSSzx5Df.jpg",
+                "backdrop_path": "/sORO7a1cSghfWE5GD4cSJ0qTN8O.jpg",
+                "release_date": "2018-05-01"
+            },
+        ]
+    }
+}
+```
+
+</details>
+</details>
