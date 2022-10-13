@@ -78,6 +78,8 @@ const Header = () => {
                           layout="fill"
                           objectFit="fill"
                           className="rounded-lg"
+                          placeholder="blur"
+                          blurDataURL={baseUrl + e.poster_path}
                         />
                       </div>
                       <div className="mt-[5px] ml-[10px] ">

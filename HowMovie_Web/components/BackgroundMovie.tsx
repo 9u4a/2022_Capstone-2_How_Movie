@@ -13,7 +13,7 @@ const BackgroundMovie = ({ currID }: Props) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error>();
   const [moviePath, setMoviePath] = useState<any>();
-  const [backDrop, setBackDrop] = useState('');
+  const [backDrop, setBackDrop] = useState<any>('');
   console.log(currID);
   useEffect(() => {
     const fetchBackgroundPath = async () => {
@@ -34,8 +34,6 @@ const BackgroundMovie = ({ currID }: Props) => {
     };
     fetchBackgroundPath();
   }, [currID]);
-  // console.log(currID);
-  // console.log(moviePath);
 
   loading && <div>로딩중</div>;
   error && <div>에러 발생</div>;

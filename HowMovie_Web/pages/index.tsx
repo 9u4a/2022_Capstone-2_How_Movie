@@ -31,13 +31,9 @@ const Home: NextPage = () => {
   loading && <div>로딩중</div>;
   error && <div>에러 발생</div>;
   !posters && null;
-  // console.log(posters);
   const onClick = () => {};
   return (
     <div className="relative">
-      {/* {detailOpen && (
-        <MovieDetail setDetailOpen={setDetailOpen} currID={currID} />
-      )} */}
       <MainPosters listType={posters ? posters.result[3].upcoming : null} />
       <div className=" w-full ">
         <MovieList
@@ -47,10 +43,10 @@ const Home: NextPage = () => {
           listType={posters ? posters.result[1].toprated : null}
         />
         <MovieList
-          type="popular"
+          type="nowplaying"
           setDetailOpen={setDetailOpen}
           setCurrID={setCurrID}
-          listType={posters ? posters.result[0].popular : null}
+          listType={posters ? posters.result[2].nowplaying : null}
         />
       </div>
     </div>

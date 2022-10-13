@@ -94,32 +94,29 @@ function MainPosters({ listType }: PropsType) {
               return (
                 <div key={i}>
                   {i === move ? (
-                    <div className="relative flex  w-[220px] h-[313px] md:w-[300px] md:h-[426px] lg:w-[350px] lg:h-[497px] duration-700 shrink-0 left-[-50%]">
+                    <div className="relative flex  w-[220px] h-[313px] md:w-[300px] md:h-[426px] lg:w-[350px] lg:h-[497px] duration-700 shrink-0 left-[-50%] rounded-lg overflow-hidden ">
                       <Image
                         src={baseUrl + e.poster_path}
                         sizes="100%"
                         alt="이미지"
                         layout="fill"
                         objectFit="fill"
-                        priority
                         className="rounded-xl"
+                        placeholder="blur"
+                        blurDataURL={baseUrl + e.poster_path}
                       />
-                      <div className="text-center text-[20px] md:text-[30px] lg:text-[30px] relative top-[100%] mx-auto">
-                        {e.title}
-                      </div>
                     </div>
                   ) : (
-                    <div
-                      className={`relative flex w-[200px] h-[284px] md:w-[270px] md:h-[384px] lg:w-[300px] lg:h-[426px] duration-700 shrink-0 left-[-55%] md:left-[-55.5%] lg:left-[-58.5%]`}
-                    >
+                    <div className="relative flex w-[200px] h-[284px] md:w-[270px] md:h-[384px] lg:w-[300px] lg:h-[426px] duration-700 shrink-0 left-[-55%] md:left-[-55.5%] lg:left-[-58.5%] rounded-lg overflow-hidden">
                       <Image
                         src={baseUrl + e.poster_path}
-                        sizes="100%"
+                        sizes="100"
                         alt="이미지"
                         layout="fill"
                         objectFit="fill"
-                        priority
                         className="rounded-xl"
+                        placeholder="blur"
+                        blurDataURL={baseUrl + e.poster_path}
                       />
                     </div>
                   )}
