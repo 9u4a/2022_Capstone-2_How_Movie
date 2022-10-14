@@ -12,11 +12,12 @@ def Credit(request):
     res = requests.get(url + movie_id + api_key + language)
     data = res.json()
 
-    result = []
-
+    acting = []
+    writing = []
+    directing = []
     for i in data['cast']:
         if i['known_for_department'] == "Acting":
-            result.append(
+            acting.append(
                 {
                     'id': i['id'],
                     'name': i['name'],
@@ -26,6 +27,33 @@ def Credit(request):
                     'popularity': i['popularity'],
                 }
             )
+        elif i['known_for_department'] == "Writing":
+            writing.append(
+                {
+                    'id': i['id'],
+                    'name': i['name'],
+                    'gender': i['gender'],
+                    'character': i['character'],
+                    'profile_path': i['profile_path'],
+                    'popularity': i['popularity'],
+                }
+            )
+        elif i['known_for_department'] == "Directing":
+            directing.append(
+                {
+                    'id': i['id'],
+                    'name': i['name'],
+                    'gender': i['gender'],
+                    'character': i['character'],
+                    'profile_path': i['profile_path'],
+                    'popularity': i['popularity'],
+                }
+            )
+    result = {
+        'acting': acting,
+        'writing': writing,
+        'directing': directing
+    }
     response = {
         'credit': result
     }
