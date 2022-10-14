@@ -41,7 +41,7 @@ function MovieList({
   };
 
   return (
-    <>
+    <div className="h-screen max-h-[350px]">
       {detailOpen && (
         <MovieDetail setDetailOpen={setDetailOpen} currID={currID} />
       )}
@@ -83,7 +83,7 @@ function MovieList({
             })}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

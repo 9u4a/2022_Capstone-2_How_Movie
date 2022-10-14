@@ -64,16 +64,17 @@ function MovieDetail({ setDetailOpen, currID }: MovieDetailProps) {
   };
 
   return (
-    <div className="flex justify-center items-center bg-black/80 w-full h-full absolute z-[200] top-[-50px]">
-      <div className="flex flex-col items-end w-[80%] h-[850px] bg-gray-900 rounded-xl">
+    <div className="flex justify-center items-center bg-black/80 w-full h-full fixed z-[200] top-[0px]">
+      <div className="flex flex-col items-end w-[1000px] max-w-[80%] h-[850px] bg-gray-900 rounded-xl">
         <div className="flex justify-end absolute ">
           <button
-            className="w-[30px] h-[30px] m-5 rounded-full z-50 right-[80px] p-1 bg-slate-300"
+            className="w-[30px] h-[30px] m-5 rounded-full z-50 right-[80px] p-1 bg-slate-300 "
             onClick={closeDetail}
           >
             <XMarkIcon />
           </button>
         </div>
+
         {test.result.map((e, i) => {
           return (
             <div key={i}>
