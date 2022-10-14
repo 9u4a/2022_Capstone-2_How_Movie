@@ -51,7 +51,7 @@ const BackgroundMovie = ({ currID }: Props) => {
           ></iframe>
         </div>
       ) : backDrop !== '' ? (
-        <div className="relative w-full pb-[56.3%] max-h-[350px] bg-black rounded-t-xl">
+        <div className="relative w-full max-w-[1000px] pb-[350px] bg-black rounded-t-xl">
           <Image
             src={baseUrl + backDrop}
             layout="fill"
