@@ -17,15 +17,13 @@ def MovieDetail(request):
         'genres': data['genres'],
         'title': data['title'],
         'overview': data['overview'],
-        'poster_path': data['poster_path'],
         'backdrop_path': data['backdrop_path'],
         'release_date': data['release_date'],
         'vote_average': data['vote_average'],
-        'vote_count': data['vote_count'],
         'status': data['status'],
         'runtime': data['runtime'],
         'tagline': data['tagline'],
-        'video': MovieVideo(request, movie_id)
+        'video': MovieVideo(request, movie_id, False)
     }]
     response = {
         'detail': result

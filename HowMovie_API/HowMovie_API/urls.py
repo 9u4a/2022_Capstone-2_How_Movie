@@ -19,6 +19,7 @@ from django.urls import path
 from API.Views.MovieDetailView import MovieDetailView
 from API.Views.MainView import MainView
 from API.Views.NowPlayingView import NowPlayingView
+from API.Views.SearchDetailView import SearchDetailView
 from API.Views.SearchView import SearchView
 from API.Views.TopRatedView import TopRatedView
 from API.Views.TrendingView import TrendingView
@@ -35,5 +36,6 @@ urlpatterns = [
     path('main', MainView.as_view()),
     path('moviedetail', MovieDetailView.as_view()),
     path('search', SearchView.as_view()),
+    path('searchdetail', SearchDetailView.as_view()),
 
 ]

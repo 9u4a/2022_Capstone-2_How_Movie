@@ -1,6 +1,7 @@
 import requests
 from django.conf import settings
 from API.GetData.MovieVideo import MovieVideo
+from API.GetData.Recommendations import Recommendations
 
 
 def SearchDetail(request):
@@ -14,6 +15,9 @@ def SearchDetail(request):
     data = res.json()
 
     result = [{
+        'adult': data['adult'],
+        'original_language': data['original_language'],
+        'original_title': data['original_title'],
         'genres': data['genres'],
         'title': data['title'],
         'overview': data['overview'],
@@ -25,7 +29,8 @@ def SearchDetail(request):
         'status': data['status'],
         'runtime': data['runtime'],
         'tagline': data['tagline'],
-        'video': MovieVideo(request, movie_id)
+        'video': MovieVideo(request, movie_id, True),
+        'recommendations': Recommendations(request)
     }]
     response = {
         'detail': result
