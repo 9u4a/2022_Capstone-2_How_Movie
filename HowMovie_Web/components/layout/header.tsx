@@ -3,14 +3,17 @@ import React, { useEffect, useRef, useState } from 'react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 import testAPI from '../../pages/api/testAPI.json';
+import { signOut, useSession } from 'next-auth/react';
 
 const Header = () => {
+  const session = useSession();
   const headerType = [
     { id: 0, title: '홈', type: 'home' },
     { id: 1, title: '장르별', type: 'genre' },
   ];
 
   const [isToggle, setIsToggle] = useState<boolean>(false);
+  const [isProfileToggle, setProfileIsToggle] = useState<boolean>(false);
   const [isSearch, setIsSearch] = useState('');
   const inputFocus = useRef<HTMLInputElement>(null);
   const baseUrl = 'https://image.tmdb.org/t/p/original';
@@ -23,7 +26,11 @@ const Header = () => {
   };
   return (
     <>
-      <div className="flex w-full h-[50px] bg-black justify-between items-center px-[50px]">
+      <div
+        className={`flex w-full h-[50px] bg-black justify-between items-center ${
+          session ? 'pl-[50px] pr-[20px]' : 'px-[50px]'
+        }`}
+      >
         <Link href="/">
           <a className="flex items-center">
             <Image
@@ -45,7 +52,9 @@ const Header = () => {
           <input
             className={`absolute ${
               isToggle ? 'w-[200px] md:w-[250px] lg:w-[300px] px-[10px]' : 'w-0'
-            } h-[30px]  text-black right-[125px] rounded-lg bg-slate-300 duration-500`}
+            } h-[30px]  text-black ${
+              session ? 'right-[70px]' : 'right-[125px]'
+            } rounded-lg bg-slate-300 duration-500`}
             placeholder="영화를 검색하세요..."
             onChange={(e) => {
               setIsSearch(e.target.value);
@@ -55,7 +64,9 @@ const Header = () => {
             ref={inputFocus}
           ></input>
           <div
-            className={`absolute top-[40px] right-[125px] ${
+            className={`absolute top-[40px] ${
+              session ? 'right-[70px]' : 'right-[125px]'
+            } ${
               isToggle && `w-[200px] md:w-[250px] lg:w-[300px]`
             } rounded-lg bg-white z-10 divide-y ${
               isSearch && `border border-slate-400`
@@ -90,12 +101,57 @@ const Header = () => {
                   );
                 })}
           </div>
-
-          <Link href="/Login">
-            <a className="flex justify-center items-center rounded-md w-[60px] h-[30px] bg-slate-800 cursor-pointer hover:bg-slate-600 active:bg-slate-900">
-              로그인
-            </a>
-          </Link>
+          {session.data?.user ? (
+            <div className="flex">
+              <Image
+                src={session.data.user.image!}
+                width={35}
+                height={35}
+                alt="userProfileImg"
+                className="rounded-full hover:cursor-pointer"
+                onClick={() => setProfileIsToggle(!isProfileToggle)}
+              />
+              {/* {isProfileToggle ? (
+                <div className="border rounded-lg text-black bg-white absolute top-[50px] right-[20px] divide-y-2 z-10 duration-700">
+                  <div className="flex justify-center items-center w-[100px] h-[30px]">
+                    찜 목록
+                  </div>
+                  <div className="flex justify-center items-center w-[100px] h-[30px]">
+                    내 댓글
+                  </div>
+                  <div className="flex justify-center items-center w-[100px] h-[30px]">
+                    로그아웃
+                  </div>
+                </div>
+              ) : null} */}
+              <div
+                className={` ${
+                  isProfileToggle
+                    ? 'opacity-1'
+                    : 'opacity-0 pointer-events-none'
+                } rounded-lg flex-col text-black bg-white absolute top-[50px] right-[20px] divide-y-2 z-10 duration-300`}
+              >
+                <div className="flex justify-center items-center w-[100px] h-[30px] hover:cursor-pointer">
+                  찜 목록
+                </div>
+                <div className="flex justify-center items-center w-[100px] h-[30px] hover:cursor-pointer">
+                  내 댓글
+                </div>
+                <div
+                  className="flex justify-center items-center w-[100px] h-[30px] hover:cursor-pointer"
+                  onClick={() => signOut()}
+                >
+                  로그아웃
+                </div>
+              </div>
+            </div>
+          ) : (
+            <Link href="/Login">
+              <a className="flex justify-center items-center rounded-md w-[60px] h-[30px] bg-slate-800 cursor-pointer hover:bg-slate-600 active:bg-slate-900">
+                로그인
+              </a>
+            </Link>
+          )}
         </div>
       </div>
     </>

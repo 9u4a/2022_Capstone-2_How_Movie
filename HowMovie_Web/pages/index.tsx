@@ -4,8 +4,10 @@ import { useEffect, useState } from 'react';
 import MovieDetail from '../components/MovieDetail';
 import MainPosters from '../components/MainPosters';
 import MovieList from '../components/MovieList';
+import { useSession } from 'next-auth/react';
 
 const Home: NextPage = () => {
+  const { data: session } = useSession();
   const [posters, setPosters] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error>();

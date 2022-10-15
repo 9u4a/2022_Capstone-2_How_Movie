@@ -1,7 +1,15 @@
+import { signIn, signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+
 import React, { useState } from 'react';
 
 function Login() {
+  const session = useSession();
+  const router = useRouter();
+  // console.log({ data: session });
+
   return (
     <div className="relative">
       <Image
@@ -17,7 +25,12 @@ function Login() {
         <div className="flex flex-col justify-center items-center">
           <h2 className="mb-[20px]">로그인</h2>
           <div className="space-y-3">
-            <div className="flex justify-between  items-center rounded-md w-[300px] md:w-[400px] lg:w-[500px] h-[50px] md:h-[55px] lg:h-[60px] space-x-5 px-[15px] hover:cursor-pointer hover:border-white border border-white/50 hover:text-white text-white/50 hover:font-semibold hover:duration-75 duration-700">
+            <div
+              className="flex justify-between  items-center rounded-md w-[300px] md:w-[400px] lg:w-[500px] h-[50px] md:h-[55px] lg:h-[60px] space-x-5 px-[15px] hover:cursor-pointer hover:border-white border border-white/50 hover:text-white text-white/50 hover:font-semibold hover:duration-75 duration-700"
+              onClick={() => {
+                signIn('google');
+              }}
+            >
               <Image
                 src="/asset/image/google_logo.svg"
                 width={20}
@@ -27,7 +40,10 @@ function Login() {
               <p className="md:text-lg">구글 로그인</p>
               <div className="w-[30px]" />
             </div>
-            <div className="flex justify-between items-center rounded-md w-[300px] md:w-[400px] lg:w-[500px] h-[50px] md:h-[55px] lg:h-[60px] space-x-5 px-[15px] hover:cursor-pointer hover:border-white border border-white/50 hover:text-white text-white/50 hover:font-semibold hover:duration-75 duration-700">
+            <div
+              className="flex justify-between items-center rounded-md w-[300px] md:w-[400px] lg:w-[500px] h-[50px] md:h-[55px] lg:h-[60px] space-x-5 px-[15px] hover:cursor-pointer hover:border-white border border-white/50 hover:text-white text-white/50 hover:font-semibold hover:duration-75 duration-700"
+              onClick={() => signIn('naver')}
+            >
               <Image
                 src="/asset/image/naver_logo.png"
                 width={20}
@@ -49,7 +65,10 @@ function Login() {
               <p className="md:text-lg">깃허브 로그인</p>
               <div className="w-[40px]" />
             </div> */}
-            <div className="flex justify-between  items-center rounded-md w-[300px] md:w-[400px] lg:w-[500px] h-[50px] md:h-[55px] lg:h-[60px] space-x-5 px-[15px] hover:cursor-pointer hover:border-white border border-white/50 hover:text-white text-white/50 hover:font-semibold hover:duration-75 duration-700">
+            <div
+              className="flex justify-between  items-center rounded-md w-[300px] md:w-[400px] lg:w-[500px] h-[50px] md:h-[55px] lg:h-[60px] space-x-5 px-[15px] hover:cursor-pointer hover:border-white border border-white/50 hover:text-white text-white/50 hover:font-semibold hover:duration-75 duration-700"
+              onClick={() => signIn('kakao')}
+            >
               <Image
                 src="/asset/image/kakaoTalk_logo.svg"
                 width={20}
