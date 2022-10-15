@@ -20,18 +20,13 @@ export interface listType extends Array<detailListType> {
 }
 
 interface MovieDetailProps {
-  setDetailOpen: (param: boolean) => void;
-  setCurrID: (param: number) => void;
+  // setDetailOpen: (param: boolean) => void;
+  // setCurrID: (param: number) => void;
   type: any;
   listType: listType;
 }
 
-function MovieList({
-  type,
-  // setDetailOpen,
-  // setCurrID,
-  listType,
-}: MovieDetailProps) {
+function MovieList({ type, listType }: MovieDetailProps) {
   const [detailOpen, setDetailOpen] = useState<boolean>(false);
   const [currID, setCurrID] = useState<number>(0);
   const baseUrl = 'https://image.tmdb.org/t/p/original';

@@ -31,7 +31,6 @@ const BackgroundMovie = ({ currID }: Props) => {
       }
       setLoading(false);
     };
-
     fetchBackgroundPath();
   }, [currID]);
 
