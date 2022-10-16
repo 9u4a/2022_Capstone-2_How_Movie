@@ -1,4 +1,4 @@
-## 🖥️ Collabrator
+## 🖥️ Collaborator
 
 <table>
   <tr>
