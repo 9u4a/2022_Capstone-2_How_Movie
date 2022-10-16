@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 
-function detail() {
+function Detail() {
   const profileBaseUrl = 'https://www.themoviedb.org/t/p/w276_and_h350_face';
   const test = {
     result: [
@@ -123,4 +123,4 @@ function detail() {
   );
 }
 
-export default detail;
+export default Detail;

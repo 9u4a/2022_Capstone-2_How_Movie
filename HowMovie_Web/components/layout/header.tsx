@@ -1,29 +1,60 @@
-import Image from 'next/image';
-import React, { useEffect, useRef, useState } from 'react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
-import Link from 'next/link';
-import testAPI from '../../pages/api/testAPI.json';
+import axios from 'axios';
 import { signOut, useSession } from 'next-auth/react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useEffect, useRef, useState } from 'react';
 
-const Header = () => {
+interface isSearchType {
+  id: number;
+  title: string;
+  poster_path: string;
+  backdrop_path: string;
+}
+
+function Header() {
   const session = useSession();
-  const headerType = [
-    { id: 0, title: '홈', type: 'home' },
-    { id: 1, title: '장르별', type: 'genre' },
-  ];
-
+  const baseUrl = 'https://image.tmdb.org/t/p/original';
+  const searchRef = useRef<any>(null);
+  const inputFocus = useRef<any>(null);
   const [isToggle, setIsToggle] = useState<boolean>(false);
   const [isProfileToggle, setProfileIsToggle] = useState<boolean>(false);
-  const [isSearch, setIsSearch] = useState('');
-  const inputFocus = useRef<HTMLInputElement>(null);
-  const baseUrl = 'https://image.tmdb.org/t/p/original';
+  const [isSearch, setIsSearch] = useState<isSearchType | any>();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<Error>();
+  const [searchInput, setSearchInput] = useState<any>(null);
+
   const onClick = () => {
     setIsToggle(!isToggle);
-    setIsSearch('');
+    setSearchInput('');
     if (inputFocus.current !== null && inputFocus.current !== undefined) {
       inputFocus.current.focus();
     }
   };
+
+  useEffect(() => {
+    if (searchInput !== null && searchInput !== '') {
+      const fetchSearchInfo = async () => {
+        try {
+          const res = await axios.get(
+            `http://localhost:8000/search?query=${searchInput}`
+          );
+          setIsSearch(res);
+        } catch (err) {
+          if (axios.isAxiosError(err)) {
+            setError(err);
+          }
+        }
+      };
+      fetchSearchInfo();
+    } else {
+      setSearchInput(null);
+    }
+
+    return () => {};
+  }, [searchInput]);
+  loading && <div>로딩중</div>;
+  error && <div>에러 발생</div>;
   return (
     <>
       <div
@@ -53,51 +84,67 @@ const Header = () => {
             className={`absolute ${
               isToggle ? 'w-[200px] md:w-[250px] lg:w-[300px] px-[10px]' : 'w-0'
             } h-[30px]  text-black ${
-              session ? 'right-[70px]' : 'right-[125px]'
+              session ? 'right-[90px]' : 'right-[125px]'
             } rounded-lg bg-slate-300 duration-500`}
             placeholder="영화를 검색하세요..."
             onChange={(e) => {
-              setIsSearch(e.target.value);
-              console.log(e.target.value);
+              setSearchInput(e.target.value.trim());
             }}
-            // id="search"
+            value={searchInput}
             ref={inputFocus}
           ></input>
           <div
             className={`absolute top-[40px] ${
-              session ? 'right-[70px]' : 'right-[125px]'
+              session ? 'right-[90px]' : 'right-[125px]'
             } ${
-              isToggle && `w-[200px] md:w-[250px] lg:w-[300px]`
-            } rounded-lg bg-white z-10 divide-y ${
-              isSearch && `border border-slate-400`
-            } duration-500 z-[60] max-h-[500px] overflow-y-scroll scrollbar-hide`}
+              isToggle
+                ? `w-[200px] md:w-[250px] lg:w-[300px]`
+                : 'hidden pointer-events-none'
+            } rounded-lg bg-white divide-y duration-500 z-[60] max-h-[500px] overflow-y-scroll scrollbar-hide`}
+            onClick={() => setIsToggle(!isToggle)}
           >
             {isSearch &&
-              testAPI.result[2].nowplaying
-                ?.filter((e) => e.title.includes(isSearch))
-                .map((e, i) => {
+              isSearch.data.result.search
+                .filter((e: isSearchType) => e.title.includes(searchInput))
+                .map((e: isSearchType, i: any) => {
                   return (
-                    <div
-                      className="flex text-black p-1 cursor-pointer hover:font-semibold hover:bg-slate-100"
-                      key={i}
-                    >
-                      <div className="w-[40px] h-[60px] relative">
-                        <Image
-                          src={baseUrl + e.poster_path}
-                          alt="이미지"
-                          sizes="100%"
-                          layout="fill"
-                          objectFit="fill"
-                          className="rounded-lg"
-                          placeholder="blur"
-                          blurDataURL={baseUrl + e.poster_path}
-                        />
-                      </div>
-                      <div className="mt-[5px] ml-[10px] ">
-                        <div className="text-[15px]">{e.title}</div>
-                        <div className="text-[13px] text-slate-400">2017</div>
-                      </div>
-                    </div>
+                    <Link href={`/Detail?movie_id=${e.id}`} key={i}>
+                      <a className="flex items-center text-black px-2 py-1 cursor-pointer hover:font-semibold hover:bg-slate-100">
+                        <div
+                          className={`w-[40px] h-[60px] mr-[10px] relative rounded-lg ${
+                            e.poster_path || 'border border-slate-200'
+                          }`}
+                        >
+                          {e.poster_path === null ? (
+                            <Image
+                              src="/asset/image/noImg.svg"
+                              alt="posterImg"
+                              sizes="100%"
+                              layout="fill"
+                              objectFit="fill"
+                              className="rounded-lg"
+                              placeholder="blur"
+                              blurDataURL="/asset/image/noImg.svg"
+                            />
+                          ) : (
+                            <Image
+                              src={baseUrl + e.poster_path}
+                              alt="posterImg"
+                              sizes="100%"
+                              layout="fill"
+                              objectFit="fill"
+                              className="rounded-lg"
+                              placeholder="blur"
+                              blurDataURL={baseUrl + e.poster_path}
+                            />
+                          )}
+                        </div>
+                        <div className="w-[130px] md:w-[180px] lg:w-[230px] mt-[5px]flex flex-col justify-between">
+                          <div className="text-[15px] leading-4">{e.title}</div>
+                          <div className="text-[13px] text-slate-400">2017</div>
+                        </div>
+                      </a>
+                    </Link>
                   );
                 })}
           </div>
@@ -111,7 +158,7 @@ const Header = () => {
                 className="rounded-full hover:cursor-pointer"
                 onClick={() => setProfileIsToggle(!isProfileToggle)}
               />
-              {/* {isProfileToggle ? (
+              {isProfileToggle ? (
                 <div className="border rounded-lg text-black bg-white absolute top-[50px] right-[20px] divide-y-2 z-10 duration-700">
                   <div className="flex justify-center items-center w-[100px] h-[30px]">
                     찜 목록
@@ -123,7 +170,7 @@ const Header = () => {
                     로그아웃
                   </div>
                 </div>
-              ) : null} */}
+              ) : null}
               <div
                 className={` ${
                   isProfileToggle
@@ -156,6 +203,6 @@ const Header = () => {
       </div>
     </>
   );
-};
+}
 
 export default Header;
