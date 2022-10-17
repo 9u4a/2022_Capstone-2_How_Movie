@@ -49,7 +49,7 @@ function MovieDetail({ setDetailOpen, currID }: MovieDetailProps) {
 
   return (
     <div className="flex justify-center items-center bg-black/80 w-full h-full fixed z-[200] top-0 overflow-scroll">
-      <div className="flex absolute flex-col items-end w-[1000px] max-w-[80%] bg-gray-900 rounded-xl top-[50px]">
+      <div className="flex absolute flex-col items-end w-[1000px] max-w-[80%] max-h-[850px] bg-gray-900 rounded-xl top-[50px] overflow-scroll">
         <div className="flex justify-end absolute ">
           <button
             className="w-[30px] h-[30px] m-5 rounded-full z-50 right-[80px] p-1 bg-slate-300 "
