@@ -90,7 +90,7 @@ function Header() {
             onChange={(e) => {
               setSearchInput(e.target.value.trim());
             }}
-            value={searchInput}
+            value={searchInput||''}
             ref={inputFocus}
           ></input>
           <div
