@@ -2,6 +2,7 @@ import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import BackgroundMovie from '../components/BackgroundMovie';
 
 function Detail() {
   const [searchDetail, setSearchDetail] = useState<any>();
@@ -138,10 +139,33 @@ function Detail() {
         <div className="h-[350px] p-10 border border-green-600">
           <div className="text-2xl mb-10">주요 출연진</div>
           <div>
-            <div className="flex w-full h-[230px] snap-x snap-mandatory overflow-x-scroll z-20 bg-gradient-to-b from-[trasparent] via-black/80 to-[#141414]/80 space-x-5 scrollbar-hide border">
-              <div className="w-[150px] rounded-lg bg-slate-500">
+            <div className="flex w-full h-[230px] space-x-5 overflow-x-scroll scrollbar-hide border">
+              <div className="relative snap-center shrink-0 overflow-hidden w-[150px] rounded-lg bg-slate-500">
                 <div className="h-[70%] border"></div>
               </div>
+              <div className="relative snap-center shrink-0 overflow-hidden w-[150px] rounded-lg bg-slate-500">
+                <div className="h-[70%] border"></div>
+              </div>
+              <div className="relative snap-center shrink-0 overflow-hidden w-[150px] rounded-lg bg-slate-500">
+                <div className="h-[70%] border"></div>
+              </div>
+              <div className="relative snap-center shrink-0 overflow-hidden w-[150px] rounded-lg bg-slate-500">
+                <div className="h-[70%] border"></div>
+              </div>
+              <div className="relative snap-center shrink-0 overflow-hidden w-[150px] rounded-lg bg-slate-500">
+                <div className="h-[70%] border"></div>
+              </div>
+              <div className="relative snap-center shrink-0 overflow-hidden w-[150px] rounded-lg bg-slate-500">
+                <div className="h-[70%] border"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="h-[450px] p-10 border border-green-600">
+          <div className=" text-2xl mb-10">예고편</div>
+          <div className="flex justify-center border w-full h-[300px]">
+            <div className="flex w-[450px] h-full border border-red-600">
+              {/* <BackgroundMovie currID={} /> */}
             </div>
           </div>
         </div>
