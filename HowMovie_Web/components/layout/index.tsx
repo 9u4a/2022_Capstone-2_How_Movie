@@ -5,7 +5,9 @@ import Header from './header';
 const Layout = ({ children }: any) => {
   return (
     <>
-      <Header />
+      <div className="sticky top-0 z-50">
+        <Header />
+      </div>
       {children}
     </>
   );
