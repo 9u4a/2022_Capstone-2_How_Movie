@@ -1,6 +1,8 @@
 import requests
 from django.conf import settings
 
+from API.GetData.Genre import Genre
+
 
 def Trend(request):
 
@@ -18,7 +20,8 @@ def Trend(request):
                 'id': i['id'],
                 'title': i['title'],
                 'poster_path': i['poster_path'],
-                'backdrop_path': i['backdrop_path']
+                'backdrop_path': i['backdrop_path'],
+                'release_date': i['release_date']
             }
         )
     response = {

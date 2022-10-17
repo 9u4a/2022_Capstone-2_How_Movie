@@ -11,7 +11,7 @@ def Popular(request):
     if not request.GET.get('page'):
         page = '&page=1'
     else:
-        page = '&page=' + str(request.GET.get('page'))
+        page = '&page=' + request.GET.get('page')
 
     res = requests.get(url + api_key + language + page)
     data = res.json()
@@ -23,7 +23,8 @@ def Popular(request):
                 'id': i['id'],
                 'title': i['title'],
                 'poster_path': i['poster_path'],
-                'backdrop_path': i['backdrop_path']
+                'backdrop_path': i['backdrop_path'],
+                'release_date': i['release_date']
             }
         )
     response = {
