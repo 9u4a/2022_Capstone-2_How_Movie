@@ -24,7 +24,8 @@ def Search(request):
                 'id': i['id'],
                 'title': i['title'],
                 'poster_path': i['poster_path'],
-                'backdrop_path': i['backdrop_path']
+                'backdrop_path': i['backdrop_path'],
+                'release_date': i['release_date']
             }
         )
     response = {
