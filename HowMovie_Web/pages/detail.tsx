@@ -3,12 +3,14 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import BackgroundMovie from '../components/BackgroundMovie';
+import Comment from '../components/Comment';
 
 function Detail() {
   const [searchDetail, setSearchDetail] = useState<any>();
   const [searchCredit, setSearchCredit] = useState<any>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error>();
+  const [movieId, setMovieId] = useState<any>();
 
   // const profileBaseUrl = 'https://www.themoviedb.org/t/p/w276_and_h350_face';
   const router = useRouter();
@@ -21,6 +23,7 @@ function Detail() {
             `http://localhost:8000/searchdetail?movie_id=${router.query.movie_id}`
           );
           setSearchDetail(res.data.result);
+          setMovieId(router.query.movie_id);
           // setSearchCredit(res.data.result[1].credit);
           // console.log(res.data.result);
         } catch (err) {
@@ -139,7 +142,7 @@ function Detail() {
         <div className="h-[350px] p-10 border border-green-600">
           <div className="text-2xl mb-10">주요 출연진</div>
           <div>
-            <div className="flex w-full h-[230px] space-x-5 overflow-x-scroll scrollbar-hide border">
+            <div className="flex w-full h-[230px] space-x-5 overflow-x-scroll border">
               <div className="relative snap-center shrink-0 overflow-hidden w-[150px] rounded-lg bg-slate-500">
                 <div className="h-[70%] border"></div>
               </div>
@@ -161,13 +164,20 @@ function Detail() {
             </div>
           </div>
         </div>
-        <div className="h-[450px] p-10 border border-green-600">
+        <div className="h-[500px] p-10 border border-green-600">
           <div className=" text-2xl mb-10">예고편</div>
-          <div className="flex justify-center border w-full h-[300px]">
-            <div className="flex w-[450px] h-full border border-red-600">
-              {/* <BackgroundMovie currID={} /> */}
+          <div className="flex justify-center border w-full h-[355px]">
+            <div className="flex w-[650px] h-full border border-red-600 rounded-xl">
+              <BackgroundMovie currID={movieId} />
             </div>
           </div>
+        </div>
+        <div className="h-[750px] p-10 border">
+          <div className=" text-2xl mb-10">댓글</div>
+          <Comment />
+          <Comment />
+          <Comment />
+          <Comment />
         </div>
       </div>
     </>
