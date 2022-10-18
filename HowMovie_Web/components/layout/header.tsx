@@ -108,7 +108,7 @@ function Header() {
                 .filter((e: isSearchType) => e.title.includes(searchInput))
                 .map((e: isSearchType, i: any) => {
                   return (
-                    <Link href={`/Detail?movie_id=${e.id}`} key={i}>
+                    <Link href={`/detail?movie_id=${e.id}`} key={i}>
                       <a className="flex items-center text-black px-2 py-1 cursor-pointer hover:font-semibold hover:bg-slate-100">
                         <div
                           className={`w-[40px] h-[60px] mr-[10px] relative rounded-lg ${
