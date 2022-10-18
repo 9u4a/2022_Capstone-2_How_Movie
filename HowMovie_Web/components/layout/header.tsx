@@ -90,7 +90,7 @@ function Header() {
             onChange={(e) => {
               setSearchInput(e.target.value.trim());
             }}
-            value={searchInput||''}
+            value={searchInput || ''}
             ref={inputFocus}
           ></input>
           <div
@@ -193,7 +193,7 @@ function Header() {
               </div>
             </div>
           ) : (
-            <Link href="/Login">
+            <Link href="/login">
               <a className="flex justify-center items-center rounded-md w-[60px] h-[30px] bg-slate-800 cursor-pointer hover:bg-slate-600 active:bg-slate-900">
                 로그인
               </a>
