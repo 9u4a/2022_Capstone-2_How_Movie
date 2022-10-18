@@ -16,7 +16,6 @@ interface MovieDetailProps {
 
 function MovieDetail({ setDetailOpen, currID }: MovieDetailProps) {
   const [detailInfo, setDetailInfo] = useState<any>();
-  const [creditInfo, setCreditInfo] = useState();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error>();
 
@@ -29,8 +28,6 @@ function MovieDetail({ setDetailOpen, currID }: MovieDetailProps) {
           `http://localhost:8000/moviedetail?movie_id=${currID}`
         );
         setDetailInfo(res.data.result[0].detail[0]);
-        console.log(detailInfo.title);
-        // setCreditInfo(res.data.result[0].credit[0]);
       } catch (err) {
         if (axios.isAxiosError(err)) {
           setError(err);
@@ -40,6 +37,7 @@ function MovieDetail({ setDetailOpen, currID }: MovieDetailProps) {
     };
     fetchDetailInfo();
   }, []);
+
   const closeDetail = () => {
     setDetailOpen(false);
   };

@@ -40,32 +40,31 @@ function Detail() {
   return (
     <>
       <div className="relative w-full h-[570px]  border border-red-500 bg-black">
-        <Image
-          src={`https://image.tmdb.org/t/p/original/${
-            searchDetail !== undefined &&
-            searchDetail[0].detail[0].backdrop_path
-          }`}
-          layout="fill"
-          alt="backDrop"
-          className="opacity-20"
-          priority
-        />
+        {searchDetail && (
+          <Image
+            src={`https://image.tmdb.org/t/p/original/${searchDetail[0].detail[0].backdrop_path}`}
+            layout="fill"
+            alt="backDrop"
+            className="opacity-20"
+            priority
+          />
+        )}
+
         <div className="flex w-full h-full">
           <div className="flex justify-center items-center grow-0 h-full w-[438px] border border-green-500">
             <div className="relative w-[210px] h-[350px]">
-              <Image
-                src={`https://image.tmdb.org/t/p/original/${
-                  searchDetail !== undefined &&
-                  searchDetail[0].detail[0].poster_path
-                }`}
-                layout="fill"
-                alt="poster"
-                className="rounded-xl"
-                placeholder="blur"
-                blurDataURL={`https://image.tmdb.org/t/p/original/${
-                  searchDetail && searchDetail[0].detail[0].poster_path
-                }`}
-              />
+              {searchDetail && (
+                <Image
+                  src={`https://image.tmdb.org/t/p/original/${searchDetail[0].detail[0].poster_path}`}
+                  layout="fill"
+                  alt="poster"
+                  className="rounded-xl"
+                  placeholder="blur"
+                  blurDataURL={`https://image.tmdb.org/t/p/original/${
+                    searchDetail && searchDetail[0].detail[0].poster_path
+                  }`}
+                />
+              )}
             </div>
           </div>
           <div className="flex justify-center items-center grow-1 h-full w-full border border-blue-500">

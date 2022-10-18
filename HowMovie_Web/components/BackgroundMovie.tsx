@@ -23,7 +23,7 @@ const BackgroundMovie = ({ currID }: Props) => {
           `http://localhost:8000/moviedetail?movie_id=${currID}`
         );
         setBackDrop(res.data.result[0].detail[0].backdrop_path);
-        setMoviePath(res.data.result[0].detail[0].video[0].video);
+        setMoviePath(res.data.result[0].detail[0].video);
       } catch (err) {
         if (axios.isAxiosError(err)) {
           setError(err);

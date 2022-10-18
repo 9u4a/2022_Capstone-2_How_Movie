@@ -125,6 +125,7 @@ function Header() {
                               className="rounded-lg"
                               placeholder="blur"
                               blurDataURL="/asset/image/noImg.svg"
+                              priority
                             />
                           ) : (
                             <Image
@@ -136,6 +137,7 @@ function Header() {
                               className="rounded-lg"
                               placeholder="blur"
                               blurDataURL={baseUrl + e.poster_path}
+                              priority
                             />
                           )}
                         </div>

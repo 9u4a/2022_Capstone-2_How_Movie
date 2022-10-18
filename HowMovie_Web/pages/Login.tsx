@@ -20,6 +20,7 @@ function Login() {
         layout="responsive"
         objectFit="fill"
         className="absolute"
+        priority
       />
       <div className="fixed flex justify-center items-center w-full h-full bg-gradient-to-t from-black via-black top-10">
         <div className="flex flex-col justify-center items-center">
