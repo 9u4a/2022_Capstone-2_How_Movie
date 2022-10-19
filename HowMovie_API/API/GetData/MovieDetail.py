@@ -23,7 +23,7 @@ def MovieDetail(request):
         'status': data['status'],
         'runtime': data['runtime'],
         'tagline': data['tagline'],
-        'video': MovieVideo(request, movie_id, False)
+        'video': MovieVideo(request, movie_id, 'movie')
     }]
     response = {
         'detail': result

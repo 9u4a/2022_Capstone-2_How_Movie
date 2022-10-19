@@ -29,7 +29,7 @@ def SearchDetail(request):
         'status': data['status'],
         'runtime': data['runtime'],
         'tagline': data['tagline'],
-        'video': MovieVideo(request, movie_id, True),
+        'video': MovieVideo(request, movie_id, 'search'),
         'recommendations': Recommendations(request)
     }]
     response = {
