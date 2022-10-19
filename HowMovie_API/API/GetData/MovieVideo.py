@@ -2,7 +2,7 @@ import requests
 from django.conf import settings
 
 
-def MovieVideo(request, movie_id, boolean):
+def MovieVideo(request, movie_id, video):
 
     url = 'https://api.themoviedb.org/3/movie/' + movie_id
     api_key = '/videos?api_key=' + getattr(settings, 'API_KEY', None)[0]
@@ -11,15 +11,17 @@ def MovieVideo(request, movie_id, boolean):
     res = requests.get(url + api_key + language)
     data = res.json()
     result = []
-    if boolean:
+    if video == 'search':
         for i in data['results']:
             result.append(
                 {
                     'video': i['key']
                 }
             )
-    elif not boolean:
-        result = data['results'][0]['key']
-
+    elif video == 'movie':
+        try:
+            result = data['results'][0]['key']
+        except IndexError:
+            result = []
     response = result
     return response
