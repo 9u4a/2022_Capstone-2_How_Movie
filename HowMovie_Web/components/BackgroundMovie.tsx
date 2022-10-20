@@ -40,11 +40,11 @@ const BackgroundMovie = ({ currID }: Props) => {
 
   return (
     <>
-      {moviePath !== '' ? (
+      {moviePath.length !== 0 ? (
         <div className="relative w-full max-w-[1000px] pb-[350px] bg-black rounded-xl">
           <iframe
             className="w-full h-full max-h-[350px] absolute rounded-xl"
-            src={`https://www.youtube.com/embed/${moviePath}?autoplay=1&fs=0&modestbranding=1&disablekb=1&controls=0`}
+            src={`https://www.youtube.com/embed/${moviePath}?fs=0&modestbranding=1&disablekb=1`}
             title="YouTube video player"
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
           ></iframe>

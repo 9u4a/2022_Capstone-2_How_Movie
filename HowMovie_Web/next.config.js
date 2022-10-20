@@ -8,7 +8,12 @@ const nextConfig = {
 module.exports = {
   ...nextConfig,
   images: {
-    domains: ['image.tmdb.org', 'lh3.googleusercontent.com', 'ssl.pstatic.net'],
+    domains: [
+      'image.tmdb.org',
+      'lh3.googleusercontent.com',
+      'ssl.pstatic.net',
+      'k.kakaocdn.net',
+    ],
   },
   output: 'standalone',
 };
