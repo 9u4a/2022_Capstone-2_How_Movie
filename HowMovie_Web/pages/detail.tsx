@@ -11,19 +11,24 @@ function Detail() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error>();
   const [movieId, setMovieId] = useState<any>();
-
+  const baseUrl = 'https://image.tmdb.org/t/p/original';
   // const profileBaseUrl = 'https://www.themoviedb.org/t/p/w276_and_h350_face';
+
+  // console.log(searchDetail && searchDetail[1]);
   const router = useRouter();
   useEffect(() => {
     if (router.query.movie_id !== undefined) {
       console.log(router.query.movie_id);
       const fetchDetailInfo = async () => {
         try {
-          const res = await axios.get(
-            `http://localhost:8000/searchdetail?movie_id=${router.query.movie_id}`
-          );
-          setSearchDetail(res.data.result);
-          setMovieId(router.query.movie_id);
+          await axios
+            .get(
+              `http://localhost:8000/searchdetail?movie_id=${router.query.movie_id}`
+            )
+            .then((res) => {
+              setSearchDetail(res.data.result);
+              setMovieId(router.query.movie_id);
+            });
           // setSearchCredit(res.data.result[1].credit);
           // console.log(res.data.result);
         } catch (err) {
@@ -33,26 +38,31 @@ function Detail() {
         }
       };
       fetchDetailInfo();
+    } else {
+      null;
     }
   }, [router.query.movie_id]);
+
   // console.log(searchDetail);
   // console.log(searchDetail);
   return (
     <>
-      <div className="relative w-full h-[570px]  border border-red-500 bg-black">
+      <div className="relative w-full h-[570px] bg-black">
         {searchDetail && (
           <Image
             src={`https://image.tmdb.org/t/p/original/${searchDetail[0].detail[0].backdrop_path}`}
             layout="fill"
             alt="backDrop"
+            sizes="100%"
+            objectFit="cover"
             className="opacity-20"
             priority
           />
         )}
 
         <div className="flex w-full h-full">
-          <div className="flex justify-center items-center grow-0 h-full w-[438px] border border-green-500">
-            <div className="relative w-[210px] h-[350px]">
+          <div className="flex justify-center items-center grow-0 h-full w-[438px]">
+            <div className="relative w-[220px] h-[300px]">
               {searchDetail && (
                 <Image
                   src={`https://image.tmdb.org/t/p/original/${searchDetail[0].detail[0].poster_path}`}
@@ -60,14 +70,16 @@ function Detail() {
                   alt="poster"
                   className="rounded-xl"
                   placeholder="blur"
+                  sizes="100%"
                   blurDataURL={`https://image.tmdb.org/t/p/original/${
                     searchDetail && searchDetail[0].detail[0].poster_path
                   }`}
+                  priority
                 />
               )}
             </div>
           </div>
-          <div className="flex justify-center items-center grow-1 h-full w-full border border-blue-500">
+          <div className="flex justify-center items-center grow-1 h-full w-full">
             {searchDetail &&
               [searchDetail[0].detail[0]].map((e: any, i: any) => {
                 return (
@@ -138,35 +150,44 @@ function Detail() {
               })}
           </div>
         </div>
-        <div className="h-[350px] p-10 border border-green-600">
+        <div className="h-[350px] p-10">
           <div className="text-2xl mb-10">주요 출연진</div>
           <div>
-            <div className="flex w-full h-[230px] space-x-5 overflow-x-scroll border">
-              <div className="relative snap-center shrink-0 overflow-hidden w-[150px] rounded-lg bg-slate-500">
-                <div className="h-[70%] border"></div>
-              </div>
-              <div className="relative snap-center shrink-0 overflow-hidden w-[150px] rounded-lg bg-slate-500">
-                <div className="h-[70%] border"></div>
-              </div>
-              <div className="relative snap-center shrink-0 overflow-hidden w-[150px] rounded-lg bg-slate-500">
-                <div className="h-[70%] border"></div>
-              </div>
-              <div className="relative snap-center shrink-0 overflow-hidden w-[150px] rounded-lg bg-slate-500">
-                <div className="h-[70%] border"></div>
-              </div>
-              <div className="relative snap-center shrink-0 overflow-hidden w-[150px] rounded-lg bg-slate-500">
-                <div className="h-[70%] border"></div>
-              </div>
-              <div className="relative snap-center shrink-0 overflow-hidden w-[150px] rounded-lg bg-slate-500">
-                <div className="h-[70%] border"></div>
-              </div>
+            <div className="flex w-full h-[230px] space-x-5 overflow-x-scroll">
+              {searchDetail &&
+                searchDetail[1].credit.acting.map((e: any, i: any) => {
+                  return (
+                    <div
+                      key={e.id}
+                      className="snap-center shrink-0 overflow-hidden w-[150px] rounded-lg bg-slate-700"
+                    >
+                      <div className="relative h-[75%]">
+                        <div className="relative h-full w-full">
+                          <Image
+                            src={baseUrl + e.profile_path}
+                            layout="fill"
+                            alt="profile"
+                            sizes="100%"
+                            objectFit="cover"
+                            className="rounded-t-lg"
+                            priority
+                          />
+                        </div>
+                        <div className="p-2">
+                          <div className="text-sm font-extrabold">{e.name}</div>
+                          <div className="text-sm">{e.character}</div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
             </div>
           </div>
         </div>
-        <div className="h-[500px] p-10 border border-green-600">
+        <div className="h-[500px] p-10">
           <div className=" text-2xl mb-10">예고편</div>
-          <div className="flex justify-center border w-full h-[355px]">
-            <div className="flex w-[650px] h-full border border-red-600 rounded-xl">
+          <div className="flex justify-center w-full h-[355px]">
+            <div className="flex w-[650px] h-full rounded-xl">
               <BackgroundMovie currID={movieId} />
             </div>
           </div>
