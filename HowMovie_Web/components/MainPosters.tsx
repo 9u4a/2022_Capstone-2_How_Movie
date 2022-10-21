@@ -26,7 +26,11 @@ function MainPosters({ listType }: PropsType) {
   const [move, setMove] = useState(0);
   const moveRef = useRef();
   const moveRight = () => {
-    setMove(move + 1);
+    if (move < listType.length - 1) {
+      setMove(move + 1);
+    } else {
+      setMove(0);
+    }
     // if (move < moveWidth[0].length - 1) {
     //   // console.log('moveRight');
     // } else if (move === moveWidth[0].length - 1) {
@@ -38,8 +42,13 @@ function MainPosters({ listType }: PropsType) {
     // if (move != 0) {
     //   // console.log('moveLeft');
     // }
+    if (move > 0) {
+      setMove(move - 1);
+    } else {
+      setMove(listType.length - 1);
+    }
   };
-  console.log(moveRef.current);
+  // console.log(listType);
   return (
     <div className="overflow-hidden group z-40">
       <div
