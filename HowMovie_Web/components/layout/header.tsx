@@ -160,19 +160,7 @@ function Header() {
                 className="rounded-full hover:cursor-pointer"
                 onClick={() => setProfileIsToggle(!isProfileToggle)}
               />
-              {isProfileToggle ? (
-                <div className="border rounded-lg text-black bg-white absolute top-[50px] right-[20px] divide-y-2 z-10 duration-700">
-                  <div className="flex justify-center items-center w-[100px] h-[30px]">
-                    찜 목록
-                  </div>
-                  <div className="flex justify-center items-center w-[100px] h-[30px]">
-                    내 댓글
-                  </div>
-                  <div className="flex justify-center items-center w-[100px] h-[30px]">
-                    로그아웃
-                  </div>
-                </div>
-              ) : null}
+
               <div
                 className={` ${
                   isProfileToggle
@@ -180,14 +168,22 @@ function Header() {
                     : 'opacity-0 pointer-events-none'
                 } rounded-lg flex-col text-black bg-white absolute top-[50px] right-[20px] divide-y-2 z-10 duration-300`}
               >
-                <div className="flex justify-center items-center w-[100px] h-[30px] hover:cursor-pointer">
+                <div className="px-[15px] py-[5px]">
+                  <div className="flex justify-start items-center ">
+                    {session.data.user.name}님
+                  </div>
+                  <div className="font-light text-[12px] text-slate-500">
+                    {session.data.user.email}
+                  </div>
+                </div>
+                <div className="flex justify-center items-center  h-[30px] hover:cursor-pointer">
                   찜 목록
                 </div>
-                <div className="flex justify-center items-center w-[100px] h-[30px] hover:cursor-pointer">
+                <div className="flex justify-center items-center  h-[30px] hover:cursor-pointer">
                   내 댓글
                 </div>
                 <div
-                  className="flex justify-center items-center w-[100px] h-[30px] hover:cursor-pointer"
+                  className="flex justify-center items-center  h-[30px] hover:cursor-pointer"
                   onClick={() => signOut()}
                 >
                   로그아웃
