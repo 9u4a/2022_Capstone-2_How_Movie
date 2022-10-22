@@ -39,9 +39,10 @@ function MainPosters({ listType }: PropsType) {
       setTransition('transform 0ms ease-in');
       setMove(a);
       setCurrPoster(b);
-    }, 400);
-    // setMove(move + 1);
-    // setCurrPoster(currPoster + 1);
+    }, 600);
+    setTimeout(() => {
+      setTransition('');
+    }, 700);
   };
   const moveWidths = [-220, -290, -320];
   const [move, setMove] = useState(0);
@@ -69,14 +70,12 @@ function MainPosters({ listType }: PropsType) {
     }
   };
 
-  console.log(currPoster);
-  console.log(move);
   return (
     <div className="overflow-hidden group z-40">
       <div
-        className={`w-full h-[450px] md:h-[700px] flex duration-700 items-center space-x-5 ml-[50%] mt-[-50px] border`}
+        className={`w-full h-[450px] md:h-[700px] flex duration-700 items-center space-x-5 ml-[50%] mt-[-50px]`}
         style={{
-          transition: transition,
+          transition: `${transition}`,
           transform: `translateX(${
             innerWidth >= 1024
               ? moveWidths[2] * move
@@ -93,6 +92,7 @@ function MainPosters({ listType }: PropsType) {
                 {i === currPoster ? (
                   <div
                     className={`relative flex w-[220px] h-[313px] md:w-[300px] md:h-[426px] lg:w-[350px] lg:h-[497px] duration-700 shrink-0 left-[-350%] md:left-[-340%] lg:left-[-325%] rounded-lg overflow-hidden`}
+                    style={{ transition: `${transition}` }}
                   >
                     <Image
                       src={baseUrl + e.poster_path}
@@ -106,7 +106,10 @@ function MainPosters({ listType }: PropsType) {
                     />
                   </div>
                 ) : (
-                  <div className="relative flex w-[200px] h-[284px] md:w-[270px] md:h-[384px] lg:w-[300px] lg:h-[426px] duration-700 shrink-0 left-[-385%] md:left-[-378%] lg:left-[-379.5%] rounded-lg overflow-hidden">
+                  <div
+                    className="relative flex w-[200px] h-[284px] md:w-[270px] md:h-[384px] lg:w-[300px] lg:h-[426px] duration-700 shrink-0 left-[-385%] md:left-[-378%] lg:left-[-379.5%] rounded-lg overflow-hidden"
+                    style={{ transition: `${transition}` }}
+                  >
                     <Image
                       src={baseUrl + e.poster_path}
                       sizes="100"
