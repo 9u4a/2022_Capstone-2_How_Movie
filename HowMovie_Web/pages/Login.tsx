@@ -1,15 +1,18 @@
 import { signIn, signOut, useSession } from 'next-auth/react';
+import { redirect } from 'next/dist/server/api-utils';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
-
-import React, { useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 
 function Login() {
   const session = useSession();
   const router = useRouter();
-  // console.log({ data: session });
-
+  // useLayoutEffect(() => {
+  //   if (session.status === 'authenticated') {
+  //     router.replace('/');
+  //   }
+  // }, [session, router]);
+  console.log(session);
   return (
     <div className="relative">
       <Image
@@ -29,7 +32,7 @@ function Login() {
             <div
               className="flex justify-between  items-center rounded-md w-[300px] md:w-[400px] lg:w-[500px] h-[50px] md:h-[55px] lg:h-[60px] space-x-5 px-[15px] hover:cursor-pointer hover:border-white border border-white/50 hover:text-white text-white/50 hover:font-semibold hover:duration-75 duration-700"
               onClick={() => {
-                signIn('google');
+                signIn('google', { callbackUrl: '/' });
               }}
             >
               <Image
@@ -43,7 +46,7 @@ function Login() {
             </div>
             <div
               className="flex justify-between items-center rounded-md w-[300px] md:w-[400px] lg:w-[500px] h-[50px] md:h-[55px] lg:h-[60px] space-x-5 px-[15px] hover:cursor-pointer hover:border-white border border-white/50 hover:text-white text-white/50 hover:font-semibold hover:duration-75 duration-700"
-              onClick={() => signIn('naver')}
+              onClick={() => signIn('naver', { callbackUrl: '/' })}
             >
               <Image
                 src="/asset/image/naver_logo.png"
@@ -68,7 +71,9 @@ function Login() {
             </div> */}
             <div
               className="flex justify-between  items-center rounded-md w-[300px] md:w-[400px] lg:w-[500px] h-[50px] md:h-[55px] lg:h-[60px] space-x-5 px-[15px] hover:cursor-pointer hover:border-white border border-white/50 hover:text-white text-white/50 hover:font-semibold hover:duration-75 duration-700"
-              onClick={() => signIn('kakao')}
+              onClick={() => {
+                signIn('kakao', { callbackUrl: '/' });
+              }}
             >
               <Image
                 src="/asset/image/kakaoTalk_logo.svg"
