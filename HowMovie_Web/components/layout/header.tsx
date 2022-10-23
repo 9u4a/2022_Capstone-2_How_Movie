@@ -184,7 +184,7 @@ function Header() {
                 </div>
                 <div
                   className="flex justify-center items-center  h-[30px] hover:cursor-pointer"
-                  onClick={() => signOut()}
+                  onClick={() => signOut({ callbackUrl: '/' })}
                 >
                   로그아웃
                 </div>
