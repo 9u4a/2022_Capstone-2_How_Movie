@@ -1,4 +1,4 @@
-package comoutsource.oauth2.config.oauth2;
+package oauth2.service;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -33,7 +33,7 @@ public class OAuth2Attribute {
         }
     }
 
-
+    // 가져온 정보(Map)을 get을 통해 데이터를 가져온다.
     private static OAuth2Attribute ofGoogle(String attributeKey,
                                             Map<String, Object> attributes) {
         return OAuth2Attribute.builder()

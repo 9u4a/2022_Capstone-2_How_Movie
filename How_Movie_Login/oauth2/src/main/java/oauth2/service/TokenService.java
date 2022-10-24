@@ -1,11 +1,13 @@
-package comoutsource.oauth2.config.jwt;
+package oauth2.service;
 
 
-import comoutsource.oauth2.dto.Token;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -14,7 +16,7 @@ import java.util.Date;
 
 @Service
 public class TokenService{
-    private String secretKey = "";
+    private String secretKey = "secret_key_alter_this_to_168bits";
 
     @PostConstruct
     protected void init() {
@@ -23,8 +25,8 @@ public class TokenService{
 
     // 토큰 생성
     public Token generateToken(String uid, String role) {
-        long tokenPeriod = 1000L * 60L * 10L;  // access token
-        long refreshPeriod = 1000L * 60L * 60L * 24L * 30L * 3L;  // refresh token
+        long tokenPeriod = 1000L * 60L * 10L;  // 엑세스 토큰
+        long refreshPeriod = 1000L * 60L * 60L * 24L * 30L * 3L;  // 리프레시 토큰
 
         Claims claims = Jwts.claims().setSubject(uid);
         claims.put("role", role);
@@ -45,7 +47,6 @@ public class TokenService{
                         .compact());
     }
 
-
     public boolean verifyToken(String token) {
         try {
             Jws<Claims> claims = Jwts.parser()
@@ -62,5 +63,18 @@ public class TokenService{
 
     public String getUid(String token) {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+    }
+
+    @Getter
+    @ToString
+    @NoArgsConstructor
+    public static class Token {
+        private String token;
+        private String refreshToken;
+
+        public Token(String token, String refreshToken) {
+            this.token = token;
+            this.refreshToken = refreshToken;
+        }
     }
 }

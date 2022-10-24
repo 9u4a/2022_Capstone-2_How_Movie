@@ -1,4 +1,4 @@
-package comoutsource.oauth2.config.oauth2;
+package oauth2.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,11 +18,11 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-
+        // DefaultOAuth2UserService 객체를 로그인 성공정보를 바탕으로 만든다
         OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserService = new DefaultOAuth2UserService();
-
+        // 생성된 Service 객체로 부터 User를 받는다
         OAuth2User oAuth2User = oAuth2UserService.loadUser(userRequest);
-
+        // 받은 User로 부터 user 정보를 수집
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
         String userNameAttributeName = userRequest.getClientRegistration()
                 .getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
@@ -30,7 +30,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         log.info("registrationId: {}", registrationId);
         log.info("userNameAttributeName: {}", userNameAttributeName);
 
-
+        // SuccessHandler가 사용할 수 있도록 등록
         OAuth2Attribute oAuth2Attribute =
                 OAuth2Attribute.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
