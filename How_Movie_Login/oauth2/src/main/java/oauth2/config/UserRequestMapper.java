@@ -1,6 +1,5 @@
-package comoutsource.oauth2.config.oauth2;
+package oauth2.config;
 
-import comoutsource.oauth2.dto.UserDto;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 

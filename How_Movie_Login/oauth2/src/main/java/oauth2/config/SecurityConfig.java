@@ -1,9 +1,7 @@
-package comoutsource.oauth2.config;
+package oauth2.config;
 
-import comoutsource.oauth2.config.jwt.JwtAuthFilter;
-import comoutsource.oauth2.config.jwt.TokenService;
-import comoutsource.oauth2.config.oauth2.CustomOAuth2UserService;
-import comoutsource.oauth2.config.oauth2.OAuth2SuccessHandler;
+import oauth2.service.TokenService;
+import oauth2.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -29,15 +27,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/token/**").permitAll()
+                .antMatchers("/movie/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtAuthFilter(tokenService),
                         OAuth2LoginAuthenticationFilter.class)
-                .oauth2Login()
-                .loginPage("/token/expired")
-                .successHandler(successHandler)
-                .userInfoEndpoint()
-                .userService(oAuth2UserService);
+                .oauth2Login() // oauth2Login 설정을 시작
+                .loginPage("/token/expired") // login 페이지 Url을 직접 설정
+                .successHandler(successHandler) // 로그인 성공 시 handler 설정
+                .userInfoEndpoint() // 로그인 성공 후 설정 시작
+                .userService(oAuth2UserService); // oauth2Service에서 처리
 
         http.addFilterBefore(new JwtAuthFilter(tokenService), UsernamePasswordAuthenticationFilter.class);
     }

@@ -1,4 +1,4 @@
-package comoutsource.oauth2.dto;
+package oauth2.config;
 
 import lombok.Builder;
 import lombok.Getter;

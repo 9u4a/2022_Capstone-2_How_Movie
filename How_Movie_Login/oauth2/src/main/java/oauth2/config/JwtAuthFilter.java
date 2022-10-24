@@ -1,6 +1,6 @@
-package comoutsource.oauth2.config.jwt;
+package oauth2.config;
 
-import comoutsource.oauth2.dto.UserDto;
+import oauth2.service.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,6 +24,7 @@ public class JwtAuthFilter extends GenericFilterBean {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         String token = ((HttpServletRequest)request).getHeader("Auth");
 
+        // jwt 인증 성공시 SecurityContext에 해당 정보를 저장
         if (token != null && tokenService.verifyToken(token)) {
             String email = tokenService.getUid(token);
 
