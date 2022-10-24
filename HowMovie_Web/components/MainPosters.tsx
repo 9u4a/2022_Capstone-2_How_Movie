@@ -2,6 +2,7 @@ import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { detailListType, listType } from './MovieList';
+import Link from 'next/link';
 
 interface PropsType {
   listType: listType;
@@ -20,9 +21,9 @@ function MainPosters({ listType }: PropsType) {
     const addedFront = [];
     const addedLast = [];
     var index = 0;
-    while (index < 3) {
+    while (index < 5) {
       addedFront.push(listType[index % listType.length]);
-      addedLast.push(listType[listType.length - 3 + (index % listType.length)]);
+      addedLast.push(listType[listType.length - 5 + (index % listType.length)]);
       index++;
     }
     return [...addedLast, ...listType, ...addedFront];
@@ -46,27 +47,27 @@ function MainPosters({ listType }: PropsType) {
   };
   const moveWidths = [-220, -290, -320];
   const [move, setMove] = useState(0);
-  const [currPoster, setCurrPoster] = useState(3);
+  const [currPoster, setCurrPoster] = useState(5);
   const moveRef = useRef();
 
   const moveRight = () => {
-    if (currPoster < listType.length + 1) {
+    if (currPoster < listType.length + 5) {
       setMove(move + 1);
       setCurrPoster(currPoster + 1);
     } else {
       setMove(move + 1);
       setCurrPoster(currPoster + 1);
-      replaceCarousel(-1, 2);
+      replaceCarousel(1, 6);
     }
   };
   const moveLeft = () => {
-    if (currPoster > 2) {
+    if (currPoster > 4) {
       setMove(move - 1);
       setCurrPoster(currPoster - 1);
     } else {
       setMove(move - 1);
       setCurrPoster(currPoster - 1);
-      replaceCarousel(18, 21);
+      replaceCarousel(18, 23);
     }
   };
 
@@ -90,37 +91,41 @@ function MainPosters({ listType }: PropsType) {
             return (
               <div key={i}>
                 {i === currPoster ? (
-                  <div
-                    className={`relative flex w-[220px] h-[313px] md:w-[300px] md:h-[426px] lg:w-[350px] lg:h-[497px] duration-700 shrink-0 left-[-350%] md:left-[-340%] lg:left-[-325%] rounded-lg overflow-hidden`}
-                    style={{ transition: `${transition}` }}
-                  >
-                    <Image
-                      src={baseUrl + e.poster_path}
-                      sizes="100%"
-                      alt="이미지"
-                      layout="fill"
-                      objectFit="fill"
-                      className="rounded-xl"
-                      placeholder="blur"
-                      blurDataURL={baseUrl + e.poster_path}
-                    />
-                  </div>
+                  <Link href={`/detail?movie_id=${e.id}`}>
+                    <div
+                      className={`relative flex w-[220px] h-[313px] md:w-[300px] md:h-[426px] lg:w-[350px] lg:h-[497px] duration-700 shrink-0 left-[-550%] md:left-[-535%] lg:left-[-508%] rounded-lg overflow-hidden hover:cursor-pointer drop-shadow-br-md`}
+                      style={{ transition: `${transition}` }}
+                    >
+                      <Image
+                        src={baseUrl + e.poster_path}
+                        sizes="100%"
+                        alt="이미지"
+                        layout="fill"
+                        objectFit="fill"
+                        className="rounded-xl"
+                        placeholder="blur"
+                        blurDataURL={baseUrl + e.poster_path}
+                      />
+                    </div>
+                  </Link>
                 ) : (
-                  <div
-                    className="relative flex w-[200px] h-[284px] md:w-[270px] md:h-[384px] lg:w-[300px] lg:h-[426px] duration-700 shrink-0 left-[-385%] md:left-[-378%] lg:left-[-379.5%] rounded-lg overflow-hidden"
-                    style={{ transition: `${transition}` }}
-                  >
-                    <Image
-                      src={baseUrl + e.poster_path}
-                      sizes="100"
-                      alt="이미지"
-                      layout="fill"
-                      objectFit="fill"
-                      className="rounded-xl"
-                      placeholder="blur"
-                      blurDataURL={baseUrl + e.poster_path}
-                    />
-                  </div>
+                  <Link href={`/detail?movie_id=${e.id}`}>
+                    <div
+                      className="relative flex w-[200px] h-[284px] md:w-[270px] md:h-[384px] lg:w-[300px] lg:h-[426px] duration-700 shrink-0 left-[-605%] md:left-[-594.5%] lg:left-[-593%] rounded-lg overflow-hidden hover:cursor-pointer drop-shadow-br-md"
+                      style={{ transition: `${transition}` }}
+                    >
+                      <Image
+                        src={baseUrl + e.poster_path}
+                        sizes="100"
+                        alt="이미지"
+                        layout="fill"
+                        objectFit="fill"
+                        className="rounded-xl "
+                        placeholder="blur"
+                        blurDataURL={baseUrl + e.poster_path}
+                      />
+                    </div>
+                  </Link>
                 )}
               </div>
             );

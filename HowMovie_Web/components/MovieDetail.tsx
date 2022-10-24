@@ -20,23 +20,25 @@ function MovieDetail({ setDetailOpen, currID }: MovieDetailProps) {
   const [error, setError] = useState<Error>();
 
   useEffect(() => {
-    const fetchDetailInfo = async () => {
-      try {
-        setDetailInfo(null);
-        setLoading(true);
-        const res = await axios.get(
-          `http://localhost:8000/moviedetail?movie_id=${currID}`
-        );
-        setDetailInfo(res.data.result[0].detail[0]);
-      } catch (err) {
-        if (axios.isAxiosError(err)) {
-          setError(err);
+    if (currID !== undefined) {
+      const fetchDetailInfo = async () => {
+        try {
+          setDetailInfo(null);
+          setLoading(true);
+          const res = await axios.get(
+            `http://localhost:8000/moviedetail?movie_id=${currID}`
+          );
+          setDetailInfo(res.data.result[0].detail[0]);
+        } catch (err) {
+          if (axios.isAxiosError(err)) {
+            setError(err);
+          }
         }
-      }
-      setLoading(false);
-    };
-    fetchDetailInfo();
-  }, []);
+        setLoading(false);
+      };
+      fetchDetailInfo();
+    }
+  }, [currID]);
 
   const closeDetail = () => {
     setDetailOpen(false);

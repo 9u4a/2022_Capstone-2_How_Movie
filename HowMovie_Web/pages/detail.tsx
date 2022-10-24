@@ -11,7 +11,7 @@ function Detail() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error>();
   const [movieId, setMovieId] = useState<any>();
-  const baseUrl = 'https://image.tmdb.org/t/p/original';
+  const baseUrl = 'https://image.tmdb.org/t/p/w500';
   // const profileBaseUrl = 'https://www.themoviedb.org/t/p/w276_and_h350_face';
 
   // console.log(searchDetail && searchDetail[1]);
@@ -29,8 +29,6 @@ function Detail() {
               setSearchDetail(res.data.result);
               setMovieId(router.query.movie_id);
             });
-          // setSearchCredit(res.data.result[1].credit);
-          // console.log(res.data.result);
         } catch (err) {
           if (axios.isAxiosError(err)) {
             setError(err);
@@ -38,50 +36,46 @@ function Detail() {
         }
       };
       fetchDetailInfo();
-    } else {
-      null;
     }
   }, [router.query.movie_id]);
 
-  // console.log(searchDetail);
-  // console.log(searchDetail);
   return (
     <>
-      <div className="relative w-full h-[570px] bg-black">
-        {searchDetail && (
+      {searchDetail ? (
+        <div className="relative w-full h-[570px] bg-black">
           <Image
-            src={`https://image.tmdb.org/t/p/original/${searchDetail[0].detail[0].backdrop_path}`}
+            src={baseUrl + searchDetail[0].detail[0].backdrop_path}
             layout="fill"
             alt="backDrop"
             sizes="100%"
             objectFit="cover"
             className="opacity-20"
             priority
+            placeholder="blur"
+            blurDataURL={baseUrl + searchDetail[0].detail[0].backdrop_path}
           />
-        )}
 
-        <div className="flex w-full h-full">
-          <div className="flex justify-center items-center grow-0 h-full w-[438px]">
-            <div className="relative w-[220px] h-[300px]">
-              {searchDetail && (
-                <Image
-                  src={`https://image.tmdb.org/t/p/original/${searchDetail[0].detail[0].poster_path}`}
-                  layout="fill"
-                  alt="poster"
-                  className="rounded-xl"
-                  placeholder="blur"
-                  sizes="100%"
-                  blurDataURL={`https://image.tmdb.org/t/p/original/${
-                    searchDetail && searchDetail[0].detail[0].poster_path
-                  }`}
-                  priority
-                />
-              )}
+          <div className="flex w-full h-full">
+            <div className="flex justify-center items-center grow-0 h-full w-[438px]">
+              <div className="relative w-[220px] h-[300px]">
+                {searchDetail && (
+                  <Image
+                    src={baseUrl + searchDetail[0].detail[0].poster_path}
+                    layout="fill"
+                    alt="poster"
+                    className="rounded-xl"
+                    placeholder="blur"
+                    sizes="100%"
+                    blurDataURL={
+                      baseUrl + searchDetail[0].detail[0].poster_path
+                    }
+                    priority
+                  />
+                )}
+              </div>
             </div>
-          </div>
-          <div className="flex justify-center items-center grow-1 h-full w-full">
-            {searchDetail &&
-              [searchDetail[0].detail[0]].map((e: any, i: any) => {
+            <div className="flex justify-center items-center grow-1 h-full w-full">
+              {[searchDetail[0].detail[0]].map((e: any, i: any) => {
                 return (
                   <div key={i}>
                     <div className="p-5">
@@ -148,30 +142,45 @@ function Detail() {
                   </div>
                 );
               })}
+            </div>
           </div>
-        </div>
-        <div className="h-[350px] p-10">
-          <div className="text-2xl mb-10">주요 출연진</div>
-          <div>
-            <div className="flex w-full h-[230px] space-x-5 overflow-x-scroll">
-              {searchDetail &&
-                searchDetail[1].credit.acting.map((e: any, i: any) => {
+          <div className="h-[350px] p-10">
+            <div className="text-2xl mb-10">주요 출연진</div>
+            <div>
+              <div className="flex w-full h-[250px] pb-[20px] space-x-5 overflow-x-scroll">
+                {searchDetail[1].credit.acting.map((e: any, i: any) => {
                   return (
                     <div
                       key={e.id}
-                      className="snap-center shrink-0 overflow-hidden w-[150px] rounded-lg bg-slate-700"
+                      className="snap-center shrink-0 overflow-hidden w-[150px] rounded-lg bg-slate-700 drop-shadow-br-md"
                     >
                       <div className="relative h-[75%]">
                         <div className="relative h-full w-full">
-                          <Image
-                            src={baseUrl + e.profile_path}
-                            layout="fill"
-                            alt="profile"
-                            sizes="100%"
-                            objectFit="cover"
-                            className="rounded-t-lg"
-                            priority
-                          />
+                          {e.profile_path ? (
+                            <Image
+                              src={baseUrl + e.profile_path}
+                              layout="fill"
+                              alt="profile"
+                              sizes="100%"
+                              objectFit="cover"
+                              className="rounded-t-lg"
+                              placeholder="blur"
+                              blurDataURL={baseUrl + e.profile_path}
+                              priority
+                            />
+                          ) : (
+                            <Image
+                              src="/asset/image/noImg.svg"
+                              layout="fill"
+                              alt="profile"
+                              sizes="100%"
+                              objectFit="cover"
+                              className="rounded-t-lg"
+                              placeholder="blur"
+                              blurDataURL="/asset/image/noImg.svg"
+                              priority
+                            />
+                          )}
                         </div>
                         <div className="p-2">
                           <div className="text-sm font-extrabold">{e.name}</div>
@@ -181,25 +190,26 @@ function Detail() {
                     </div>
                   );
                 })}
+              </div>
             </div>
           </div>
-        </div>
-        <div className="h-[500px] p-10">
-          <div className=" text-2xl mb-10">예고편</div>
-          <div className="flex justify-center w-full h-[355px]">
-            <div className="flex w-[650px] h-full rounded-xl">
-              <BackgroundMovie currID={movieId} />
+          <div className="h-[500px] p-10">
+            <div className=" text-2xl mb-10">예고편</div>
+            <div className="flex justify-center w-full h-[355px]">
+              <div className="flex w-[650px] h-full rounded-xl drop-shadow-br-md">
+                <BackgroundMovie currID={movieId} />
+              </div>
             </div>
           </div>
+          <div className="h-[750px] p-10 border">
+            <div className=" text-2xl mb-10">댓글</div>
+            <Comment />
+            <Comment />
+            <Comment />
+            <Comment />
+          </div>
         </div>
-        <div className="h-[750px] p-10 border">
-          <div className=" text-2xl mb-10">댓글</div>
-          <Comment />
-          <Comment />
-          <Comment />
-          <Comment />
-        </div>
-      </div>
+      ) : null}
     </>
   );
 }
