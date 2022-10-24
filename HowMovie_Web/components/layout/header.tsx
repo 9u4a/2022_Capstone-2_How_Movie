@@ -13,6 +13,84 @@ interface isSearchType {
 }
 
 function Header() {
+  const genre = [
+    {
+      id: 28,
+      name: '액션',
+    },
+    {
+      id: 12,
+      name: '모험',
+    },
+    {
+      id: 16,
+      name: '애니메이션',
+    },
+    {
+      id: 35,
+      name: '코미디',
+    },
+    {
+      id: 80,
+      name: '범죄',
+    },
+    {
+      id: 99,
+      name: '다큐멘터리',
+    },
+    {
+      id: 18,
+      name: '드라마',
+    },
+    {
+      id: 10751,
+      name: '가족',
+    },
+    {
+      id: 14,
+      name: '판타지',
+    },
+    {
+      id: 36,
+      name: '역사',
+    },
+    {
+      id: 27,
+      name: '공포',
+    },
+    {
+      id: 10402,
+      name: '음악',
+    },
+    {
+      id: 9648,
+      name: '미스터리',
+    },
+    {
+      id: 10749,
+      name: '로맨스',
+    },
+    {
+      id: 878,
+      name: 'SF',
+    },
+    {
+      id: 10770,
+      name: 'TV 영화',
+    },
+    {
+      id: 53,
+      name: '스릴러',
+    },
+    {
+      id: 10752,
+      name: '전쟁',
+    },
+    {
+      id: 37,
+      name: '서부',
+    },
+  ];
   const session = useSession();
   const baseUrl = 'https://image.tmdb.org/t/p/original';
   const searchRef = useRef<any>(null);
@@ -23,6 +101,8 @@ function Header() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error>();
   const [searchInput, setSearchInput] = useState<any>(null);
+  const [isGenreToggle, setGenreToggle] = useState(false);
+  const [currGenre, setCurrGenre] = useState<number>();
 
   const onClick = () => {
     setIsToggle(!isToggle);
@@ -52,7 +132,7 @@ function Header() {
     }
 
     return () => {};
-  }, [searchInput]);
+  }, [searchInput, currGenre]);
   loading && <div>로딩중</div>;
   error && <div>에러 발생</div>;
   return (
@@ -62,22 +142,34 @@ function Header() {
           session ? 'pl-[50px] pr-[20px]' : 'px-[50px]'
         }`}
       >
-        <Link href="/">
-          <a className="flex items-center">
-            <Image
-              src="/asset/image/clapperboard.png"
-              alt="icon"
-              width={25}
-              height={25}
-            />
-            <h4 className="ml-[5px] font-semibold">무비어때</h4>
-          </a>
-        </Link>
-        <div className="flex items-center">
+        <div className="flex">
+          <Link href="/">
+            <a className="flex items-center mr-[30px]">
+              <Image
+                src="/asset/image/clapperboard.png"
+                alt="icon"
+                width={25}
+                height={25}
+              />
+              <h4 className="ml-[5px] font-semibold">무비어때</h4>
+            </a>
+          </Link>
+          <div className="flex items-center">
+            <div
+              className="hover:cursor-pointer"
+              onClick={() => setGenreToggle(!isGenreToggle)}
+            >
+              장르
+            </div>
+          </div>
+        </div>
+
+        <div className="flex items-center w-[100px] h-[50px] shrink-0">
+          {/* Search Box */}
           <MagnifyingGlassIcon
-            className={`w-[20px] h-[20px] mr-[20px] hover:cursor-pointer z-10 ${
+            className={`w-[20px] h-[20px]  hover:cursor-pointer z-10 ${
               isToggle ? 'text-black' : 'text-white'
-            } duration-1000`}
+            } ${session ? 'mr-[35px]' : 'mr-[20px]'} duration-1000`}
             onClick={() => onClick()}
           />
           <input
@@ -150,6 +242,8 @@ function Header() {
                   );
                 })}
           </div>
+
+          {/* Login || User Profile */}
           {session.data?.user ? (
             <div className="flex">
               <Image
@@ -199,6 +293,40 @@ function Header() {
           )}
         </div>
       </div>
+
+      {/* Genre list Box */}
+      {isGenreToggle ? (
+        <div
+          className={`flex flex-wrap absolute w-full ${
+            isGenreToggle ? null : 'hidden'
+          } bg-black  drop-shadow-bt-md duration-700`}
+        >
+          {genre.map((e, i) => {
+            return (
+              <div
+                key={i}
+                className="lg:w-[20%] md:w-[20%] w-[50%] flex justify-center py-1"
+              >
+                <Link href={`/genre?genre_id=${e.id}`}>
+                  <a
+                    className="hover:cursor-pointer"
+                    onClick={() => {
+                      setCurrGenre(e.id), setGenreToggle(!isGenreToggle);
+                    }}
+                  >
+                    {e.name}
+                  </a>
+                </Link>
+              </div>
+            );
+          })}
+          {/* <div>액션</div>
+          <div>액션</div>
+          <div>액션</div>
+          <div>액션</div>
+          <div>액션</div> */}
+        </div>
+      ) : null}
     </>
   );
 }
