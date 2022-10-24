@@ -41,35 +41,33 @@ function MovieDetail({ setDetailOpen, currID }: MovieDetailProps) {
   const closeDetail = () => {
     setDetailOpen(false);
   };
-
   loading && <div>로딩중</div>;
   error && <div>에러 발생</div>;
 
   return (
     <div className="flex justify-center items-center bg-black/80 w-full h-full fixed z-[200] top-0 overflow-scroll">
-      <div className="flex absolute flex-col items-end w-[1000px] max-w-[80%] max-h-[850px] bg-gray-900 rounded-xl top-[50px] overflow-scroll">
-        <div className="flex justify-end absolute ">
-          <button
-            className="w-[30px] h-[30px] m-5 rounded-full z-50 right-[80px] p-1 bg-slate-300 "
-            onClick={closeDetail}
-          >
-            <XMarkIcon />
-          </button>
-        </div>
-        <div>
-          <div className="w-full h-full max-h-[350px] rounded-t-xl">
-            <BackgroundMovie currID={currID} />
+      {detailInfo ? (
+        <div className="flex absolute flex-col items-end w-[1000px] max-w-[80%] max-h-[850px] bg-gray-900 rounded-xl top-[50px] overflow-scroll">
+          <div className="flex justify-end absolute ">
+            <button
+              className="w-[30px] h-[30px] m-5 rounded-full z-50 right-[80px] p-1 bg-slate-300 "
+              onClick={closeDetail}
+            >
+              <XMarkIcon />
+            </button>
           </div>
-          <div className="w-full mt-5 p-5 mb-[100px]">
-            <h2>{detailInfo && detailInfo.title}</h2>
-            <h3>줄거리</h3>
-            <p>{detailInfo && detailInfo.overview}</p>
-            <p>{detailInfo && detailInfo.overview}</p>
-            <p>{detailInfo && detailInfo.overview}</p>
-            <p>{detailInfo && detailInfo.overview}</p>
+          <div>
+            <div className="w-full h-full max-h-[350px] rounded-t-xl">
+              <BackgroundMovie currID={currID} />
+            </div>
+            <div className="w-full mt-5 p-5 mb-[100px]">
+              <h2>{detailInfo && detailInfo.title}</h2>
+              <h3>줄거리</h3>
+              <p>{detailInfo && detailInfo.overview}</p>
+            </div>
           </div>
         </div>
-      </div>
+      ) : null}
     </div>
   );
 }
