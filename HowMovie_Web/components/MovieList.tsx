@@ -35,6 +35,7 @@ function MovieList({ type, listType }: MovieDetailProps) {
     setDetailOpen(true);
   };
 
+  // console.log(listType);
   return (
     <div className="h-screen max-h-[350px]">
       {detailOpen && (
