@@ -9,11 +9,10 @@ function Genre() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error>();
-  // const [genreId, setGenreId] = useState<string | string[]>();
+
   const [genreMovies, setGenreMovies] = useState<any>();
   useEffect(() => {
     if (router.query.genre_id !== undefined) {
-      // console.log(router.query.genre_id);
       const fetchGenreMovie = async () => {
         try {
           setLoading(true);
