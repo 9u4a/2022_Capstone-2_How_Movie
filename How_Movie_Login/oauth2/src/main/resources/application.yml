@@ -1,11 +1,13 @@
 spring:
+  server:
+    port: 8081
   security:
     oauth2:
       client:
         registration:
           kakao:
-            client-id: '{카카오 client-id}'
-            client-secret: '{카카오 client-secret}'
+            client-id: '7345dd34fad4c4b6e313b15506ac815b'
+            client-secret: 'caa05f990d5a2e85fde36f80d8d28afd'
             redirect-uri: http://localhost:8080/login/oauth2/code/kakao
             authorization-grant-type: authorization_code
             client-authentication-method: POST
@@ -16,16 +18,16 @@ spring:
               - profile_image
               - account_email
           naver:
-            client-id: '{네이버 client-id}'
-            client-secret: '{네이버 client-secret}'
+            client-id: 'LIuG6pm7RIP4MmDyhyvs'
+            client-secret: 'usou2qampP'
             redirect-uri:  http://localhost:8080/login/oauth2/code/naver
             authorization-grant-type: authorization_code
             scope:
               - name
               - email
           google:
-            client-id: '{구글 client-id}'
-            client-secret: '{구글 client-secret}'
+            client-id: '383902592347-eaqrov2grgu38re4trpjsf44mcspbasq.apps.googleusercontent.com'
+            client-secret: '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'
             scope:
               - profile
               - email
@@ -50,7 +52,8 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
+

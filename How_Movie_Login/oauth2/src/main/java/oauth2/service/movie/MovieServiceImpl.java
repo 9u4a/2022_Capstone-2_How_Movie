@@ -33,7 +33,7 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public void saveReview(ReviewDto reviewDto) {
         Movie movie = movieRepository.findById(reviewDto.getMovieId()).orElse(null);
-        User user = userRepository.findById(reviewDto.getUserId()).orElse(null);
+        User user = userRepository.findByEmail(reviewDto.getUserEmail());
 
         if (checkUserReviewValid(user)) {
             if (movie != null && user != null) {
@@ -72,3 +72,4 @@ public class MovieServiceImpl implements MovieService {
     }
 
 }
+

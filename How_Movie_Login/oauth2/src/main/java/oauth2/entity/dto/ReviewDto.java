@@ -9,7 +9,7 @@ public class ReviewDto {
 
     private Long movieId;
 
-    private Long userId;
+    private String userEmail;
 
     private float score;
 
