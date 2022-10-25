@@ -53,7 +53,7 @@ function MovieDetail({ setDetailOpen, currID }: MovieDetailProps) {
   return (
     <div className="flex justify-center items-center bg-black/80 w-full h-full fixed z-[200] top-0 overflow-scroll">
       {detailInfo ? (
-        <div className="flex absolute flex-col items-end w-[1000px] max-w-[80%] max-h-[850px] bg-gray-900 rounded-xl top-[50px] overflow-scroll">
+        <div className="flex absolute flex-col items-end w-[80%] max-w-[1000px] max-h-[850px] bg-gray-900 rounded-xl top-[50px]">
           <div className="flex justify-end absolute ">
             <button
               className="w-[30px] h-[30px] m-5 rounded-full z-50 right-[80px] p-1 bg-slate-300 "
@@ -66,25 +66,29 @@ function MovieDetail({ setDetailOpen, currID }: MovieDetailProps) {
             <div className="w-full h-full max-h-[350px] rounded-t-xl">
               <BackgroundMovie currID={currID} />
             </div>
-            <div className="w-full mt-5 p-5 mb-[100px]">
+            <div className="w-full mt-5 p-5 mb-[100px] overflow-y-scroll">
               <h2>{detailInfo && detailInfo.title}</h2>
-              <div className="flex items-center">
-                <div className="text-base">{`${
-                  detailInfo.release_date
-                } · ${detailInfo.genres.map((e: any, i: any) => {
-                  return e.name;
-                })} · ${detailInfo.runtime}분`}</div>
-                <div className="relative bottom-2 ml-10">
-                  <div className="text-base mb-3">출연</div>
-                  <p className="text-xs">
-                    {creditInfo.acting.map((e: any, i: any) => {
-                      if (i < 3) {
-                        return e.name + ', ';
-                      } else {
-                        return;
-                      }
-                    })}
-                  </p>
+              <div className="flex">
+                <div className="mr-7">
+                  <div className="text-base">{`${
+                    detailInfo.release_date
+                  } · ${detailInfo.genres.map((e: any, i: any) => {
+                    return e.name;
+                  })} · ${detailInfo.runtime}분`}</div>
+                </div>
+                <div className="flex items-end">
+                  <div className="text-base">출연</div>
+                  <div className="ml-3">
+                    <p className="text-xs mr-2">
+                      {creditInfo.acting.map((e: any, i: any) => {
+                        if (i < 3) {
+                          return e.name + ', ';
+                        } else {
+                          return;
+                        }
+                      })}
+                    </p>
+                  </div>
                   <Link href={`/detail?movie_id=${currID}`}>
                     <p className="text-sm underline hover:cursor-pointer">
                       더보기
