@@ -57,6 +57,7 @@ const BackgroundMovie = ({ currID }: Props) => {
             alt="backDrop"
             className="rounded-t-xl"
             placeholder="blur"
+            objectFit="cover"
             blurDataURL={baseUrl + backDrop}
           />
         </div>

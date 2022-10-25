@@ -186,7 +186,7 @@ function Detail() {
                       key={e.id}
                       className="snap-center shrink-0 overflow-hidden w-[150px] rounded-lg bg-slate-700 drop-shadow-br-md"
                     >
-                      <div className="relative h-[75%]">
+                      <div className="relative h-[70%]">
                         <div className="relative h-full w-full">
                           {e.profile_path ? (
                             <Image

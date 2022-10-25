@@ -3,6 +3,7 @@ import BackgroundMovie from './BackgroundMovie';
 import axios from 'axios';
 import testAPI from '../pages/api/testAPI.json';
 import { XMarkIcon } from '@heroicons/react/24/solid';
+import Link from 'next/link';
 
 interface detailInfoType {
   detail: string[];
@@ -16,6 +17,7 @@ interface MovieDetailProps {
 
 function MovieDetail({ setDetailOpen, currID }: MovieDetailProps) {
   const [detailInfo, setDetailInfo] = useState<any>();
+  const [creditInfo, setCreditInfo] = useState<any>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error>();
 
@@ -25,10 +27,12 @@ function MovieDetail({ setDetailOpen, currID }: MovieDetailProps) {
         try {
           setDetailInfo(null);
           setLoading(true);
-          const res = await axios.get(
-            `http://localhost:8000/moviedetail?movie_id=${currID}`
-          );
-          setDetailInfo(res.data.result[0].detail[0]);
+          await axios
+            .get(`http://localhost:8000/moviedetail?movie_id=${currID}`)
+            .then((res) => {
+              setDetailInfo(res.data.result[0].detail[0]);
+              setCreditInfo(res.data.result[1].credit);
+            });
         } catch (err) {
           if (axios.isAxiosError(err)) {
             setError(err);
@@ -64,7 +68,34 @@ function MovieDetail({ setDetailOpen, currID }: MovieDetailProps) {
             </div>
             <div className="w-full mt-5 p-5 mb-[100px]">
               <h2>{detailInfo && detailInfo.title}</h2>
-              <h3>줄거리</h3>
+              <div className="flex items-center">
+                <div className="text-base">{`${
+                  detailInfo.release_date
+                } · ${detailInfo.genres.map((e: any, i: any) => {
+                  return e.name;
+                })} · ${detailInfo.runtime}분`}</div>
+                <div className="relative bottom-2 ml-10">
+                  <div className="text-base mb-3">출연</div>
+                  <p className="text-xs">
+                    {creditInfo.acting.map((e: any, i: any) => {
+                      if (i < 3) {
+                        return e.name + ', ';
+                      } else {
+                        return;
+                      }
+                    })}
+                  </p>
+                  <Link href={`/detail?movie_id=${currID}`}>
+                    <p className="text-sm underline hover:cursor-pointer">
+                      더보기
+                    </p>
+                  </Link>
+                </div>
+              </div>
+              <div className="text-base italic my-[24px] mr-[50px]">
+                {detailInfo.tagline}
+              </div>
+              <h4 className="my-3">줄거리</h4>
               <p>{detailInfo && detailInfo.overview}</p>
             </div>
           </div>
