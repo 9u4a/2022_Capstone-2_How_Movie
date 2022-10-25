@@ -2,6 +2,7 @@ import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { detailListType, listType } from './MovieList';
+import Link from 'next/link';
 
 interface PropsType {
   listType: listType;
@@ -15,102 +16,85 @@ function MainPosters({ listType }: PropsType) {
   }
 
   const [innerWidth, setInnerWidth] = useState(initialWidth);
+  const [transition, setTransition] = useState('');
+  const setSlides = () => {
+    const addedFront = [];
+    const addedLast = [];
+    var index = 0;
+    while (index < 5) {
+      addedFront.push(listType[index % listType.length]);
+      addedLast.push(listType[listType.length - 5 + (index % listType.length)]);
+      index++;
+    }
+    return [...addedLast, ...listType, ...addedFront];
+  };
+  const carousel = listType && setSlides();
   useEffect(() => {
     const resizeListener = () => {
       setInnerWidth(window.innerWidth);
     };
     window.addEventListener('resize', resizeListener);
   }, [innerWidth]);
-
-  const moveWidth = [
-    [
-      'translate-x-[0px]',
-      'translate-x-[-220px]',
-      'translate-x-[-440px]',
-      'translate-x-[-660px]',
-      'translate-x-[-880px]',
-      'translate-x-[-1100px]',
-      'translate-x-[-1320px]',
-      'translate-x-[-1540px]',
-      'translate-x-[-1760px]',
-      'translate-x-[-1980px]',
-    ],
-    [
-      'translate-x-[0px]',
-      'translate-x-[-290px]',
-      'translate-x-[-580px]',
-      'translate-x-[-870px]',
-      'translate-x-[-1160px]',
-      'translate-x-[-1450px]',
-      'translate-x-[-1740px]',
-      'translate-x-[-2030px]',
-      'translate-x-[-2320px]',
-      'translate-x-[-2610px]',
-    ],
-    [
-      'translate-x-[0px]',
-      'translate-x-[-320px]',
-      'translate-x-[-640px]',
-      'translate-x-[-960px]',
-      'translate-x-[-1280px]',
-      'translate-x-[-1600px]',
-      'translate-x-[-1920px]',
-      'translate-x-[-2240px]',
-      'translate-x-[-2560px]',
-      'translate-x-[-2880px]',
-    ],
-  ];
-
+  const replaceCarousel = (a: number, b: number) => {
+    setTimeout(() => {
+      setTransition('transform 0ms ease-in');
+      setMove(a);
+      setCurrPoster(b);
+    }, 600);
+    setTimeout(() => {
+      setTransition('');
+    }, 700);
+  };
+  const moveWidths = [-220, -290, -320];
   const [move, setMove] = useState(0);
+  const [currPoster, setCurrPoster] = useState(5);
+  const moveRef = useRef();
+
   const moveRight = () => {
-    if (move < moveWidth[0].length - 1) {
+    if (currPoster < listType.length + 5) {
       setMove(move + 1);
-      console.log('moveRight');
-    } else if (move === moveWidth[0].length - 1) {
-      setMove(0);
+      setCurrPoster(currPoster + 1);
+    } else {
+      setMove(move + 1);
+      setCurrPoster(currPoster + 1);
+      replaceCarousel(1, 6);
     }
   };
   const moveLeft = () => {
-    if (move != 0) {
+    if (currPoster > 4) {
       setMove(move - 1);
-      console.log('moveLeft');
+      setCurrPoster(currPoster - 1);
+    } else {
+      setMove(move - 1);
+      setCurrPoster(currPoster - 1);
+      replaceCarousel(18, 23);
     }
   };
-  console.log(listType);
+
   return (
     <div className="overflow-hidden group z-40">
       <div
-        className={`${
-          innerWidth >= 1024
-            ? moveWidth[2][move]
-            : innerWidth >= 768
-            ? moveWidth[1][move]
-            : moveWidth[0][move]
-        } w-full h-[450px] md:h-[700px] flex items-center duration-700 space-x-5 ml-[50%] mt-[-50px]`}
+        className={`w-full h-[450px] md:h-[700px] flex duration-700 items-center space-x-5 ml-[50%] mt-[-50px]`}
+        style={{
+          transition: `${transition}`,
+          transform: `translateX(${
+            innerWidth >= 1024
+              ? moveWidths[2] * move
+              : innerWidth >= 768
+              ? moveWidths[1] * move
+              : moveWidths[0] * move
+          }px)`,
+        }}
       >
-        <>
-          {listType &&
-            listType.map((e, i) => {
-              return (
-                <div key={i}>
-                  {i === move ? (
-                    <div className="relative flex  w-[220px] h-[313px] md:w-[300px] md:h-[426px] lg:w-[350px] lg:h-[497px] duration-700 shrink-0 left-[-50%]">
-                      <Image
-                        src={baseUrl + e.poster_path}
-                        sizes="100%"
-                        alt="이미지"
-                        layout="fill"
-                        objectFit="fill"
-                        priority
-                        className="rounded-xl"
-                      />
-                      <div className="text-center text-[20px] md:text-[30px] lg:text-[30px] relative top-[100%] mx-auto">
-                        {e.title}
-                      </div>
-                    </div>
-                  ) : (
+        {carousel &&
+          carousel.map((e, i) => {
+            return (
+              <div key={i}>
+                {i === currPoster ? (
+                  <Link href={`/detail?movie_id=${e.id}`}>
                     <div
-                      className={`relative flex w-[200px] h-[284px] md:w-[270px] md:h-[384px] lg:w-[300px] lg:h-[426px] duration-700 shrink-0 left-[-55%] md:left-[-55.5%] lg:left-[-58.5%]`}
+                      className={`relative flex w-[220px] h-[313px] md:w-[300px] md:h-[426px] lg:w-[350px] lg:h-[497px] duration-700 shrink-0 left-[-550%] md:left-[-535%] lg:left-[-508%] rounded-lg overflow-hidden hover:cursor-pointer drop-shadow-br-md`}
+                      style={{ transition: `${transition}` }}
                     >
                       <Image
                         src={baseUrl + e.poster_path}
@@ -118,15 +102,34 @@ function MainPosters({ listType }: PropsType) {
                         alt="이미지"
                         layout="fill"
                         objectFit="fill"
-                        priority
                         className="rounded-xl"
+                        placeholder="blur"
+                        blurDataURL={baseUrl + e.poster_path}
                       />
                     </div>
-                  )}
-                </div>
-              );
-            })}
-        </>
+                  </Link>
+                ) : (
+                  <Link href={`/detail?movie_id=${e.id}`}>
+                    <div
+                      className="relative flex w-[200px] h-[284px] md:w-[270px] md:h-[384px] lg:w-[300px] lg:h-[426px] duration-700 shrink-0 left-[-605%] md:left-[-594.5%] lg:left-[-593%] rounded-lg overflow-hidden hover:cursor-pointer drop-shadow-br-md"
+                      style={{ transition: `${transition}` }}
+                    >
+                      <Image
+                        src={baseUrl + e.poster_path}
+                        sizes="100"
+                        alt="이미지"
+                        layout="fill"
+                        objectFit="fill"
+                        className="rounded-xl "
+                        placeholder="blur"
+                        blurDataURL={baseUrl + e.poster_path}
+                      />
+                    </div>
+                  </Link>
+                )}
+              </div>
+            );
+          })}
       </div>
       <div className="top-[15%] md:top-[20%] absolute invisible group-hover:visible flex justify-between items-center w-full">
         <div

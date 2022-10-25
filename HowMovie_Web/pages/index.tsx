@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react';
 import MovieDetail from '../components/MovieDetail';
 import MainPosters from '../components/MainPosters';
 import MovieList from '../components/MovieList';
+import { useSession } from 'next-auth/react';
 
 const Home: NextPage = () => {
-  const [detailOpen, setDetailOpen] = useState<boolean>(false);
-  const [currID, setCurrID] = useState(0);
+  const { data: session } = useSession();
   const [posters, setPosters] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error>();
@@ -27,35 +27,25 @@ const Home: NextPage = () => {
     };
     fetchPosters();
   }, []);
-  useEffect(() => {
-    const fetchBackgroundPath = async () => {
-      try {
-        setCurrID(0);
-      } catch (e) {}
-    };
-  });
+
   loading && <div>로딩중</div>;
   error && <div>에러 발생</div>;
   !posters && null;
-  console.log(posters);
   return (
     <div className="relative">
-      {detailOpen && (
-        <MovieDetail setDetailOpen={setDetailOpen} currID={currID} />
-      )}
       <MainPosters listType={posters ? posters.result[3].upcoming : null} />
       <div className=" w-full ">
         <MovieList
           type="toprated"
-          setDetailOpen={setDetailOpen}
-          setCurrID={setCurrID}
+          // setDetailOpen={setDetailOpen}
+          // setCurrID={setCurrID}
           listType={posters ? posters.result[1].toprated : null}
         />
         <MovieList
-          type="popular"
-          setDetailOpen={setDetailOpen}
-          setCurrID={setCurrID}
-          listType={posters ? posters.result[0].popular : null}
+          type="nowplaying"
+          // setDetailOpen={setDetailOpen}
+          // setCurrID={setCurrID}
+          listType={posters ? posters.result[2].nowplaying : null}
         />
       </div>
     </div>
