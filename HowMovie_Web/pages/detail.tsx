@@ -106,7 +106,7 @@ function Detail() {
                 )}
               </div>
             </div>
-            <div className="flex justify-center items-center grow-1 h-full w-full">
+            <div className="flex justify-start items-center grow-1 h-full w-full">
               {[searchDetail[0].detail[0]].map((e: any, i: any) => {
                 return (
                   <div key={i}>
