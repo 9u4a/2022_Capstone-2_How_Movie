@@ -25,7 +25,12 @@ def SearchGenre(request):
                 'title': i['title'],
                 'poster_path': i['poster_path'],
                 'backdrop_path': i['backdrop_path'],
-                'release_date': i['release_date']
+                'release_date': i['release_date'],
+                'adult': i['adult'],
+                'original_title': i['original_title'],
+                'genre_ids': i['genre_ids'],
+                'overview': i['overview'],
+                'vote_average': i['vote_average']
             }
         )
     response = {
