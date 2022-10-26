@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 interface isSearchType {
   id: number;
   title: string;
+  release_date: string;
   poster_path: string;
   backdrop_path: string;
 }
@@ -133,6 +134,7 @@ function Header() {
 
     return () => {};
   }, [searchInput, currGenre]);
+
   loading && <div>로딩중</div>;
   error && <div>에러 발생</div>;
   return (
@@ -180,7 +182,7 @@ function Header() {
             } rounded-lg bg-slate-300 duration-500`}
             placeholder="영화를 검색하세요..."
             onChange={(e) => {
-              setSearchInput(e.target.value.trim());
+              setSearchInput(e.target.value.replace(/^[\s\uFEFF\xA0]+/gi, ''));
             }}
             value={searchInput || ''}
             ref={inputFocus}
@@ -235,7 +237,9 @@ function Header() {
                         </div>
                         <div className="w-[130px] md:w-[180px] lg:w-[230px] mt-[5px]flex flex-col justify-between">
                           <div className="text-[15px] leading-4">{e.title}</div>
-                          <div className="text-[13px] text-slate-400">2017</div>
+                          <div className="text-[13px] text-slate-400">
+                            {e.release_date.slice(0, 4)}
+                          </div>
                         </div>
                       </a>
                     </Link>

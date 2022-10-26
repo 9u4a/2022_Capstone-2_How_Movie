@@ -14,7 +14,9 @@ function MainPosters({ listType }: PropsType) {
   if (typeof window !== 'undefined') {
     initialWidth = window.innerWidth;
   }
-
+  const moveWidths = [-220, -290, -320];
+  const [move, setMove] = useState(0);
+  const [currPoster, setCurrPoster] = useState(5);
   const [innerWidth, setInnerWidth] = useState(initialWidth);
   const [transition, setTransition] = useState('');
   const setSlides = () => {
@@ -45,10 +47,6 @@ function MainPosters({ listType }: PropsType) {
       setTransition('');
     }, 700);
   };
-  const moveWidths = [-220, -290, -320];
-  const [move, setMove] = useState(0);
-  const [currPoster, setCurrPoster] = useState(5);
-  const moveRef = useRef();
 
   const moveRight = () => {
     if (currPoster < listType.length + 5) {
@@ -76,7 +74,7 @@ function MainPosters({ listType }: PropsType) {
       <div
         className={`w-full h-[450px] md:h-[700px] flex duration-700 items-center space-x-5 ml-[50%] mt-[-50px]`}
         style={{
-          transition: `${transition}`,
+          ...(listType && { transition: `${transition}` }),
           transform: `translateX(${
             innerWidth >= 1024
               ? moveWidths[2] * move

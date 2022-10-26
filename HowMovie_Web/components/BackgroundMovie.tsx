@@ -1,6 +1,4 @@
-import { MoonIcon } from '@heroicons/react/24/solid';
 import axios from 'axios';
-import { NextPage } from 'next';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
@@ -55,7 +53,7 @@ const BackgroundMovie = ({ currID }: Props) => {
             src={baseUrl + backDrop}
             layout="fill"
             alt="backDrop"
-            className="rounded-t-xl"
+            className="rounded-xl"
             placeholder="blur"
             objectFit="cover"
             blurDataURL={baseUrl + backDrop}

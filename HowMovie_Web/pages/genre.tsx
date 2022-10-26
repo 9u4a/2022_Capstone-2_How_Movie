@@ -87,7 +87,6 @@ function Genre() {
       name: '서부',
     },
   ];
-  // console.log(genre[0].id);
   const [genreMovies, setGenreMovies] = useState<any>();
   useEffect(() => {
     if (router.query.genre_id !== undefined) {

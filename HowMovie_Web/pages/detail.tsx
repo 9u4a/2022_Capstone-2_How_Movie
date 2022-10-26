@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
@@ -6,6 +7,7 @@ import BackgroundMovie from '../components/BackgroundMovie';
 import Comment from '../components/Comment';
 
 function Detail() {
+  const session = useSession();
   const [searchDetail, setSearchDetail] = useState<any>();
   const [searchCredit, setSearchCredit] = useState<any>();
   const [commentInfo, setCommentInfo] = useState<any>();
@@ -17,9 +19,7 @@ function Detail() {
   const STAR_IDX_ARR = ['first', 'second', 'third', 'fourth', 'last'];
   const [starHover, setStarHover] = useState<number>(0);
   const [starClick, setStarClick] = useState<number>();
-  // const profileBaseUrl = 'https://www.themoviedb.org/t/p/w276_and_h350_face';
-
-  // console.log(searchDetail && searchDetail[1]);
+  const [testProps, setTestProps] = useState<any>();
   const router = useRouter();
   useEffect(() => {
     if (router.query.movie_id !== undefined) {
@@ -41,20 +41,22 @@ function Detail() {
       };
       fetchDetailInfo();
     }
-    const getCommentInfo = async () => {
-      try {
-        await axios
-          .get(`jdbc:mariadb://localhost:3306/movie/${router.query.movie_id}`)
-          .then((res) => {
-            setCommentInfo(res);
-          });
-      } catch (err) {
-        if (axios.isAxiosError(err)) {
-          setError(err);
+    if (router.query.movie_id !== undefined) {
+      const getCommentInfo = async () => {
+        try {
+          await axios
+            .get(`jdbc:mariadb://localhost:3306/movie/${router.query.movie_id}`)
+            .then((res) => {
+              setCommentInfo(res);
+            });
+        } catch (err) {
+          if (axios.isAxiosError(err)) {
+            setError(err);
+          }
         }
-      }
-    };
-    getCommentInfo();
+      };
+      getCommentInfo();
+    }
   }, [router.query.movie_id]);
 
   const postComment = async ({ body }: any) => {
@@ -70,25 +72,29 @@ function Detail() {
       }
     }
   };
-  console.log(userComment);
+
   return (
     <>
       {searchDetail ? (
-        <div className="relative w-full h-[570px] bg-black">
-          <Image
-            src={baseUrl + searchDetail[0].detail[0].backdrop_path}
-            layout="fill"
-            alt="backDrop"
-            sizes="100%"
-            objectFit="cover"
-            className="opacity-20"
-            priority
-            placeholder="blur"
-            blurDataURL={baseUrl + searchDetail[0].detail[0].backdrop_path}
-          />
+        <div className="relative w-full h-[570px] bg-black/70">
+          {searchDetail[0].detail[0].backdrop_path ? (
+            <Image
+              src={`https://image.tmdb.org/t/p/original${searchDetail[0].detail[0].backdrop_path}`}
+              layout="fill"
+              alt="backDrop"
+              sizes="100%"
+              objectFit="cover"
+              className="opacity-20"
+              priority
+              placeholder="blur"
+              blurDataURL={`https://image.tmdb.org/t/p/original
+              ${searchDetail[0].detail[0].backdrop_path}
+            `}
+            />
+          ) : null}
 
-          <div className="flex w-full h-full">
-            <div className="flex justify-center items-center grow-0 h-full w-[438px]">
+          <div className="flex w-full h-full ">
+            <div className="flex justify-center items-center  h-full w-[438px] ">
               <div className="relative w-[220px] h-[300px] drop-shadow-br-md">
                 {searchDetail && (
                   <Image
@@ -106,7 +112,7 @@ function Detail() {
                 )}
               </div>
             </div>
-            <div className="flex justify-start items-center grow-1 h-full w-full">
+            <div className="flex justify-start items-center h-full w-full overflow-hidden">
               {[searchDetail[0].detail[0]].map((e: any, i: any) => {
                 return (
                   <div key={i}>
@@ -118,16 +124,29 @@ function Detail() {
                       } · ${e.genres.map((e: any, i: any) => {
                         return e.name;
                       })} · ${e.runtime}분`}</div>
-
-                      <div className="text-base italic my-[24px]">
-                        {e.tagline}
-                      </div>
+                      {e.tagline && (
+                        <div className="text-base italic my-[24px]">
+                          {`" ${e.tagline} "`}
+                        </div>
+                      )}
 
                       <div className="text-xl font-bold">개요</div>
-                      <p className="mb-[30px]">{e.overview}</p>
-
-                      <div className="flex">
-                        <div className="mr-[185px] flex flex-col">
+                      <p className="mb-[30px] border w-full h-[140px] leading-5 text-ellipsis whitespace-normal overflow-hidden line-clamp-5 block">
+                        {e.overview}
+                      </p>
+                      <div
+                        className={`flex ${
+                          searchDetail[1].credit.directing.length === 0
+                            ? null
+                            : 'space-x-[185px]'
+                        }`}
+                      >
+                        <div
+                          className={`flex flex-col ${
+                            searchDetail[1].credit.directing.length === 0 &&
+                            'hidden'
+                          }`}
+                        >
                           <div className="flex">
                             {searchDetail[1].credit.directing.map(
                               (e: any, i: number) => {
@@ -147,7 +166,9 @@ function Detail() {
                               }
                             )}
                           </div>
-                          <p className="text-[12px]">Director</p>
+                          {searchDetail[1].credit.directing.length !== 0 ? (
+                            <p className="text-[12px]">Director</p>
+                          ) : null}
                         </div>
                         <div>
                           {searchDetail[1].credit.writing.map(
@@ -167,7 +188,9 @@ function Detail() {
                               );
                             }
                           )}
-                          <p className="text-[12px]">Writer</p>
+                          {searchDetail[1].credit.writing.length !== 0 ? (
+                            <p className="text-[12px]">Writer</p>
+                          ) : null}
                         </div>
                       </div>
                     </div>
@@ -240,7 +263,13 @@ function Detail() {
                 <h4 className="">평점</h4>
 
                 {/* starPoint */}
-                <div className="w-[150px]">
+                <div
+                  className={`w-[150px] ${
+                    session.status !== 'authenticated'
+                      ? 'pointer-events-none'
+                      : null
+                  }`}
+                >
                   <div
                     className="absolute  w-[150px] h-[30px] z-10"
                     onMouseMove={(e) => {
@@ -302,24 +331,40 @@ function Detail() {
                 </div>
               </div>
               <textarea
-                className="w-full h-[100px] text-wthie bg-black border rounded-lg mt-3 p-5"
-                placeholder="리뷰를 남겨주세요."
+                className={`w-full h-[100px] text-wthie bg-black border rounded-lg mt-3 p-5 ${
+                  session.status !== 'authenticated'
+                    ? 'pointer-events-none'
+                    : null
+                }`}
+                placeholder={
+                  session.status !== 'authenticated'
+                    ? '로그인을 해주세요.'
+                    : '리뷰를 남겨주세요.'
+                }
                 onChange={(e) => setUserComment(e.target.value)}
               ></textarea>
               <div className="flex justify-end">
                 <button
                   className="w-[100px] h-[40px] border rounded-lg mt-2 bg-white text-black hover:bg-black hover:text-white duration-200 active:bg-slate-800"
-                  onClick={() => postComment({ userComment, starClick })}
+                  onClick={() =>
+                    session.status !== 'authenticated'
+                      ? alert('로그인을 해주세요.')
+                      : // : postComment({ movieId, starClick, userComment })
+                        setTestProps({
+                          session,
+                          movieId,
+                          starClick,
+                          userComment,
+                        })
+                  }
                 >
                   등록
                 </button>
               </div>
             </div>
             <hr className="border-slate-400 border-2 rounded-lg my-5" />
-            <Comment />
-            <Comment />
-            <Comment />
-            <Comment />
+            {testProps && <Comment testProps={testProps} />}
+            <Comment typeProps={undefined} />
           </div>
         </div>
       ) : null}
