@@ -61,7 +61,7 @@ function Detail() {
 
   const postComment = async ({ body }: any) => {
     try {
-      const res = await axios
+      await axios
         .post(`jdbc:mariadb://localhost:3306/movie/review`, body)
         .then((res) => {
           console.log('status: ' + res.status);
@@ -131,7 +131,7 @@ function Detail() {
                       )}
 
                       <div className="text-xl font-bold">개요</div>
-                      <p className="mb-[30px] border w-full h-[140px] leading-5 text-ellipsis whitespace-normal overflow-hidden line-clamp-5 block">
+                      <p className="mb-[30px] w-full h-[140px] leading-5 text-ellipsis whitespace-normal overflow-hidden line-clamp-5 block">
                         {e.overview}
                       </p>
                       <div
