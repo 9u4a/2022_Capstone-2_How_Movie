@@ -14,56 +14,74 @@ function Detail() {
   const [userComment, setUserComment] = useState<string>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error>();
-  const [movieId, setMovieId] = useState<any>();
+  const [movieId, setMovieId] = useState<number | undefined>();
+
   const baseUrl = 'https://image.tmdb.org/t/p/w500';
   const STAR_IDX_ARR = ['first', 'second', 'third', 'fourth', 'last'];
   const [starHover, setStarHover] = useState<number>(0);
   const [starClick, setStarClick] = useState<number>();
+  const [userEmail, setUserEmail] = useState<any>();
   const [testProps, setTestProps] = useState<any>();
   const router = useRouter();
+
   useEffect(() => {
+    session ? setUserEmail(session.data?.user?.email) : null;
+
     if (router.query.movie_id !== undefined) {
-      const fetchDetailInfo = async () => {
-        try {
-          await axios
-            .get(
-              `http://localhost:8000/searchdetail?movie_id=${router.query.movie_id}`
-            )
-            .then((res) => {
-              setSearchDetail(res.data.result);
-              setMovieId(router.query.movie_id);
-            });
-        } catch (err) {
-          if (axios.isAxiosError(err)) {
-            setError(err);
-          }
-        }
-      };
-      fetchDetailInfo();
+      setMovieId(parseInt(router.query.movie_id));
     }
-    if (router.query.movie_id !== undefined) {
-      const getCommentInfo = async () => {
+
+    const fetchDetailInfo = async () => {
+      if (typeof movieId === 'number') {
         try {
-          await axios
-            .get(`jdbc:mariadb://localhost:3306/movie/${router.query.movie_id}`)
-            .then((res) => {
-              setCommentInfo(res);
-            });
+          const res = await axios.get(
+            `http://localhost:8000/searchdetail?movie_id=${movieId}`
+          );
+          setSearchDetail(res.data.result);
         } catch (err) {
           if (axios.isAxiosError(err)) {
             setError(err);
           }
         }
-      };
+      }
+    };
+    const getCommentInfo = async () => {
+      if (router.query.movie_id !== undefined) {
+        try {
+          const res = await axios.get(
+            `jdbc:mariadb://localhost:3306/movie/505642
+            `
+          );
+
+          console.log(res);
+          setCommentInfo(res);
+        } catch (err) {
+          if (axios.isAxiosError(err)) {
+            setError(err);
+          }
+        }
+      }
+    };
+    if (router.query.movie_id !== undefined) {
+      fetchDetailInfo();
       getCommentInfo();
     }
-  }, [router.query.movie_id]);
+    // }
+  }, [router.query.movie_id, movieId]);
 
-  const postComment = async ({ body }: any) => {
+  const postComment = async (props: any) => {
+    const body = {
+      movieId: movieId,
+      userEmail: userEmail,
+      score: starClick,
+      rating: userComment,
+    };
+    console.log(body);
     try {
       await axios
-        .post(`jdbc:mariadb://localhost:3306/movie/review`, body)
+        .post('jdbc:mariadb://localhost:3306/movie/review', body)
         .then((res) => {
+          console.log('전송');
           console.log('status: ' + res.status);
         });
     } catch (err) {
@@ -72,7 +90,8 @@ function Detail() {
       }
     }
   };
-
+  // console.log(userEmail);
+  // console.log(starClick);
   return (
     <>
       {searchDetail ? (
@@ -88,8 +107,8 @@ function Detail() {
               priority
               placeholder="blur"
               blurDataURL={`https://image.tmdb.org/t/p/original
-              ${searchDetail[0].detail[0].backdrop_path}
-            `}
+            ${searchDetail[0].detail[0].backdrop_path}
+          `}
             />
           ) : null}
 
@@ -131,7 +150,7 @@ function Detail() {
                       )}
 
                       <div className="text-xl font-bold">개요</div>
-                      <p className="mb-[30px] w-full h-[140px] leading-5 text-ellipsis whitespace-normal overflow-hidden line-clamp-5 block">
+                      <p className="mb-[30px] w-full h-[140px] leading-5 text-ellipsis whitespace-normal overflow-hidden line-clamp-5 block border">
                         {e.overview}
                       </p>
                       <div
@@ -279,7 +298,7 @@ function Detail() {
                     }}
                     onClick={() => {
                       if (starClick === undefined) {
-                        setStarClick(starHover / 30);
+                        setStarClick(parseFloat((starHover / 30).toFixed(1)));
                       } else {
                         setStarClick(undefined);
                       }
@@ -349,10 +368,9 @@ function Detail() {
                   onClick={() =>
                     session.status !== 'authenticated'
                       ? alert('로그인을 해주세요.')
-                      : // : postComment({ movieId, starClick, userComment })
-                        setTestProps({
-                          session,
+                      : postComment({
                           movieId,
+                          userEmail,
                           starClick,
                           userComment,
                         })
@@ -363,8 +381,8 @@ function Detail() {
               </div>
             </div>
             <hr className="border-slate-400 border-2 rounded-lg my-5" />
-            {testProps && <Comment testProps={testProps} />}
-            <Comment typeProps={undefined} />
+
+            {/* <div>{console.log(commentInfo)}</div> */}
           </div>
         </div>
       ) : null}
