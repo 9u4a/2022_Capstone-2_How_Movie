@@ -1,6 +1,7 @@
 package oauth2.controller;
 
 import oauth2.entity.Movie;
+import oauth2.entity.dto.MovieDto;
 import oauth2.entity.dto.ReviewDto;
 import oauth2.service.movie.MovieService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,16 @@ public class MovieController {
     @GetMapping("/{id}")
     public Movie getMovie(@PathVariable Long id) {
         return movieService.getMovie(id);
+    }
+
+    @GetMapping("/review/{id}")
+    public Boolean checkMovieReview(@PathVariable Long id) {
+        return movieService.checkMovieReview(id);
+    }
+
+    @PostMapping
+    public void movie(@RequestBody MovieDto movieDto) {
+        movieService.saveMovie(movieDto);
     }
 
     @PostMapping("/review")

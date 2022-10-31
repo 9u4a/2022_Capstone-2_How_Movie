@@ -2,6 +2,7 @@ package oauth2.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import oauth2.service.TokenService;
+import oauth2.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -21,12 +22,15 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private final TokenService tokenService;
     private final UserRequestMapper userRequestMapper;
     private final ObjectMapper objectMapper;
+    private final UserService userService;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         // 최초 로그인인지 확인하고 아니면 유저 등록
         OAuth2User oAuth2User = (OAuth2User)authentication.getPrincipal();
         UserDto userDto = userRequestMapper.toDto(oAuth2User);
+
+        userService.checkUser(userDto.getEmail());
 
         log.info("Principal에서 꺼낸 OAuth2User: {}", oAuth2User);
         log.info("토큰 발행 시작");

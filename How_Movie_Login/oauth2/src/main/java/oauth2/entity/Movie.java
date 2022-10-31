@@ -1,7 +1,6 @@
 package oauth2.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -10,6 +9,8 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Movie {
 
     @Id
@@ -21,6 +22,15 @@ public class Movie {
     private String content;
 
     @ManyToMany
-    private Set<Review> review = new HashSet<>();
+    private Set<Review> review;
 
+    @PostPersist
+    public void postPersist() {
+
+    }
+
+    @PostRemove
+    public void postRemove() {
+
+    }
 }

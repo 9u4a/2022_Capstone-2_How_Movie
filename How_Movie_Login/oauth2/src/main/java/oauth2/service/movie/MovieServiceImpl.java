@@ -1,17 +1,22 @@
 package oauth2.service.movie;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import oauth2.entity.Movie;
 import oauth2.entity.Review;
 import oauth2.entity.User;
+import oauth2.entity.dto.MovieDto;
 import oauth2.entity.dto.ReviewDto;
 import oauth2.repository.MovieRepository;
 import oauth2.repository.ReviewRepository;
 import oauth2.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -28,6 +33,28 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public Movie getMovie(Long id) {
         return movieRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Boolean checkMovieReview(Long id) {
+        Movie movie = movieRepository.findById(id).orElse(null);
+
+        assert movie != null;
+        Set<Review> reviews = movie.getReview();
+
+        return !reviews.isEmpty();
+    }
+
+    @Override
+    public void saveMovie(MovieDto movieDto) {
+        Movie movie = new Movie(
+                null,
+                movieDto.getTitle(),
+                movieDto.getContent(),
+                new HashSet<>()
+        );
+
+        movieRepository.save(movie);
     }
 
     @Override
@@ -72,4 +99,3 @@ public class MovieServiceImpl implements MovieService {
     }
 
 }
-

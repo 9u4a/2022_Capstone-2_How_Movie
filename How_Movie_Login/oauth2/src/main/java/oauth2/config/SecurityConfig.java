@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(new JwtAuthFilter(tokenService),
                         OAuth2LoginAuthenticationFilter.class)
                 .oauth2Login() // oauth2Login 설정을 시작
-                .loginPage("/token/expired") // login 페이지 Url을 직접 설정
+//                .loginPage("/token/expired") // login 페이지 Url을 직접 설정
                 .successHandler(successHandler) // 로그인 성공 시 handler 설정
                 .userInfoEndpoint() // 로그인 성공 후 설정 시작
                 .userService(oAuth2UserService); // oauth2Service에서 처리
