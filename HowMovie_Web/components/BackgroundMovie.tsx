@@ -3,7 +3,7 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
 interface Props {
-  currID: number;
+  currID: number | undefined;
 }
 
 const BackgroundMovie = ({ currID }: Props) => {

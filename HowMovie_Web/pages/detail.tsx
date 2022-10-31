@@ -14,25 +14,25 @@ function Detail() {
   const [userComment, setUserComment] = useState<string>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error>();
-  const [movieId, setMovieId] = useState<number | undefined>();
+  const [movieId, setMovieId] = useState<any>();
 
   const baseUrl = 'https://image.tmdb.org/t/p/w500';
   const STAR_IDX_ARR = ['first', 'second', 'third', 'fourth', 'last'];
   const [starHover, setStarHover] = useState<number>(0);
   const [starClick, setStarClick] = useState<number>();
-  const [userEmail, setUserEmail] = useState<any>();
+  const [userName, setUserName] = useState<any>();
   const [testProps, setTestProps] = useState<any>();
   const router = useRouter();
 
   useEffect(() => {
-    session ? setUserEmail(session.data?.user?.email) : null;
+    session ? setUserName(session.data?.user?.name) : null;
 
     if (router.query.movie_id !== undefined) {
-      setMovieId(parseInt(router.query.movie_id));
+      setMovieId(router.query.movie_id);
     }
 
     const fetchDetailInfo = async () => {
-      if (typeof movieId === 'number') {
+      if (movieId !== undefined) {
         try {
           const res = await axios.get(
             `http://localhost:8000/searchdetail?movie_id=${movieId}`
@@ -46,15 +46,14 @@ function Detail() {
       }
     };
     const getCommentInfo = async () => {
-      if (router.query.movie_id !== undefined) {
+      if (movieId !== undefined) {
         try {
           const res = await axios.get(
-            `jdbc:mariadb://localhost:3306/movie/505642
+            `http://localhost:8000/comment/${movieId}
             `
           );
 
-          console.log(res);
-          setCommentInfo(res);
+          setCommentInfo(res.data);
         } catch (err) {
           if (axios.isAxiosError(err)) {
             setError(err);
@@ -67,19 +66,18 @@ function Detail() {
       getCommentInfo();
     }
     // }
-  }, [router.query.movie_id, movieId]);
+  }, [router.query.movie_id, movieId, session]);
 
   const postComment = async (props: any) => {
     const body = {
-      movieId: movieId,
-      userEmail: userEmail,
-      score: starClick,
-      rating: userComment,
+      user_id: userName,
+      vote: starClick,
+      comment: userComment,
     };
-    console.log(body);
+
     try {
       await axios
-        .post('jdbc:mariadb://localhost:3306/movie/review', body)
+        .post(`http://localhost:8000/comment/${movieId}`, body)
         .then((res) => {
           console.log('전송');
           console.log('status: ' + res.status);
@@ -90,8 +88,7 @@ function Detail() {
       }
     }
   };
-  // console.log(userEmail);
-  // console.log(starClick);
+
   return (
     <>
       {searchDetail ? (
@@ -369,8 +366,7 @@ function Detail() {
                     session.status !== 'authenticated'
                       ? alert('로그인을 해주세요.')
                       : postComment({
-                          movieId,
-                          userEmail,
+                          userName,
                           starClick,
                           userComment,
                         })
@@ -381,8 +377,7 @@ function Detail() {
               </div>
             </div>
             <hr className="border-slate-400 border-2 rounded-lg my-5" />
-
-            {/* <div>{console.log(commentInfo)}</div> */}
+            {commentInfo && <Comment commentInfo={commentInfo} />}
           </div>
         </div>
       ) : null}
