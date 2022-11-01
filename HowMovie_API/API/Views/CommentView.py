@@ -16,7 +16,7 @@ class CommentView(APIView):
             comment_serializer.save()
             response = {
                 'success': True,
-                'user_id': data['user_id']
+                'user_name': data['user_name']
             }
             return JsonResponse(response)
         else:
@@ -38,19 +38,28 @@ class CommentView(APIView):
     def put(self, request, movie_id):
         data = JSONParser().parse(request)
         data['movie_id'] = movie_id
-        comment_data = Comment.objects.get(id=data['id'])
+        comment_data = Comment.objects.filter(
+            Q(id=data['id']) &
+            Q(email=data['email'])
+        ).first()
+
+        # comment_data = Comment.objects.get(id=data['id'])
         comment_serializer = CommentSerializer(comment_data, data=data)
         if comment_serializer.is_valid():
             comment_serializer.save()
             response = {
                 'result': True,
-                'user_id': data['user_id']
+                'user_name': data['user_name']
             }
             return JsonResponse(response)
 
-    def delete(self, request):
+    def delete(self, request, movie_id):
         data = JSONParser().parse(request)
-        comment_data = Comment.objects.get(id=data['id'])
+        comment_data = Comment.objects.filter(
+            Q(id=data['id']) &
+            Q(email=data['email']) &
+            Q(movie_id=movie_id)
+        ).first()
         comment_data.delete()
         response = {
             'success': True
