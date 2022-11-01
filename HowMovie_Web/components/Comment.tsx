@@ -1,19 +1,43 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StarIcon } from '@heroicons/react/24/solid';
+import axios from 'axios';
 
-function Comment({ commentInfo }: any) {
-  console.log(commentInfo);
-
-  // useEffect(() => {}, [testProps]);
+function Comment(props: any) {
+  const [error, setError] = useState<Error>();
+  const { commentInfo, movieId } = props;
+  // const [commentId, setCommentId] = useState();
+  useEffect(() => {}, [commentInfo]);
+  const deleteComment = async (id: number, email: string) => {
+    console.log(id, email);
+    try {
+      await axios
+        .delete(`http://localhost:8000/comment/${movieId}`, {
+          data: { id: id, email: email },
+        })
+        .then((res) => {
+          console.log('삭제');
+          console.log('status: ' + res.status);
+        });
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        setError(err);
+      }
+    }
+  };
 
   return (
     <>
-      {commentInfo.result.map((e: any, i: number) => {
+      {[...commentInfo.result].reverse().map((e: any, i: number) => {
         return (
           <div className="h-[140px] p-5 bg-slate-800 mb-3" key={i}>
             <div className="flex text-sm mb-1 justify-between">
-              <div>{e.user_id}</div>
-              <div className="text-slate-500 hover:text-white active:text-slate-400 hover:cursor-pointer">
+              <div>{e.user_name}</div>
+              <div
+                className="text-slate-500 hover:text-white active:text-slate-400 hover:cursor-pointer"
+                onClick={() => {
+                  deleteComment(e.id, e.email);
+                }}
+              >
                 삭제
               </div>
             </div>

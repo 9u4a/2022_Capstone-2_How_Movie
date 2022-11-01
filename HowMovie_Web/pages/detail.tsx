@@ -9,7 +9,6 @@ import Comment from '../components/Comment';
 function Detail() {
   const session = useSession();
   const [searchDetail, setSearchDetail] = useState<any>();
-  const [searchCredit, setSearchCredit] = useState<any>();
   const [commentInfo, setCommentInfo] = useState<any>();
   const [userComment, setUserComment] = useState<string>();
   const [loading, setLoading] = useState(false);
@@ -21,11 +20,15 @@ function Detail() {
   const [starHover, setStarHover] = useState<number>(0);
   const [starClick, setStarClick] = useState<number>();
   const [userName, setUserName] = useState<any>();
+  const [userEmail, setUserEmail] = useState<any>();
   const [testProps, setTestProps] = useState<any>();
   const router = useRouter();
 
   useEffect(() => {
-    session ? setUserName(session.data?.user?.name) : null;
+    session
+      ? (setUserName(session.data?.user?.name),
+        setUserEmail(session.data?.user?.email))
+      : null;
 
     if (router.query.movie_id !== undefined) {
       setMovieId(router.query.movie_id);
@@ -70,11 +73,11 @@ function Detail() {
 
   const postComment = async (props: any) => {
     const body = {
-      user_id: userName,
+      user_name: userName,
+      email: userEmail,
       vote: starClick,
       comment: userComment,
     };
-
     try {
       await axios
         .post(`http://localhost:8000/comment/${movieId}`, body)
@@ -352,6 +355,7 @@ function Detail() {
                     ? 'pointer-events-none'
                     : null
                 }`}
+                value={userComment}
                 placeholder={
                   session.status !== 'authenticated'
                     ? '로그인을 해주세요.'
@@ -365,11 +369,15 @@ function Detail() {
                   onClick={() =>
                     session.status !== 'authenticated'
                       ? alert('로그인을 해주세요.')
-                      : postComment({
+                      : (postComment({
                           userName,
+                          userEmail,
                           starClick,
                           userComment,
-                        })
+                        }),
+                        setStarClick(0),
+                        setStarHover(0),
+                        setUserComment(''))
                   }
                 >
                   등록
@@ -377,7 +385,9 @@ function Detail() {
               </div>
             </div>
             <hr className="border-slate-400 border-2 rounded-lg my-5" />
-            {commentInfo && <Comment commentInfo={commentInfo} />}
+            {commentInfo && (
+              <Comment commentInfo={commentInfo} movieId={movieId} />
+            )}
           </div>
         </div>
       ) : null}
