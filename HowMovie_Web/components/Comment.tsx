@@ -35,7 +35,12 @@ function Comment(props: any) {
               <div
                 className="text-slate-500 hover:text-white active:text-slate-400 hover:cursor-pointer"
                 onClick={() => {
-                  deleteComment(e.id, e.email);
+                  if (window.confirm('정말로 삭제하시겠습니까?')) {
+                    deleteComment(e.id, e.email);
+                    location.reload();
+                  } else {
+                    null;
+                  }
                 }}
               >
                 삭제
@@ -53,4 +58,4 @@ function Comment(props: any) {
   );
 }
 
-export default Comment;
+export default React.memo(Comment);
