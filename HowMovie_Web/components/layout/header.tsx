@@ -97,7 +97,7 @@ function Header() {
   const searchRef = useRef<any>(null);
   const inputFocus = useRef<any>(null);
   const [isToggle, setIsToggle] = useState<boolean>(false);
-  const [isProfileToggle, setProfileIsToggle] = useState<boolean>(false);
+  const [isProfileToggle, setIsProfileToggle] = useState<boolean>(false);
   const [isSearch, setIsSearch] = useState<isSearchType | any>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error>();
@@ -249,22 +249,24 @@ function Header() {
 
           {/* Login || User Profile */}
           {session.data?.user ? (
-            <div className="flex">
+            <div
+              className="flex"
+              onMouseEnter={() => setIsProfileToggle(true)}
+              onMouseLeave={() => setIsProfileToggle(false)}
+            >
               <Image
                 src={session.data.user.image!}
                 width={35}
                 height={35}
                 alt="userProfileImg"
                 className="rounded-full hover:cursor-pointer"
-                onClick={() => setProfileIsToggle(!isProfileToggle)}
               />
-
               <div
-                className={` ${
+                className={`${
                   isProfileToggle
                     ? 'opacity-1'
                     : 'opacity-0 pointer-events-none'
-                } rounded-lg flex-col text-black bg-white absolute top-[50px] right-[20px] divide-y-2 z-10 duration-300`}
+                } rounded-lg flex-col text-black bg-white absolute top-[43px] right-[20px] divide-y-2 z-10 duration-300`}
               >
                 <div className="px-[15px] py-[5px]">
                   <div className="flex justify-start items-center ">
@@ -274,12 +276,19 @@ function Header() {
                     {session.data.user.email}
                   </div>
                 </div>
-                <div className="flex justify-center items-center  h-[30px] hover:cursor-pointer">
+                {/* <div className="flex justify-center items-center  h-[30px] hover:cursor-pointer">
                   찜 목록
-                </div>
-                <div className="flex justify-center items-center  h-[30px] hover:cursor-pointer">
-                  내 댓글
-                </div>
+                </div> */}
+                <Link href="/myComment">
+                  <a
+                    className="flex justify-center items-center h-[30px] hover:cursor-pointe"
+                    onClick={() => {
+                      setIsProfileToggle(!isProfileToggle);
+                    }}
+                  >
+                    내 댓글
+                  </a>
+                </Link>
                 <div
                   className="flex justify-center items-center  h-[30px] hover:cursor-pointer"
                   onClick={() => signOut({ callbackUrl: '/' })}
