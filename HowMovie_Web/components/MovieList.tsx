@@ -33,9 +33,9 @@ function MovieList({ type, listType }: MovieDetailProps) {
 
   const showDetail = () => {
     setDetailOpen(true);
+    document.body.style.overflow = 'hidden';
   };
 
-  // console.log(listType);
   return (
     <div className="h-screen max-h-[350px]">
       {detailOpen && (

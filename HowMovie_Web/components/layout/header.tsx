@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 interface isSearchType {
   id: number;
   title: string;
+  release_date: string;
   poster_path: string;
   backdrop_path: string;
 }
@@ -96,7 +97,7 @@ function Header() {
   const searchRef = useRef<any>(null);
   const inputFocus = useRef<any>(null);
   const [isToggle, setIsToggle] = useState<boolean>(false);
-  const [isProfileToggle, setProfileIsToggle] = useState<boolean>(false);
+  const [isProfileToggle, setIsProfileToggle] = useState<boolean>(false);
   const [isSearch, setIsSearch] = useState<isSearchType | any>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error>();
@@ -133,6 +134,7 @@ function Header() {
 
     return () => {};
   }, [searchInput, currGenre]);
+
   loading && <div>로딩중</div>;
   error && <div>에러 발생</div>;
   return (
@@ -180,7 +182,7 @@ function Header() {
             } rounded-lg bg-slate-300 duration-500`}
             placeholder="영화를 검색하세요..."
             onChange={(e) => {
-              setSearchInput(e.target.value.trim());
+              setSearchInput(e.target.value.replace(/^[\s\uFEFF\xA0]+/gi, ''));
             }}
             value={searchInput || ''}
             ref={inputFocus}
@@ -235,7 +237,9 @@ function Header() {
                         </div>
                         <div className="w-[130px] md:w-[180px] lg:w-[230px] mt-[5px]flex flex-col justify-between">
                           <div className="text-[15px] leading-4">{e.title}</div>
-                          <div className="text-[13px] text-slate-400">2017</div>
+                          <div className="text-[13px] text-slate-400">
+                            {e.release_date.slice(0, 4)}
+                          </div>
                         </div>
                       </a>
                     </Link>
@@ -245,22 +249,24 @@ function Header() {
 
           {/* Login || User Profile */}
           {session.data?.user ? (
-            <div className="flex">
+            <div
+              className="flex"
+              onMouseEnter={() => setIsProfileToggle(true)}
+              onMouseLeave={() => setIsProfileToggle(false)}
+            >
               <Image
                 src={session.data.user.image!}
                 width={35}
                 height={35}
                 alt="userProfileImg"
                 className="rounded-full hover:cursor-pointer"
-                onClick={() => setProfileIsToggle(!isProfileToggle)}
               />
-
               <div
-                className={` ${
+                className={`${
                   isProfileToggle
                     ? 'opacity-1'
                     : 'opacity-0 pointer-events-none'
-                } rounded-lg flex-col text-black bg-white absolute top-[50px] right-[20px] divide-y-2 z-10 duration-300`}
+                } rounded-lg flex-col text-black bg-white absolute top-[43px] right-[20px] divide-y-2 z-10 duration-300`}
               >
                 <div className="px-[15px] py-[5px]">
                   <div className="flex justify-start items-center ">
@@ -270,12 +276,19 @@ function Header() {
                     {session.data.user.email}
                   </div>
                 </div>
-                <div className="flex justify-center items-center  h-[30px] hover:cursor-pointer">
+                {/* <div className="flex justify-center items-center  h-[30px] hover:cursor-pointer">
                   찜 목록
-                </div>
-                <div className="flex justify-center items-center  h-[30px] hover:cursor-pointer">
-                  내 댓글
-                </div>
+                </div> */}
+                <Link href="/myComment">
+                  <a
+                    className="flex justify-center items-center h-[30px] hover:cursor-pointe"
+                    onClick={() => {
+                      setIsProfileToggle(!isProfileToggle);
+                    }}
+                  >
+                    내 댓글
+                  </a>
+                </Link>
                 <div
                   className="flex justify-center items-center  h-[30px] hover:cursor-pointer"
                   onClick={() => signOut({ callbackUrl: '/' })}

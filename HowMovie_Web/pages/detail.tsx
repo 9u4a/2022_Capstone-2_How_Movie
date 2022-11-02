@@ -1,94 +1,104 @@
 import axios from 'axios';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import BackgroundMovie from '../components/BackgroundMovie';
 import Comment from '../components/Comment';
+import Startreview from '../components/Startreview';
 
 function Detail() {
+  const session = useSession();
   const [searchDetail, setSearchDetail] = useState<any>();
-  const [searchCredit, setSearchCredit] = useState<any>();
   const [commentInfo, setCommentInfo] = useState<any>();
-  const [userComment, setUserComment] = useState<string>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error>();
-  const [movieId, setMovieId] = useState<any>();
+  const [movieInfo, setMovieInfo] = useState<any>({
+    movieId: '',
+    movieName: '',
+  });
+  const { movieId, movieName } = movieInfo;
   const baseUrl = 'https://image.tmdb.org/t/p/w500';
-  const STAR_IDX_ARR = ['first', 'second', 'third', 'fourth', 'last'];
-  const [starHover, setStarHover] = useState<number>(0);
-  const [starClick, setStarClick] = useState<number>();
-  // const profileBaseUrl = 'https://www.themoviedb.org/t/p/w276_and_h350_face';
-
-  // console.log(searchDetail && searchDetail[1]);
+  const [userInfo, setUserInfo] = useState<any>({
+    userName: '',
+    userEmail: '',
+  });
   const router = useRouter();
+
   useEffect(() => {
-    if (router.query.movie_id !== undefined) {
-      const fetchDetailInfo = async () => {
+    session
+      ? setUserInfo({
+          userName: session.data?.user?.name,
+          userEmail: session.data?.user?.email,
+        })
+      : null;
+
+    const fetchDetailInfo = async () => {
+      if (movieId !== '') {
         try {
-          await axios
-            .get(
-              `http://localhost:8000/searchdetail?movie_id=${router.query.movie_id}`
-            )
-            .then((res) => {
-              setSearchDetail(res.data.result);
-              setMovieId(router.query.movie_id);
-            });
+          const res = await axios.get(
+            `http://localhost:8000/searchdetail?movie_id=${movieId}`
+          );
+          setMovieInfo({
+            movieId,
+            movieName: res.data.result[0].detail[0].title,
+          });
+          setSearchDetail(res.data.result);
         } catch (err) {
           if (axios.isAxiosError(err)) {
             setError(err);
           }
         }
-      };
-      fetchDetailInfo();
-    }
+      }
+    };
     const getCommentInfo = async () => {
-      try {
-        await axios
-          .get(`jdbc:mariadb://localhost:3306/movie/${router.query.movie_id}`)
-          .then((res) => {
-            setCommentInfo(res);
-          });
-      } catch (err) {
-        if (axios.isAxiosError(err)) {
-          setError(err);
+      if (movieId !== '') {
+        try {
+          const res = await axios.get(
+            `http://localhost:8000/comment/${movieId}
+            `
+          );
+          setCommentInfo(res.data);
+        } catch (err) {
+          if (axios.isAxiosError(err)) {
+            setError(err);
+          }
         }
       }
     };
-    getCommentInfo();
-  }, [router.query.movie_id]);
+    if (router.query.movie_id !== undefined) {
+      setMovieInfo({
+        movieId: router.query.movie_id,
+        movieName: '',
+      });
 
-  const postComment = async ({ body }: any) => {
-    try {
-      const res = await axios
-        .post(`jdbc:mariadb://localhost:3306/movie/review`, body)
-        .then((res) => {
-          console.log('status: ' + res.status);
-        });
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        setError(err);
-      }
+      fetchDetailInfo();
+      getCommentInfo();
     }
-  };
-  console.log(userComment);
+  }, [router.query.movie_id, session, movieId]);
+
   return (
     <>
       {searchDetail ? (
-        <div className="relative w-full h-[570px] bg-black">
-          <Image
-            src={baseUrl + searchDetail[0].detail[0].backdrop_path}
-            layout="fill"
-            alt="backDrop"
-            sizes="100%"
-            objectFit="cover"
-            className="opacity-20"
-            priority
-            placeholder="blur"
-            blurDataURL={baseUrl + searchDetail[0].detail[0].backdrop_path}
-          />
+        <div className="relative w-full h-[570px] bg-black/70">
+          {searchDetail[0].detail[0].backdrop_path ? (
+            <Image
+              src={`https://image.tmdb.org/t/p/original${searchDetail[0].detail[0].backdrop_path}`}
+              layout="fill"
+              alt="backDrop"
+              sizes="100%"
+              objectFit="cover"
+              className="opacity-20"
+              priority
+              placeholder="blur"
+              blurDataURL={`https://image.tmdb.org/t/p/original
+            ${searchDetail[0].detail[0].backdrop_path}
+          `}
+            />
+          ) : null}
 
-          <div className="flex w-full h-full">
-            <div className="flex justify-center items-center grow-0 h-full w-[438px]">
+          <div className="flex w-full h-full ">
+            <div className="flex justify-center items-center  h-full w-[438px] ">
               <div className="relative w-[220px] h-[300px] drop-shadow-br-md">
                 {searchDetail && (
                   <Image
@@ -106,28 +116,59 @@ function Detail() {
                 )}
               </div>
             </div>
-            <div className="flex justify-start items-center grow-1 h-full w-full">
+            <div className="flex justify-start items-center h-full w-full overflow-hidden">
               {[searchDetail[0].detail[0]].map((e: any, i: any) => {
                 return (
                   <div key={i}>
                     <div className="p-5">
                       <div className="text-4xl">{e.title}</div>
 
-                      <div className="text-base">{`${
-                        e.release_date
-                      } · ${e.genres.map((e: any, i: any) => {
-                        return e.name;
-                      })} · ${e.runtime}분`}</div>
-
-                      <div className="text-base italic my-[24px]">
-                        {e.tagline}
+                      <div className="text-base flex">
+                        {`${e.release_date} · ${e.genres.map(
+                          (e: any, i: any) => {
+                            return e.name;
+                          }
+                        )} · ${e.runtime}분 ·`}
+                        <div className="flex items-center pl-1 space-x-1">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                            className="w-[20px] h-[20px] text-[#d70000]"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                          <div>{e.vote_average.toFixed(1)}</div>
+                        </div>
                       </div>
+                      <div></div>
+                      {e.tagline && (
+                        <div className="text-base italic my-[24px]">
+                          {`" ${e.tagline} "`}
+                        </div>
+                      )}
 
                       <div className="text-xl font-bold">개요</div>
-                      <p className="mb-[30px]">{e.overview}</p>
-
-                      <div className="flex">
-                        <div className="mr-[185px] flex flex-col">
+                      <p className="mb-[30px] w-full h-[140px] leading-5 text-ellipsis whitespace-normal overflow-hidden line-clamp-5 block border">
+                        {e.overview}
+                      </p>
+                      <div
+                        className={`flex ${
+                          searchDetail[1].credit.directing.length === 0
+                            ? null
+                            : 'space-x-[185px]'
+                        }`}
+                      >
+                        <div
+                          className={`flex flex-col ${
+                            searchDetail[1].credit.directing.length === 0 &&
+                            'hidden'
+                          }`}
+                        >
                           <div className="flex">
                             {searchDetail[1].credit.directing.map(
                               (e: any, i: number) => {
@@ -147,7 +188,9 @@ function Detail() {
                               }
                             )}
                           </div>
-                          <p className="text-[12px]">Director</p>
+                          {searchDetail[1].credit.directing.length !== 0 ? (
+                            <p className="text-[12px]">Director</p>
+                          ) : null}
                         </div>
                         <div>
                           {searchDetail[1].credit.writing.map(
@@ -167,7 +210,9 @@ function Detail() {
                               );
                             }
                           )}
-                          <p className="text-[12px]">Writer</p>
+                          {searchDetail[1].credit.writing.length !== 0 ? (
+                            <p className="text-[12px]">Writer</p>
+                          ) : null}
                         </div>
                       </div>
                     </div>
@@ -235,91 +280,19 @@ function Detail() {
           </div>
           <div className="p-10">
             <div className=" text-2xl mb-10">댓글</div>
-            <div className="flex flex-col w-full ">
-              <div className="flex flex-col">
-                <h4 className="">평점</h4>
-
-                {/* starPoint */}
-                <div className="w-[150px]">
-                  <div
-                    className="absolute  w-[150px] h-[30px] z-10"
-                    onMouseMove={(e) => {
-                      if (starClick === undefined) {
-                        setStarHover(e.nativeEvent.offsetX);
-                      }
-                    }}
-                    onClick={() => {
-                      if (starClick === undefined) {
-                        setStarClick(starHover / 30);
-                      } else {
-                        setStarClick(undefined);
-                      }
-                    }}
-                  ></div>
-                  <div className="flex items-center">
-                    <div className="flex w-full">
-                      {STAR_IDX_ARR.map((e, i) => {
-                        return (
-                          <svg
-                            key={i}
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                            className="w-[30px] h-[30px] text-slate-300 "
-                          >
-                            <clipPath id={`${e}StarClip`}>
-                              <rect
-                                width={`${
-                                  starHover / 30 >= i
-                                    ? 0.8 * starHover - 24 * i
-                                    : 0
-                                }`}
-                                height="40"
-                              />
-                            </clipPath>
-                            <path
-                              id={`${e}Star`}
-                              fillRule="evenodd"
-                              d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
-                              // transform="translate(-2 -2)"
-                              clipRule="evenodd"
-                            />
-                            <use
-                              clipPath={`url(#${e}StarClip)`}
-                              href={`#${e}Star`}
-                              fill="#d70000"
-                            />
-                          </svg>
-                        );
-                      })}
-                    </div>
-                    <h4 className="ml-2">
-                      {starClick === undefined
-                        ? (starHover / 30).toFixed(1)
-                        : starClick.toFixed(1)}
-                    </h4>
-                  </div>
-                </div>
-              </div>
-              <textarea
-                className="w-full h-[100px] text-wthie bg-black border rounded-lg mt-3 p-5"
-                placeholder="리뷰를 남겨주세요."
-                onChange={(e) => setUserComment(e.target.value)}
-              ></textarea>
-              <div className="flex justify-end">
-                <button
-                  className="w-[100px] h-[40px] border rounded-lg mt-2 bg-white text-black hover:bg-black hover:text-white duration-200 active:bg-slate-800"
-                  onClick={() => postComment({ userComment, starClick })}
-                >
-                  등록
-                </button>
-              </div>
-            </div>
+            <Startreview
+              session={session}
+              userInfo={userInfo}
+              movieInfo={movieInfo}
+            />
             <hr className="border-slate-400 border-2 rounded-lg my-5" />
-            <Comment />
-            <Comment />
-            <Comment />
-            <Comment />
+            {commentInfo && (
+              <Comment
+                commentInfo={commentInfo}
+                movieInfo={movieInfo}
+                session={session}
+              />
+            )}
           </div>
         </div>
       ) : null}
