@@ -11,6 +11,10 @@ def Trend(request):
     language = '&language=ko-KR'
 
     res = requests.get(url + api_key + language)
+    if res.status_code == 401:
+        raise Exception(401)
+    elif res.status_code == 404:
+        raise Exception(404)
     data = res.json()
     result = []
 

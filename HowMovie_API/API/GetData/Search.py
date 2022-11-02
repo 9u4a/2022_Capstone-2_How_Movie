@@ -15,6 +15,10 @@ def Search(request):
 
     query = '&query=' + parse.quote(request.GET.get('query'))
     res = requests.get(url + api_key + language + query + page)
+    if res.status_code == 401:
+        raise Exception(401)
+    elif res.status_code == 404:
+        raise Exception(404)
     data = res.json()
     result = []
 
