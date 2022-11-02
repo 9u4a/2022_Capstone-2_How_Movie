@@ -16,10 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+
 from API.Views.CommentView import CommentView
 from API.Views.GenreView import GenreView
 from API.Views.MovieDetailView import MovieDetailView
 from API.Views.MainView import MainView
+from API.Views.MyCommentView import MyCommentView
 from API.Views.NowPlayingView import NowPlayingView
 from API.Views.SearchDetailView import SearchDetailView
 from API.Views.SearchView import SearchView
@@ -41,5 +43,6 @@ urlpatterns = [
     path('searchdetail', SearchDetailView.as_view()),
     path('genre', GenreView.as_view()),
     path('comment/<int:movie_id>', CommentView.as_view()),
+    path('mycomment', MyCommentView.as_view()),
 
 ]
