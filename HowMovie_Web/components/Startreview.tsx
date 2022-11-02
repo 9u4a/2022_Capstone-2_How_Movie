@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react';
 
 function Startreview(props: any) {
   const [error, setError] = useState<Error>();
-  const { session, userInfo, movieId, setSubmit } = props;
+  const { session, userInfo, movieInfo } = props;
+  const { movieId, movieName } = movieInfo;
   const { userName, userEmail } = userInfo;
   const STAR_IDX_ARR = ['first', 'second', 'third', 'fourth', 'last'];
   const [starHover, setStarHover] = useState<number>(0);
@@ -12,6 +13,7 @@ function Startreview(props: any) {
 
   const postComment = async (props: any) => {
     const body = {
+      movie_name: movieName,
       user_name: userName,
       email: userEmail,
       vote: starClick,
