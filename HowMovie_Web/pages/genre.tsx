@@ -116,7 +116,7 @@ function Genre() {
           genreMovies.map((e: any, i: number) => {
             return (
               <Link href={`/detail?movie_id=${e.id}`} key={i}>
-                <div className="w-full flex space-x-5 bg-slate-900 drop-shadow-br-md  hover:cursor-pointer">
+                <div className="w-full flex space-x-5 bg-slate-900 drop-shadow-br-md  hover:cursor-pointer rounded-xl">
                   <div className="relative md:w-[152px] md:h-[216px] w-[140px] h-[199px] duration-700 rounded-lg shrink-0">
                     <Image
                       src={baseUrl + e.poster_path}

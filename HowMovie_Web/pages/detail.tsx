@@ -18,7 +18,6 @@ function Detail() {
     movieName: '',
   });
   const { movieId, movieName } = movieInfo;
-  // const [movieId, setMovieId] = useState<any>();
   const baseUrl = 'https://image.tmdb.org/t/p/w500';
   const [userInfo, setUserInfo] = useState<any>({
     userName: '',
@@ -72,11 +71,10 @@ function Detail() {
         movieId: router.query.movie_id,
         movieName: '',
       });
-      // setMovieId(router.query.movie_id);
+
       fetchDetailInfo();
       getCommentInfo();
     }
-    // }
   }, [router.query.movie_id, session, movieId]);
 
   return (
@@ -125,11 +123,29 @@ function Detail() {
                     <div className="p-5">
                       <div className="text-4xl">{e.title}</div>
 
-                      <div className="text-base">{`${
-                        e.release_date
-                      } · ${e.genres.map((e: any, i: any) => {
-                        return e.name;
-                      })} · ${e.runtime}분`}</div>
+                      <div className="text-base flex">
+                        {`${e.release_date} · ${e.genres.map(
+                          (e: any, i: any) => {
+                            return e.name;
+                          }
+                        )} · ${e.runtime}분 ·`}
+                        <div className="flex items-center pl-1 space-x-1">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                            className="w-[20px] h-[20px] text-[#d70000]"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                          <div>{e.vote_average.toFixed(1)}</div>
+                        </div>
+                      </div>
+                      <div></div>
                       {e.tagline && (
                         <div className="text-base italic my-[24px]">
                           {`" ${e.tagline} "`}
@@ -271,7 +287,11 @@ function Detail() {
             />
             <hr className="border-slate-400 border-2 rounded-lg my-5" />
             {commentInfo && (
-              <Comment commentInfo={commentInfo} movieInfo={movieInfo} />
+              <Comment
+                commentInfo={commentInfo}
+                movieInfo={movieInfo}
+                session={session}
+              />
             )}
           </div>
         </div>

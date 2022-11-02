@@ -26,6 +26,7 @@ function MyComment() {
   }, [session.data, userEmail]);
   return (
     <>
+      <h3 className="p-5 pb-2">내 댓글</h3>
       <Comment myComment={myComment} />
     </>
   );
