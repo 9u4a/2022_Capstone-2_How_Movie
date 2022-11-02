@@ -13,7 +13,12 @@ function Detail() {
   const [commentInfo, setCommentInfo] = useState<any>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error>();
-  const [movieId, setMovieId] = useState<any>();
+  const [movieInfo, setMovieInfo] = useState<any>({
+    movieId: '',
+    movieName: '',
+  });
+  const { movieId, movieName } = movieInfo;
+  // const [movieId, setMovieId] = useState<any>();
   const baseUrl = 'https://image.tmdb.org/t/p/w500';
   const [userInfo, setUserInfo] = useState<any>({
     userName: '',
@@ -30,11 +35,15 @@ function Detail() {
       : null;
 
     const fetchDetailInfo = async () => {
-      if (movieId !== undefined) {
+      if (movieId !== '') {
         try {
           const res = await axios.get(
             `http://localhost:8000/searchdetail?movie_id=${movieId}`
           );
+          setMovieInfo({
+            movieId,
+            movieName: res.data.result[0].detail[0].title,
+          });
           setSearchDetail(res.data.result);
         } catch (err) {
           if (axios.isAxiosError(err)) {
@@ -44,7 +53,7 @@ function Detail() {
       }
     };
     const getCommentInfo = async () => {
-      if (movieId !== undefined) {
+      if (movieId !== '') {
         try {
           const res = await axios.get(
             `http://localhost:8000/comment/${movieId}
@@ -59,7 +68,11 @@ function Detail() {
       }
     };
     if (router.query.movie_id !== undefined) {
-      setMovieId(router.query.movie_id);
+      setMovieInfo({
+        movieId: router.query.movie_id,
+        movieName: '',
+      });
+      // setMovieId(router.query.movie_id);
       fetchDetailInfo();
       getCommentInfo();
     }
@@ -254,11 +267,11 @@ function Detail() {
             <Startreview
               session={session}
               userInfo={userInfo}
-              movieId={movieId}
+              movieInfo={movieInfo}
             />
             <hr className="border-slate-400 border-2 rounded-lg my-5" />
             {commentInfo && (
-              <Comment commentInfo={commentInfo} movieId={movieId} />
+              <Comment commentInfo={commentInfo} movieInfo={movieInfo} />
             )}
           </div>
         </div>

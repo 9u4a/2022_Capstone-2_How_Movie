@@ -107,7 +107,6 @@ function Genre() {
       fetchGenreMovie();
     }
   }, [router.query.genre_id]);
-  console.log(genreMovies);
 
   return (
     <>

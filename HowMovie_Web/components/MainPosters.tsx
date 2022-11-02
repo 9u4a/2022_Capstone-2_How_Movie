@@ -131,13 +131,13 @@ function MainPosters({ listType }: PropsType) {
           : null}
       </div>
       <div
-        className="top-[15%] left-0 lg:top-[20%] md:top-[17%] absolute invisible group-hover:visible w-[50px] h-[100px] flex justify-center items-center bg-slate-50/50 hover:cursor-pointer"
+        className="top-[15%] left-0 lg:top-[18%] md:top-[17%] absolute invisible group-hover:visible w-[50px] h-[100px] flex justify-center items-center bg-slate-50/50 hover:cursor-pointer duration-700"
         onClick={moveLeft}
       >
         <ChevronLeftIcon className="w-8 h-8" />
       </div>
       <div
-        className="top-[15%] right-0 lg:top-[20%] md:top-[17%] absolute invisible group-hover:visible w-[50px] h-[100px] flex justify-center items-center bg-slate-50/50 hover:cursor-pointer "
+        className="top-[15%] right-0 lg:top-[18%] md:top-[17%] absolute invisible group-hover:visible w-[50px] h-[100px] flex justify-center items-center bg-slate-50/50 hover:cursor-pointer duration-700"
         onClick={moveRight}
       >
         <ChevronRightIcon className="w-8 h-8" />
