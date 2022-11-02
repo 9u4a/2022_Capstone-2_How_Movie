@@ -20,12 +20,13 @@ class CommentView(APIView):
                 'success': True,
                 'user_name': data['user_name']
             }
-            return JsonResponse(response)
+            return JsonResponse(response, status=status.HTTP_201_CREATED)
         else:
             response = {
-                'success': False
+                'success': False,
+                'err': comment_serializer.errors
             }
-            return JsonResponse(response)
+            return JsonResponse(response, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request, movie_id):
         comment_data = list(Comment.objects.filter(movie_id=movie_id).values())
@@ -35,7 +36,7 @@ class CommentView(APIView):
             'vote_average': vote_average['vote__avg'],
             'result': comment_data
         }
-        return JsonResponse(response)
+        return JsonResponse(response, status=status.HTTP_200_OK)
 
     def put(self, request, movie_id):
         data = JSONParser().parse(request)
@@ -48,10 +49,10 @@ class CommentView(APIView):
         if comment_serializer.is_valid():
             comment_serializer.save()
             response = {
-                'result': True,
+                'success': True,
                 'user_name': data['user_name']
             }
-            return JsonResponse(response)
+            return JsonResponse(response, status=status.HTTP_201_CREATED)
 
     def delete(self, request, movie_id):
         data = JSONParser().parse(request)
@@ -65,10 +66,16 @@ class CommentView(APIView):
             response = {
                 'success': True
             }
-            return JsonResponse(response)
+            return JsonResponse(response, status=status.HTTP_200_OK)
         except FieldDoesNotExist:
             response = {
                 'success': False,
-                'error': 'FieldDoesNotExist'
+                'error': 'Comment Does Not Exist'
+            }
+            return JsonResponse(response, status=status.HTTP_404_NOT_FOUND)
+        except AttributeError:
+            response = {
+                'success': False,
+                'error': 'Comment Does Not Exist'
             }
             return JsonResponse(response, status=status.HTTP_404_NOT_FOUND)

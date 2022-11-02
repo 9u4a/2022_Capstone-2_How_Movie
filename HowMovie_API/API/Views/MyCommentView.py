@@ -12,7 +12,6 @@ class MyCommentView(APIView):
         try:
             email = request.GET.get('email')
             comment_data = list(Comment.objects.filter(email=email).values())
-            print(comment_data)
             response = {
                 'success': True,
                 'result': comment_data

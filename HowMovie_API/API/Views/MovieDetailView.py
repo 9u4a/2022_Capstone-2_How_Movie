@@ -17,15 +17,26 @@ class MovieDetailView(APIView):
                 'result': result
             }
             return JsonResponse(response, status=status.HTTP_200_OK)
-        except KeyError:
+
+        except Exception as e:
+            if int(str(e)) == 401:
+                response = {
+                    'success': False,
+                    'err': 'API_KEY ERROR'
+                }
+                return JsonResponse(response, status=status.HTTP_401_UNAUTHORIZED)
+
+            elif int(str(e)) == 404:
+                response = {
+                    'success': False,
+                    'err': 'NOT_FOUND'
+                }
+                return JsonResponse(response, status=status.HTTP_404_NOT_FOUND)
+
             response = {
                 'success': False,
-                'err': 'Movie Does Not Exist'
-            }
-            return JsonResponse(response, status=status.HTTP_404_NOT_FOUND)
-        except NameError:
-            response = {
-                'success': False,
-                'err': 'ApiKey error'
+                'err': 'BAD_REQUEST'
             }
             return JsonResponse(response, status=status.HTTP_400_BAD_REQUEST)
+
+
