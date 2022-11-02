@@ -12,6 +12,10 @@ def SearchDetail(request):
 
     movie_id = request.GET.get('movie_id')
     res = requests.get(url + movie_id + api_key + language)
+    if res.status_code == 401:
+        raise Exception(401)
+    elif res.status_code == 404:
+        raise Exception(404)
     data = res.json()
 
     result = [{

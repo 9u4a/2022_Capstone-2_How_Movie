@@ -14,6 +14,10 @@ def Popular(request):
         page = '&page=' + request.GET.get('page')
 
     res = requests.get(url + api_key + language + page)
+    if res.status_code == 401:
+        raise Exception(401)
+    elif res.status_code == 404:
+        raise Exception(404)
     data = res.json()
     result = []
 

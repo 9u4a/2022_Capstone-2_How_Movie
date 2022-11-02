@@ -11,8 +11,10 @@ def MovieVideo(request, movie_id, video):
     language = '&language=ko-KR'
 
     res = requests.get(url + api_key + language)
-    api_status = res.status_code
-    print(api_status)
+    if res.status_code == 401:
+        raise Exception(401)
+    elif res.status_code == 404:
+        raise Exception(404)
     data = res.json()
     result = []
     try:
