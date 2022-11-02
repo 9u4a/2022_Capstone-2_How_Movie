@@ -32,6 +32,13 @@ services:
       && python manage.py makemigrations API
       && python manage.py migrate API
       && python manage.py runserver 0.0.0.0:8000"
+  spring:
+    container_name: how-movie-login
+    build:
+      context: ./HowMovie_Login/oauth2/.
+      dockerfile: ./Dockerfile
+    ports:
+      - "8080:8080"  
   next:
     container_name: how-movie-web
     build:
@@ -39,4 +46,4 @@ services:
       dockerfile: ./Dockerfile
     ports:
       - "3000:3000"
-      
+  
