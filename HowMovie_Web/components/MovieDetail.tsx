@@ -52,8 +52,8 @@ function MovieDetail({ setDetailOpen, currID }: MovieDetailProps) {
   error && <div>에러 발생</div>;
 
   return (
-    <div className="flex justify-center items-center bg-black/80 w-full h-full fixed z-[200] top-0 overflow-none">
-      <div className="flex justify-end fixed z-[300] top-[1%] right-[1%]">
+    <div className="flex justify-center items-center bg-black/80 w-full h-full fixed z-[200] top-0 overflow-none mt-[50px]">
+      <div className="flex justify-end fixed z-[300] top-[1%] right-[1%] mt-[50px]">
         <button
           className="w-[40px] h-[40px] m-5 rounded-full z-50 right-[80px] p-1 text-slate-400"
           onClick={closeDetail}
@@ -62,7 +62,7 @@ function MovieDetail({ setDetailOpen, currID }: MovieDetailProps) {
         </button>
       </div>
       {detailInfo ? (
-        <div className="flex absolute flex-col items-end w-[80%] h-[80%] max-w-[1000px] max-h-[850px] bg-gray-900 rounded-xl top-[50%] translate-y-[-50%] overflow-scroll">
+        <div className="flex absolute flex-col items-end w-[80%] h-[80%] max-w-[1000px] max-h-[850px] bg-gray-900 rounded-xl top-[50%] translate-y-[-50%] overflow-scroll scrollbar-hide">
           <div className="w-full">
             <div className="w-full h-full max-h-[350px] rounded-t-xl">
               <BackgroundMovie currID={currID} />
