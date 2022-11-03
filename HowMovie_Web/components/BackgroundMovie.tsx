@@ -18,7 +18,7 @@ const BackgroundMovie = ({ currID }: Props) => {
       try {
         setLoading(true);
         const res = await axios.get(
-          `http://localhost:8000/moviedetail?movie_id=${currID}`
+          `http://localhost:8000/moviedetails?movie_id=${currID}`
         );
         setBackDrop(res.data.result[0].detail[0].backdrop_path);
         setMoviePath(res.data.result[0].detail[0].video);

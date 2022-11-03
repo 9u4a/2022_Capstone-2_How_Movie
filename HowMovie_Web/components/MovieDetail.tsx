@@ -28,7 +28,7 @@ function MovieDetail({ setDetailOpen, currID }: MovieDetailProps) {
           setDetailInfo(null);
           setLoading(true);
           await axios
-            .get(`http://localhost:8000/moviedetail?movie_id=${currID}`)
+            .get(`http://localhost:8000/moviedetails?movie_id=${currID}`)
             .then((res) => {
               setDetailInfo(res.data.result[0].detail[0]);
               setCreditInfo(res.data.result[1].credit);

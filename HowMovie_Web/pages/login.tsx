@@ -12,7 +12,7 @@ function Login() {
   //     router.replace('/');
   //   }
   // }, [session, router]);
-  console.log(session);
+  // console.log(session);
   return (
     <div className="relative">
       <Image
@@ -58,17 +58,7 @@ function Login() {
               <p className="md:text-lg">네이버 로그인</p>
               <div className="w-[40px]" />
             </div>
-            {/* <div className="flex justify-between items-center rounded-md w-[300px] md:w-[400px] lg:w-[500px] h-[50px] md:h-[55px] lg:h-[60px] space-x-5 px-[10px] hover:cursor-pointer hover:border-white border border-white/50 hover:text-white text-white/50 hover:font-semibold hover:duration-75 duration-700">
-              <Image
-                src="/asset/image/github_logo_white.svg"
-                width={30}
-                height={30}
-                alt="login"
-                className=""
-              />
-              <p className="md:text-lg">깃허브 로그인</p>
-              <div className="w-[40px]" />
-            </div> */}
+
             <div
               className="flex justify-between  items-center rounded-md w-[300px] md:w-[400px] lg:w-[500px] h-[50px] md:h-[55px] lg:h-[60px] space-x-5 px-[15px] hover:cursor-pointer hover:border-white border border-white/50 hover:text-white text-white/50 hover:font-semibold hover:duration-75 duration-700"
               onClick={() => {
@@ -76,7 +66,7 @@ function Login() {
               }}
             >
               <Image
-                src="/asset/image/kakaoTalk_logo.svg"
+                src="/asset/image/KakaoTalk_logo.svg"
                 width={20}
                 height={20}
                 alt="login"
@@ -88,39 +78,6 @@ function Login() {
         </div>
       </div>
     </div>
-    // <div className="absolute flex justify-end w-full z-50">
-    //   <div className="relative">
-    //     <div className="flex flex-col justify-center items-center lg:w-[350px] lg:h-[250px] md:w-[300px] md:h-[200px] w-[250px] h-[200px] bg-black/80 space-y-[5px] py-[auto]">
-    //       {/* <h3 className="mb-[30px]">로그인</h3> */}
-    //       <div className="flex items-center bg-white rounded-md w-[200px] h-[50px] space-x-5 px-[15px] hover:cursor-pointer ">
-    //         <Image
-    //           src="/asset/image/github.svg"
-    //           width={20}
-    //           height={20}
-    //           alt="login"
-    //         />
-    //         <p className="text-black pl-[15px]">깃허브 로그인</p>
-    //       </div>
-    //       <div className="w-[200px] h-[50px] hover:cursor-pointer">
-    //         <Image
-    //           src="/asset/image/kakao_login_large_narrow.png"
-    //           width={200}
-    //           height={50}
-    //           alt="kakaologin"
-    //         />
-    //       </div>
-    //       <div className="flex items-center bg-white rounded-md w-[200px] h-[50px] space-x-5 px-[15px] hover:cursor-pointer">
-    //         <Image
-    //           src="/asset/image/google.png"
-    //           width={20}
-    //           height={20}
-    //           alt="login"
-    //         />
-    //         <p className="text-black pl-[15px]">구글 로그인</p>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
   );
 }
 

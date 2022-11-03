@@ -13,6 +13,7 @@ function Startreview(props: any) {
 
   const postComment = async (props: any) => {
     const body = {
+      movie_id: movieId,
       movie_name: movieName,
       user_name: userName,
       email: userEmail,
@@ -20,12 +21,10 @@ function Startreview(props: any) {
       comment: userComment,
     };
     try {
-      await axios
-        .post(`http://localhost:8000/comment/${movieId}`, body)
-        .then((res) => {
-          console.log('전송');
-          console.log('status: ' + res.status);
-        });
+      await axios.post(`http://localhost:8000/comments`, body).then((res) => {
+        console.log('전송');
+        console.log('status: ' + res.status);
+      });
     } catch (err) {
       if (axios.isAxiosError(err)) {
         setError(err);
@@ -120,6 +119,7 @@ function Startreview(props: any) {
               session.status !== 'authenticated'
                 ? alert('로그인을 해주세요.')
                 : (postComment({
+                    movieId,
                     userName,
                     userEmail,
                     starClick,

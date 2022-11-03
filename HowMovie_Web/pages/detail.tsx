@@ -26,6 +26,8 @@ function Detail() {
   const router = useRouter();
 
   useEffect(() => {
+    const movieId = router.query.movie_id;
+
     session
       ? setUserInfo({
           userName: session.data?.user?.name,
@@ -34,10 +36,10 @@ function Detail() {
       : null;
 
     const fetchDetailInfo = async () => {
-      if (movieId !== '') {
+      if (movieId !== undefined) {
         try {
           const res = await axios.get(
-            `http://localhost:8000/searchdetail?movie_id=${movieId}`
+            `http://localhost:8000/searchdetails?movie_id=${movieId}`
           );
           setMovieInfo({
             movieId,
@@ -52,10 +54,10 @@ function Detail() {
       }
     };
     const getCommentInfo = async () => {
-      if (movieId !== '') {
+      if (movieId !== undefined) {
         try {
           const res = await axios.get(
-            `http://localhost:8000/comment/${movieId}
+            `http://localhost:8000/comments?movie_id=${movieId}
             `
           );
           setCommentInfo(res.data);
@@ -66,16 +68,10 @@ function Detail() {
         }
       }
     };
-    if (router.query.movie_id !== undefined) {
-      setMovieInfo({
-        movieId: router.query.movie_id,
-        movieName: '',
-      });
 
-      fetchDetailInfo();
-      getCommentInfo();
-    }
-  }, [router.query.movie_id, session, movieId]);
+    fetchDetailInfo();
+    getCommentInfo();
+  }, [router.query.movie_id, session]);
 
   return (
     <>

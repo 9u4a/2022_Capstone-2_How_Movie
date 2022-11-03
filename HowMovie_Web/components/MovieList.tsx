@@ -47,7 +47,7 @@ function MovieList({ type, listType }: MovieDetailProps) {
         ) : (
           <h2 className="px-[30px] font-semibold text-shadow-2xl">최신 영화</h2>
         )}
-        <div className="mb-[30px] px-[30px] flex w-full snap-x snap-mandatory overflow-x-scroll z-20 bg-gradient-to-b from-[trasparent] via-black/80 to-[#141414]/80 space-x-5 scrollbar-hide pb-[20px] drop-shadow-br-md">
+        <div className="mb-[30px] px-[30px] flex w-full snap-x snap-mandatory overflow-x-scroll z-20 bg-gradient-to-b from-[trasparent] via-black/80 to-[#141414]/80 space-x-5 pb-[20px] drop-shadow-br-md">
           {listType &&
             listType.map((e, i) => {
               return (

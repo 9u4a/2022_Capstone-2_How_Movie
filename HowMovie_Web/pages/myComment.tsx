@@ -12,7 +12,7 @@ function MyComment() {
     const fetchMyComment = async () => {
       if (userEmail !== undefined) {
         await axios
-          .get(`http://localhost:8000/mycomment?email=${userEmail}`)
+          .get(`http://localhost:8000/comments?email=${userEmail}`)
           .then((res) => {
             setMyComment(res.data.result);
           });
