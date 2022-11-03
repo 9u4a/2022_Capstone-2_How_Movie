@@ -38,11 +38,10 @@ urlpatterns = [
     path('nowplaying', NowPlayingView.as_view()),
     path('toprated', TopRatedView.as_view()),
     path('main', MainView.as_view()),
-    path('moviedetail', MovieDetailView.as_view()),
+    path('moviedetails', MovieDetailView.as_view()),
     path('search', SearchView.as_view()),
-    path('searchdetail', SearchDetailView.as_view()),
+    path('searchdetails', SearchDetailView.as_view()),
     path('genre', GenreView.as_view()),
-    path('comment/<int:movie_id>', CommentView.as_view()),
-    path('mycomment', MyCommentView.as_view()),
+    path('comments', CommentView.as_view()),
 
 ]

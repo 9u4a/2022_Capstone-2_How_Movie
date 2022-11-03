@@ -9,9 +9,8 @@ from API.models import Comment
 
 
 class CommentView(APIView):
-    def post(self, request, movie_id):
+    def post(self, request):
         data = JSONParser().parse(request)
-        data['movie_id'] = movie_id
         comment_serializer = CommentSerializer(data=data)
 
         if comment_serializer.is_valid():
@@ -28,19 +27,42 @@ class CommentView(APIView):
             }
             return JsonResponse(response, status=status.HTTP_400_BAD_REQUEST)
 
-    def get(self, request, movie_id):
-        comment_data = list(Comment.objects.filter(movie_id=movie_id).values())
-        vote_average = Comment.objects.filter(movie_id=movie_id).aggregate(Avg('vote'))
-        response = {
-            'success': True,
-            'vote_average': vote_average['vote__avg'],
-            'result': comment_data
-        }
-        return JsonResponse(response, status=status.HTTP_200_OK)
+    def get(self, request):
+        movie_id = request.GET.get('movie_id')
+        email = request.GET.get('email')
+        if movie_id:
+            try:
+                comment_data = list(Comment.objects.filter(movie_id=movie_id).values())
+                vote_average = Comment.objects.filter(movie_id=movie_id).aggregate(Avg('vote'))
+                response = {
+                    'success': True,
+                    'vote_average': vote_average['vote__avg'],
+                    'result': comment_data
+                }
+                return JsonResponse(response, status=status.HTTP_200_OK)
+            except Comment.DoesNotExist:
+                response = {
+                    'success': False,
+                    'err': 'Comment Does Not Exist'
+                }
+            return JsonResponse(response, status=status.HTTP_404_NOT_FOUND)
+        elif email:
+            try:
+                comment_data = list(Comment.objects.filter(email=email).values())
+                response = {
+                    'success': True,
+                    'result': comment_data
+                }
+                return JsonResponse(response, status=status.HTTP_200_OK)
+            except Comment.DoesNotExist:
+                response = {
+                    'success': False,
+                    'err': 'Comment Does Not Exist'
+                }
+            return JsonResponse(response, status=status.HTTP_404_NOT_FOUND)
 
-    def put(self, request, movie_id):
+    def put(self, request):
         data = JSONParser().parse(request)
-        data['movie_id'] = movie_id
         comment_data = Comment.objects.filter(
             Q(id=data['id']) &
             Q(email=data['email'])
@@ -53,14 +75,20 @@ class CommentView(APIView):
                 'user_name': data['user_name']
             }
             return JsonResponse(response, status=status.HTTP_201_CREATED)
+        else:
+            response = {
+                'success': False,
+                'err': comment_serializer.errors
+            }
+            return JsonResponse(response, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, movie_id):
+    def delete(self, request):
         data = JSONParser().parse(request)
         try:
             comment_data = Comment.objects.filter(
                 Q(id=data['id']) &
                 Q(email=data['email']) &
-                Q(movie_id=movie_id)
+                Q(movie_id=data['movie_id'])
             ).first()
             comment_data.delete()
             response = {
