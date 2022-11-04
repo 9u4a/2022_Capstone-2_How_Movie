@@ -24,10 +24,17 @@ function MyComment() {
       fetchMyComment();
     }
   }, [session.data, userEmail]);
+
   return (
     <>
       <h3 className="p-5 pb-2">내 댓글</h3>
-      <Comment myComment={myComment} />
+      {myComment && myComment.length !== 0 ? (
+        <Comment myComment={myComment} />
+      ) : (
+        <h3 className="flex justify-center items-center w-full h-[500px] ">
+          🚨 작성하신 댓글이 없습니다.
+        </h3>
+      )}
     </>
   );
 }

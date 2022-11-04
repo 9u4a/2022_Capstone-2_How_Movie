@@ -119,7 +119,7 @@ function Detail() {
                     <div className="p-5">
                       <div className="text-4xl">{e.title}</div>
 
-                      <div className="text-base flex">
+                      <div className="text-base flex flex-col md:flex-row lg:flex-row">
                         {`${e.release_date} · ${e.genres.map(
                           (e: any, i: any) => {
                             return e.name;
@@ -147,11 +147,16 @@ function Detail() {
                           {`" ${e.tagline} "`}
                         </div>
                       )}
-
-                      <div className="text-xl font-bold">개요</div>
-                      <p className="mb-[30px] w-full h-[140px] leading-5 text-ellipsis whitespace-normal overflow-hidden line-clamp-5 block border">
-                        {e.overview}
-                      </p>
+                      {e.overview ? (
+                        <>
+                          <div className="text-xl font-bold">개요</div>
+                          <p className="mb-[30px] w-full h-[120px] line-clamp-5 block">
+                            {e.overview}
+                          </p>
+                        </>
+                      ) : (
+                        <div className="h-[20px]"></div>
+                      )}
                       <div
                         className={`flex ${
                           searchDetail[1].credit.directing.length === 0

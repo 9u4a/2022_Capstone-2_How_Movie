@@ -13,37 +13,15 @@ function Comment(props: any) {
   useEffect(() => {}, [commentInfo, myComment]);
   const deleteComment = async (id: number, email: string, movieId: number) => {
     try {
-      await axios
-        .delete(`http://localhost:8000/comments`, {
-          data: { id: id, email: email, movie_id: movieId },
-        })
-        .then((res) => {
-          console.log('삭제');
-          console.log('status: ' + res.status);
-        });
+      await axios.delete(`http://localhost:8000/comments`, {
+        data: { id: id, email: email, movie_id: movieId },
+      });
     } catch (err) {
       if (axios.isAxiosError(err)) {
         setError(err);
       }
     }
   };
-  // const deleteMyComment = async (id: number, email: string) => {
-  //   console.log(id, email);
-  //   try {
-  //     await axios
-  //       .delete(`http://localhost:8000/mycomment`, {
-  //         data: { id: id, email: email },
-  //       })
-  //       .then((res) => {
-  //         console.log('삭제');
-  //         console.log('status: ' + res.status);
-  //       });
-  //   } catch (err) {
-  //     if (axios.isAxiosError(err)) {
-  //       setError(err);
-  //     }
-  //   }
-  // };
 
   return (
     <>
@@ -80,7 +58,6 @@ function Comment(props: any) {
       ) : myComment ? (
         <div className="p-3">
           {[...myComment].reverse().map((e: any, i: number) => {
-            console.log(e);
             return (
               <div
                 className="h-[140px] p-5 bg-slate-800 mb-3 rounded-xl"
