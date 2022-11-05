@@ -22,15 +22,16 @@ function Startreview(props: any) {
     };
     try {
       await axios.post(`http://localhost:8000/comments`, body).then((res) => {
-        console.log('전송');
-        console.log('status: ' + res.status);
+        location.reload();
       });
     } catch (err) {
       if (axios.isAxiosError(err)) {
         setError(err);
+        alert('평점과 댓글을 제대로 입력해주세요.');
       }
     }
   };
+
   return (
     <>
       <div className="flex flex-col w-full">
@@ -127,8 +128,7 @@ function Startreview(props: any) {
                   }),
                   setStarClick(0),
                   setStarHover(0),
-                  setUserComment(''),
-                  location.reload())
+                  setUserComment(''))
             }
           >
             등록

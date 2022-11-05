@@ -110,116 +110,122 @@ function Genre() {
 
   return (
     <>
-      <div className="space-y-5 p-5">
-        {!loading ? (
-          genreMovies &&
-          genreMovies.map((e: any, i: number) => {
-            return (
-              <Link href={`/detail?movie_id=${e.id}`} key={i}>
-                <div className="w-full flex space-x-5 bg-slate-900 drop-shadow-br-md  hover:cursor-pointer rounded-xl">
-                  <div className="relative md:w-[152px] md:h-[216px] w-[140px] h-[199px] duration-700 rounded-lg shrink-0">
-                    <Image
-                      src={baseUrl + e.poster_path}
-                      alt="이미지"
-                      sizes="100%"
-                      layout="fill"
-                      objectFit="fill"
-                      placeholder="blur"
-                      blurDataURL={baseUrl + e.poster_path}
-                      className="rounded-lg"
-                    />
-                  </div>
-                  <div className="flex flex-col mt-5">
-                    <div className="flex items-baseline space-x-1 leading-6 mb-3 s">
-                      <h3>{e.title}</h3>
-                      <h4 className="italic">{e.original_title}</h4>
+      {!error ? (
+        <div className="space-y-5 p-5">
+          {!loading ? (
+            genreMovies &&
+            genreMovies.map((e: any, i: number) => {
+              return (
+                <Link href={`/detail?movie_id=${e.id}`} key={i}>
+                  <div className="w-full flex space-x-5 bg-slate-900 drop-shadow-br-md  hover:cursor-pointer rounded-xl">
+                    <div className="relative md:w-[152px] md:h-[216px] w-[140px] h-[199px] duration-700 rounded-lg shrink-0">
+                      <Image
+                        src={baseUrl + e.poster_path}
+                        alt="이미지"
+                        sizes="100%"
+                        layout="fill"
+                        objectFit="fill"
+                        placeholder="blur"
+                        blurDataURL={baseUrl + e.poster_path}
+                        className="rounded-lg"
+                      />
                     </div>
-                    <div className="flex space-x-3 mb-3 items-center">
-                      <div>{e.release_date}</div>
-                      <div className="flex space-x-2">
-                        {e.genre_ids.map((e: number, i: number) => {
-                          return genre.map((v: any) => {
-                            if (e === v.id) {
-                              return <div key={i}>{v.name}</div>;
-                            }
-                          });
-                        })}
+                    <div className="flex flex-col mt-5">
+                      <div className="flex items-baseline space-x-1 leading-6 mb-3 s">
+                        <h3>{e.title}</h3>
+                        <h4 className="italic">{e.original_title}</h4>
                       </div>
-                      <div className="flex items-center space-x-1">
-                        <svg
-                          key={i}
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          fill="currentColor"
-                          className="w-[20px] h-[20px] text-[#d70000]"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
-                            // transform="translate(-2 -2)"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                        <div>{e.vote_average}</div>
+                      <div className="flex space-x-3 mb-3 items-center">
+                        <div>{e.release_date}</div>
+                        <div className="flex space-x-2">
+                          {e.genre_ids.map((e: number, i: number) => {
+                            return genre.map((v: any) => {
+                              if (e === v.id) {
+                                return <div key={i}>{v.name}</div>;
+                              }
+                            });
+                          })}
+                        </div>
+                        <div className="flex items-center space-x-1">
+                          <svg
+                            key={i}
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                            className="w-[20px] h-[20px] text-[#d70000]"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                              // transform="translate(-2 -2)"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                          <div>{e.vote_average}</div>
+                        </div>
+                      </div>
+                      <div className="overflow-hidden text-[12px] opacity-70 mr-5">
+                        {e.overview}
                       </div>
                     </div>
-                    <div className="overflow-hidden text-[12px] opacity-70 mr-5">
-                      {e.overview}
-                    </div>
                   </div>
+                </Link>
+              );
+            })
+          ) : (
+            <>
+              <div className="w-full flex space-x-5 bg-slate-900 drop-shadow-br-md">
+                <div className="relative md:w-[152px] md:h-[216px] w-[140px] h-[199px] duration-700">
+                  <div className="w-full h-full rounded-lg bg-slate-700 animate-pulse"></div>
                 </div>
-              </Link>
-            );
-          })
-        ) : (
-          <>
-            <div className="w-full flex space-x-5 bg-slate-900 drop-shadow-br-md">
-              <div className="relative md:w-[152px] md:h-[216px] w-[140px] h-[199px] duration-700">
-                <div className="w-full h-full rounded-lg bg-slate-700 animate-pulse"></div>
+                <div className="flex flex-col mt-5">
+                  <div className="bg-slate-700 w-[250px] h-[40px] rounded-lg animate-pulse mb-5"></div>
+                  <div className="bg-slate-700 w-[400px] h-[30px] rounded-lg animate-pulse mb-3"></div>
+                  <div className="bg-slate-700 w-[400px] h-[30px] rounded-lg animate-pulse mb-3"></div>
+                  <div className="bg-slate-700 w-[400px] h-[30px] rounded-lg animate-pulse"></div>
+                </div>
               </div>
-              <div className="flex flex-col mt-5">
-                <div className="bg-slate-700 w-[250px] h-[40px] rounded-lg animate-pulse mb-5"></div>
-                <div className="bg-slate-700 w-[400px] h-[30px] rounded-lg animate-pulse mb-3"></div>
-                <div className="bg-slate-700 w-[400px] h-[30px] rounded-lg animate-pulse mb-3"></div>
-                <div className="bg-slate-700 w-[400px] h-[30px] rounded-lg animate-pulse"></div>
+              <div className="w-full flex space-x-5 bg-slate-900 drop-shadow-br-md">
+                <div className="relative md:w-[152px] md:h-[216px] w-[140px] h-[199px] duration-700">
+                  <div className="w-full h-full rounded-lg bg-slate-700 animate-pulse"></div>
+                </div>
+                <div className="flex flex-col mt-5">
+                  <div className="bg-slate-700 w-[250px] h-[40px] rounded-lg animate-pulse mb-5"></div>
+                  <div className="bg-slate-700 w-[400px] h-[30px] rounded-lg animate-pulse mb-3"></div>
+                  <div className="bg-slate-700 w-[400px] h-[30px] rounded-lg animate-pulse mb-3"></div>
+                  <div className="bg-slate-700 w-[400px] h-[30px] rounded-lg animate-pulse"></div>
+                </div>
               </div>
-            </div>
-            <div className="w-full flex space-x-5 bg-slate-900 drop-shadow-br-md">
-              <div className="relative md:w-[152px] md:h-[216px] w-[140px] h-[199px] duration-700">
-                <div className="w-full h-full rounded-lg bg-slate-700 animate-pulse"></div>
+              <div className="w-full flex space-x-5 bg-slate-900 drop-shadow-br-md">
+                <div className="relative md:w-[152px] md:h-[216px] w-[140px] h-[199px] duration-700">
+                  <div className="w-full h-full rounded-lg bg-slate-700 animate-pulse"></div>
+                </div>
+                <div className="flex flex-col mt-5">
+                  <div className="bg-slate-700 w-[250px] h-[40px] rounded-lg animate-pulse mb-5"></div>
+                  <div className="bg-slate-700 w-[400px] h-[30px] rounded-lg animate-pulse mb-3"></div>
+                  <div className="bg-slate-700 w-[400px] h-[30px] rounded-lg animate-pulse mb-3"></div>
+                  <div className="bg-slate-700 w-[400px] h-[30px] rounded-lg animate-pulse"></div>
+                </div>
               </div>
-              <div className="flex flex-col mt-5">
-                <div className="bg-slate-700 w-[250px] h-[40px] rounded-lg animate-pulse mb-5"></div>
-                <div className="bg-slate-700 w-[400px] h-[30px] rounded-lg animate-pulse mb-3"></div>
-                <div className="bg-slate-700 w-[400px] h-[30px] rounded-lg animate-pulse mb-3"></div>
-                <div className="bg-slate-700 w-[400px] h-[30px] rounded-lg animate-pulse"></div>
+              <div className="w-full flex space-x-5 bg-slate-900 drop-shadow-br-md">
+                <div className="relative md:w-[152px] md:h-[216px] w-[140px] h-[199px] duration-700">
+                  <div className="w-full h-full rounded-lg bg-slate-700 animate-pulse"></div>
+                </div>
+                <div className="flex flex-col mt-5">
+                  <div className="bg-slate-700 w-[250px] h-[40px] rounded-lg animate-pulse mb-5"></div>
+                  <div className="bg-slate-700 w-[400px] h-[30px] rounded-lg animate-pulse mb-3"></div>
+                  <div className="bg-slate-700 w-[400px] h-[30px] rounded-lg animate-pulse mb-3"></div>
+                  <div className="bg-slate-700 w-[400px] h-[30px] rounded-lg animate-pulse"></div>
+                </div>
               </div>
-            </div>
-            <div className="w-full flex space-x-5 bg-slate-900 drop-shadow-br-md">
-              <div className="relative md:w-[152px] md:h-[216px] w-[140px] h-[199px] duration-700">
-                <div className="w-full h-full rounded-lg bg-slate-700 animate-pulse"></div>
-              </div>
-              <div className="flex flex-col mt-5">
-                <div className="bg-slate-700 w-[250px] h-[40px] rounded-lg animate-pulse mb-5"></div>
-                <div className="bg-slate-700 w-[400px] h-[30px] rounded-lg animate-pulse mb-3"></div>
-                <div className="bg-slate-700 w-[400px] h-[30px] rounded-lg animate-pulse mb-3"></div>
-                <div className="bg-slate-700 w-[400px] h-[30px] rounded-lg animate-pulse"></div>
-              </div>
-            </div>
-            <div className="w-full flex space-x-5 bg-slate-900 drop-shadow-br-md">
-              <div className="relative md:w-[152px] md:h-[216px] w-[140px] h-[199px] duration-700">
-                <div className="w-full h-full rounded-lg bg-slate-700 animate-pulse"></div>
-              </div>
-              <div className="flex flex-col mt-5">
-                <div className="bg-slate-700 w-[250px] h-[40px] rounded-lg animate-pulse mb-5"></div>
-                <div className="bg-slate-700 w-[400px] h-[30px] rounded-lg animate-pulse mb-3"></div>
-                <div className="bg-slate-700 w-[400px] h-[30px] rounded-lg animate-pulse mb-3"></div>
-                <div className="bg-slate-700 w-[400px] h-[30px] rounded-lg animate-pulse"></div>
-              </div>
-            </div>
-          </>
-        )}
-      </div>
+            </>
+          )}
+        </div>
+      ) : (
+        <h3 className="flex mt-[15%] justify-center items-center">
+          🚨 서버와 연결을 확인해주세요.
+        </h3>
+      )}
     </>
   );
 }
