@@ -38,7 +38,7 @@
 
 ---
 <details>
-<summary>메인화면(/main)</summary>
+<summary>메인화면 (/main)</summary>
 
 ### Request Form
 
@@ -272,7 +272,7 @@
 
 <details>
 
-<summary>영화검색(/search)</summary>
+<summary>영화검색 (/search)</summary>
 
 ### Request Form
 
@@ -772,5 +772,285 @@
 }
 ```
 </details>
+</details>
+</details>
+
+<details>
+<summary>Popular (/popular)</summary>
+
+### Request Form
+
+|     TAG     |  value  | required |
+| :---------: | :-----: | :------: |
+|   API URL   |  /popular  |    -     |
+|   Method    |  GET   |    -     |
+|   page    |  integer   |    -     |
+
+### Response 
+
+|     STATUS     |  response  |
+| :---------: | :-----: | 
+|   200   | OK  |
+|   400    |  err: BAD_REQUEST  |
+|   401   |  err: API_KEY ERROR   |
+|   404    |  err: NOT_FOUND   |
+
+
+<details><summary>Example</summary>
+
+```yaml
+{
+    "success": true,
+    "result": {
+        "popular": [
+            {
+                "id": 663712,
+                "title": "테리파이어 2",
+                "poster_path": "/yB8BMtvzHlMmRT1WmTQnGv1bcOK.jpg",
+                "backdrop_path": "/y5Z0WesTjvn59jP6yo459eUsbli.jpg",
+                "release_date": "2022-10-06"
+            },
+            {
+                "id": 436270,
+                "title": "블랙 아담",
+                "poster_path": "/mEdMHGy1FfCUc7PskFO0tibm8jp.jpg",
+                "backdrop_path": "/bQXAqRx2Fgc46uCVWgoPz5L5Dtr.jpg",
+                "release_date": "2022-10-19"
+            },
+            {
+                "id": 420634,
+                "title": "테리파이어",
+                "poster_path": "/6PQqC4SbY910VvyVad6mvsboILU.jpg",
+                "backdrop_path": "/naNXYdBzTEb1KwOdi1RbBkM9Zv1.jpg",
+                "release_date": "2016-10-15"
+            }
+        ]
+    }
+}
+```
+</details>
+</details>
+
+<details>
+<summary>NowPlaying (/nowplaying)</summary>
+
+### Request Form
+
+|     TAG     |  value  | required |
+| :---------: | :-----: | :------: |
+|   API URL   |  /nowplaying  |    -     |
+|   Method    |  GET   |    -     |
+|   page    |  integer   |    -     |
+
+### Response 
+
+|     STATUS     |  response  |
+| :---------: | :-----: | 
+|   200   | OK  |
+|   400    |  err: BAD_REQUEST  |
+|   401   |  err: API_KEY ERROR   |
+|   404    |  err: NOT_FOUND   |
+
+
+<details><summary>Example</summary>
+
+```yaml
+{
+    "success": true,
+    "result": {
+        "nowplaying": [
+            {
+                "id": 663712,
+                "title": "테리파이어 2",
+                "poster_path": "/yB8BMtvzHlMmRT1WmTQnGv1bcOK.jpg",
+                "backdrop_path": "/y5Z0WesTjvn59jP6yo459eUsbli.jpg",
+                "release_date": "2022-10-06"
+            },
+            {
+                "id": 436270,
+                "title": "블랙 아담",
+                "poster_path": "/mEdMHGy1FfCUc7PskFO0tibm8jp.jpg",
+                "backdrop_path": "/bQXAqRx2Fgc46uCVWgoPz5L5Dtr.jpg",
+                "release_date": "2022-10-19"
+            },
+            {
+                "id": 717728,
+                "title": "Jeepers Creepers: Reborn",
+                "poster_path": "/aGBuiirBIQ7o64FmJxO53eYDuro.jpg",
+                "backdrop_path": "/tIX6j3NzadlwGcJ52nuWdmtOQkg.jpg",
+                "release_date": "2022-09-15"
+            }
+        ]
+    }
+}
+```
+</details>
+</details>
+
+<details>
+<summary>UpComing (/upcoming)</summary>
+
+### Request Form
+
+|     TAG     |  value  | required |
+| :---------: | :-----: | :------: |
+|   API URL   |  /upcoming  |    -     |
+|   Method    |  GET   |    -     |
+|   page    |  integer   |    -     |
+
+### Response 
+
+|     STATUS     |  response  |
+| :---------: | :-----: | 
+|   200   | OK  |
+|   400    |  err: BAD_REQUEST  |
+|   401   |  err: API_KEY ERROR   |
+|   404    |  err: NOT_FOUND   |
+
+
+<details><summary>Example</summary>
+
+```yaml
+{
+    "success": true,
+    "result": {
+        "upcoming": [
+            {
+                "id": 663712,
+                "title": "테리파이어 2",
+                "poster_path": "/yB8BMtvzHlMmRT1WmTQnGv1bcOK.jpg",
+                "backdrop_path": "/y5Z0WesTjvn59jP6yo459eUsbli.jpg",
+                "release_date": "2022-10-06"
+            },
+            {
+                "id": 619730,
+                "title": "걱정말아요 그대",
+                "poster_path": "/9BXYLjXtSipBp2GfAlsri4i8hPC.jpg",
+                "backdrop_path": "/4O9kFXsBjlxtgzXWHfgMS9CjhbN.jpg",
+                "release_date": "2022-09-21"
+            },
+            {
+                "id": 820067,
+                "title": "극장판 5등분의 신부",
+                "poster_path": "/63SDXxNKOA4ZfXvRCkF9B1y14Us.jpg",
+                "backdrop_path": "/jBIMZ0AlUYuFNsKbd4L6FojWMoy.jpg",
+                "release_date": "2022-05-20"
+            }
+        ]
+    }
+}
+```
+</details>
+</details>
+
+<details>
+<summary>Trend (/trend)</summary>
+
+### Request Form
+
+|     TAG     |  value  | required |
+| :---------: | :-----: | :------: |
+|   API URL   |  /trend  |    -     |
+|   Method    |  GET   |    -     |
+|   page    |  integer   |    -     |
+
+### Response 
+
+|     STATUS     |  response  |
+| :---------: | :-----: | 
+|   200   | OK  |
+|   400    |  err: BAD_REQUEST  |
+|   401   |  err: API_KEY ERROR   |
+|   404    |  err: NOT_FOUND   |
+
+
+<details><summary>Example</summary>
+
+```yaml
+{
+    "success": true,
+    "result": {
+        "trend": [
+            {
+                "id": 829280,
+                "title": "에놀라 홈즈 2",
+                "poster_path": "/S6fDnntDjduIWuLW2GcqFasobD.jpg",
+                "backdrop_path": "/zzoFeH4PsV5Mh2Sc47JOMFwGYOX.jpg",
+                "release_date": "2022-11-04"
+            },
+            {
+                "id": 595586,
+                "title": "더 브릿지",
+                "poster_path": "/wNSfX8GOCfusviA9yxuKv9Tc9Gq.jpg",
+                "backdrop_path": "/qgbrCFlhx6OmyZmJZsKVZekBWBL.jpg",
+                "release_date": "2022-10-28"
+            },
+            {
+                "id": 744114,
+                "title": "나의 경찰관",
+                "poster_path": "/wdbiMjXd4CxPfCx4r4Jfy8cGec0.jpg",
+                "backdrop_path": "/s5MLcxbdFqvIzTLNLU5yQFFYALR.jpg",
+                "release_date": "2022-10-21"
+            }
+        ]
+    }
+}
+```
+</details>
+</details>
+
+<details>
+<summary>TopRated (/toprated)</summary>
+
+### Request Form
+
+|     TAG     |  value  | required |
+| :---------: | :-----: | :------: |
+|   API URL   |  /toprated  |    -     |
+|   Method    |  GET   |    -     |
+|   page    |  integer   |    -     |
+
+### Response 
+
+|     STATUS     |  response  |
+| :---------: | :-----: | 
+|   200   | OK  |
+|   400    |  err: BAD_REQUEST  |
+|   401   |  err: API_KEY ERROR   |
+|   404    |  err: NOT_FOUND   |
+
+
+<details><summary>Example</summary>
+
+```yaml
+{
+    "success": true,
+    "result": {
+        "toprated": [
+            {
+                "id": 238,
+                "title": "대부",
+                "poster_path": "/cOwVs8eYA4G9ZQs7hIRSoiZr46Q.jpg",
+                "backdrop_path": "/rSPw7tgCH9c6NqICZef4kZjFOQ5.jpg",
+                "release_date": "1972-03-14"
+            },
+            {
+                "id": 278,
+                "title": "쇼생크 탈출",
+                "poster_path": "/oAt6OtpwYCdJI76AVtVKW1eorYx.jpg",
+                "backdrop_path": "/kXfqcdQKsToO0OUXHcrrNCHDBzO.jpg",
+                "release_date": "1994-09-23"
+            },
+            {
+                "id": 620249,
+                "title": "나소흑전기: 첫만남편",
+                "poster_path": "/nDieZR47cirx44UZxKQsCbRGYqW.jpg",
+                "backdrop_path": "/aVFx1VtlOxR3v0ADEatalXOvwbu.jpg",
+                "release_date": "2019-08-27"
+            }
+        ]
+    }
+}
+```
 </details>
 </details>
