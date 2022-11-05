@@ -93,7 +93,7 @@ function Header() {
     },
   ];
   const session = useSession();
-  const baseUrl = 'https://image.tmdb.org/t/p/original';
+  const baseUrl = 'https://image.tmdb.org/t/p/w92';
   const searchRef = useRef<any>(null);
   const inputFocus = useRef<any>(null);
   const [isToggle, setIsToggle] = useState<boolean>(false);
