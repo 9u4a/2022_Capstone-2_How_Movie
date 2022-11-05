@@ -2,7 +2,6 @@ import axios from 'axios';
 import { NextPage } from 'next';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
-import testAPI from '../pages/api/testAPI.json';
 import MovieDetail from './MovieDetail';
 
 export interface detailListType {
@@ -29,7 +28,7 @@ interface MovieDetailProps {
 function MovieList({ type, listType }: MovieDetailProps) {
   const [detailOpen, setDetailOpen] = useState<boolean>(false);
   const [currID, setCurrID] = useState<number>(0);
-  const baseUrl = 'https://image.tmdb.org/t/p/original';
+  const baseUrl = 'https://image.tmdb.org/t/p/w342';
 
   const showDetail = () => {
     setDetailOpen(true);
@@ -47,7 +46,7 @@ function MovieList({ type, listType }: MovieDetailProps) {
         ) : (
           <h2 className="px-[30px] font-semibold text-shadow-2xl">최신 영화</h2>
         )}
-        <div className="mb-[30px] px-[30px] flex w-full snap-x snap-mandatory overflow-x-scroll z-20 bg-gradient-to-b from-[trasparent] via-black/80 to-[#141414]/80 space-x-5 scrollbar-hide pb-[20px] drop-shadow-br-md">
+        <div className="mb-[30px] px-[30px] flex w-full snap-x snap-mandatory overflow-x-scroll z-20 bg-gradient-to-b from-[trasparent] via-black/80 to-[#141414]/80 space-x-5 pb-[20px] drop-shadow-br-md">
           {listType &&
             listType.map((e, i) => {
               return (
@@ -67,6 +66,7 @@ function MovieList({ type, listType }: MovieDetailProps) {
                       objectFit="fill"
                       placeholder="blur"
                       blurDataURL={baseUrl + e.poster_path}
+                      priority
                     />
                     {type === 'toprated' && (
                       <h1 className="relative z-30 ml-[10px] top-[-5px] italic font-semibold text-shadow-2xl">

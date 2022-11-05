@@ -138,7 +138,7 @@ function Header() {
   loading && <div>로딩중</div>;
   error && <div>에러 발생</div>;
   return (
-    <>
+    <div className="fixed w-full top-0 z-[999]">
       <div
         className={`flex w-full h-[50px] bg-black justify-between items-center ${
           session ? 'pl-[50px] pr-[20px]' : 'px-[50px]'
@@ -340,7 +340,7 @@ function Header() {
           <div>액션</div> */}
         </div>
       ) : null}
-    </>
+    </div>
   );
 }
 

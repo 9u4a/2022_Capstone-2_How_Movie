@@ -13,6 +13,7 @@ function Startreview(props: any) {
 
   const postComment = async (props: any) => {
     const body = {
+      movie_id: movieId,
       movie_name: movieName,
       user_name: userName,
       email: userEmail,
@@ -20,18 +21,17 @@ function Startreview(props: any) {
       comment: userComment,
     };
     try {
-      await axios
-        .post(`http://localhost:8000/comment/${movieId}`, body)
-        .then((res) => {
-          console.log('전송');
-          console.log('status: ' + res.status);
-        });
+      await axios.post(`http://localhost:8000/comments`, body).then((res) => {
+        location.reload();
+      });
     } catch (err) {
       if (axios.isAxiosError(err)) {
         setError(err);
+        alert('평점과 댓글을 제대로 입력해주세요.');
       }
     }
   };
+
   return (
     <>
       <div className="flex flex-col w-full">
@@ -120,6 +120,7 @@ function Startreview(props: any) {
               session.status !== 'authenticated'
                 ? alert('로그인을 해주세요.')
                 : (postComment({
+                    movieId,
                     userName,
                     userEmail,
                     starClick,
@@ -127,8 +128,7 @@ function Startreview(props: any) {
                   }),
                   setStarClick(0),
                   setStarHover(0),
-                  setUserComment(''),
-                  location.reload())
+                  setUserComment(''))
             }
           >
             등록

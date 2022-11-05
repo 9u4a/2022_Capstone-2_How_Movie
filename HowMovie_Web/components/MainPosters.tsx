@@ -9,7 +9,7 @@ interface PropsType {
 }
 
 function MainPosters({ listType }: PropsType) {
-  const baseUrl = 'https://image.tmdb.org/t/p/original';
+  const baseUrl = 'https://image.tmdb.org/t/p/w342';
   var initialWidth = 0;
   if (typeof window !== 'undefined') {
     initialWidth = window.innerWidth;
@@ -19,6 +19,7 @@ function MainPosters({ listType }: PropsType) {
   const [currPoster, setCurrPoster] = useState(5);
   const [innerWidth, setInnerWidth] = useState(initialWidth);
   const [transition, setTransition] = useState('');
+  const [clickable, setClickable] = useState<boolean>(true);
   const setSlides = () => {
     const addedFront = [];
     const addedLast = [];
@@ -49,6 +50,10 @@ function MainPosters({ listType }: PropsType) {
     }, 700);
   };
   const moveRight = () => {
+    setClickable(false);
+    setTimeout(() => {
+      setClickable(true);
+    }, 700);
     if (currPoster < listType.length + 5) {
       setMove(move + 1);
       setCurrPoster(currPoster + 1);
@@ -59,6 +64,10 @@ function MainPosters({ listType }: PropsType) {
     }
   };
   const moveLeft = () => {
+    setClickable(false);
+    setTimeout(() => {
+      setClickable(true);
+    }, 700);
     if (currPoster > 4) {
       setMove(move - 1);
       setCurrPoster(currPoster - 1);
@@ -91,7 +100,7 @@ function MainPosters({ listType }: PropsType) {
                   {i === currPoster ? (
                     <Link href={`/detail?movie_id=${e.id}`}>
                       <div
-                        className={`relative flex w-[220px] h-[313px] md:w-[300px] md:h-[426px] lg:w-[350px] lg:h-[497px] duration-700 shrink-0 left-[-550%] md:left-[-535%] lg:left-[-508%] rounded-lg overflow-hidden hover:cursor-pointer drop-shadow-br-md`}
+                        className={`relative flex w-[220px] h-[328px] md:w-[300px] md:h-[448px] lg:w-[350px] lg:h-[525px] duration-700 shrink-0 left-[-550%] md:left-[-535%] lg:left-[-508%] rounded-lg overflow-hidden hover:cursor-pointer drop-shadow-br-md`}
                         style={{ transition: `${transition}` }}
                       >
                         <Image
@@ -99,6 +108,7 @@ function MainPosters({ listType }: PropsType) {
                           sizes="100%"
                           alt="이미지"
                           layout="fill"
+                          priority
                           objectFit="fill"
                           className="rounded-xl"
                           placeholder="blur"
@@ -109,7 +119,7 @@ function MainPosters({ listType }: PropsType) {
                   ) : (
                     <Link href={`/detail?movie_id=${e.id}`}>
                       <div
-                        className="relative flex w-[200px] h-[284px] md:w-[270px] md:h-[384px] lg:w-[300px] lg:h-[426px] duration-700 shrink-0 left-[-605%] md:left-[-594.5%] lg:left-[-593%] rounded-lg overflow-hidden hover:cursor-pointer drop-shadow-br-md"
+                        className="relative flex w-[200px] h-[299px] md:w-[270px] md:h-[403px] lg:w-[300px] lg:h-[431px] duration-700 shrink-0 left-[-605%] md:left-[-594.5%] lg:left-[-593%] rounded-lg overflow-hidden hover:cursor-pointer drop-shadow-br-md"
                         style={{ transition: `${transition}` }}
                       >
                         <Image
@@ -117,6 +127,7 @@ function MainPosters({ listType }: PropsType) {
                           sizes="100"
                           alt="이미지"
                           layout="fill"
+                          priority
                           objectFit="fill"
                           className="rounded-xl "
                           placeholder="blur"
@@ -132,13 +143,21 @@ function MainPosters({ listType }: PropsType) {
       </div>
       <div
         className="top-[15%] left-0 lg:top-[18%] md:top-[17%] absolute invisible group-hover:visible w-[50px] h-[100px] flex justify-center items-center bg-slate-50/50 hover:cursor-pointer duration-700"
-        onClick={moveLeft}
+        onClick={() => {
+          if (clickable) {
+            moveLeft();
+          }
+        }}
       >
         <ChevronLeftIcon className="w-8 h-8" />
       </div>
       <div
         className="top-[15%] right-0 lg:top-[18%] md:top-[17%] absolute invisible group-hover:visible w-[50px] h-[100px] flex justify-center items-center bg-slate-50/50 hover:cursor-pointer duration-700"
-        onClick={moveRight}
+        onClick={() => {
+          if (clickable) {
+            moveRight();
+          }
+        }}
       >
         <ChevronRightIcon className="w-8 h-8" />
       </div>

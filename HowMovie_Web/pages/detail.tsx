@@ -26,6 +26,8 @@ function Detail() {
   const router = useRouter();
 
   useEffect(() => {
+    const movieId = router.query.movie_id;
+
     session
       ? setUserInfo({
           userName: session.data?.user?.name,
@@ -34,10 +36,10 @@ function Detail() {
       : null;
 
     const fetchDetailInfo = async () => {
-      if (movieId !== '') {
+      if (movieId !== undefined) {
         try {
           const res = await axios.get(
-            `http://localhost:8000/searchdetail?movie_id=${movieId}`
+            `http://localhost:8000/searchdetails?movie_id=${movieId}`
           );
           setMovieInfo({
             movieId,
@@ -52,10 +54,10 @@ function Detail() {
       }
     };
     const getCommentInfo = async () => {
-      if (movieId !== '') {
+      if (movieId !== undefined) {
         try {
           const res = await axios.get(
-            `http://localhost:8000/comment/${movieId}
+            `http://localhost:8000/comments?movie_id=${movieId}
             `
           );
           setCommentInfo(res.data);
@@ -66,111 +68,134 @@ function Detail() {
         }
       }
     };
-    if (router.query.movie_id !== undefined) {
-      setMovieInfo({
-        movieId: router.query.movie_id,
-        movieName: '',
-      });
 
-      fetchDetailInfo();
-      getCommentInfo();
-    }
-  }, [router.query.movie_id, session, movieId]);
-
+    fetchDetailInfo();
+    getCommentInfo();
+  }, [router.query.movie_id, session]);
+  console.log(error);
   return (
     <>
-      {searchDetail ? (
-        <div className="relative w-full h-[570px] bg-black/70">
-          {searchDetail[0].detail[0].backdrop_path ? (
-            <Image
-              src={`https://image.tmdb.org/t/p/original${searchDetail[0].detail[0].backdrop_path}`}
-              layout="fill"
-              alt="backDrop"
-              sizes="100%"
-              objectFit="cover"
-              className="opacity-20"
-              priority
-              placeholder="blur"
-              blurDataURL={`https://image.tmdb.org/t/p/original
-            ${searchDetail[0].detail[0].backdrop_path}
-          `}
-            />
-          ) : null}
+      {!error ? (
+        searchDetail ? (
+          <div className="relative w-full h-[570px] bg-black/70">
+            {searchDetail[0].detail[0].backdrop_path ? (
+              <Image
+                src={`https://image.tmdb.org/t/p/original${searchDetail[0].detail[0].backdrop_path}`}
+                layout="fill"
+                alt="backDrop"
+                sizes="100%"
+                objectFit="cover"
+                className="opacity-20"
+                priority
+                placeholder="blur"
+                blurDataURL={`https://image.tmdb.org/t/p/original
+          ${searchDetail[0].detail[0].backdrop_path}
+        `}
+              />
+            ) : null}
 
-          <div className="flex w-full h-full ">
-            <div className="flex justify-center items-center  h-full w-[438px] ">
-              <div className="relative w-[220px] h-[300px] drop-shadow-br-md">
-                {searchDetail && (
-                  <Image
-                    src={baseUrl + searchDetail[0].detail[0].poster_path}
-                    layout="fill"
-                    alt="poster"
-                    className="rounded-xl"
-                    placeholder="blur"
-                    sizes="100%"
-                    blurDataURL={
-                      baseUrl + searchDetail[0].detail[0].poster_path
-                    }
-                    priority
-                  />
-                )}
+            <div className="flex w-full h-full ">
+              <div className="flex justify-center items-center  h-full w-[438px] ">
+                <div className="relative w-[220px] h-[300px] drop-shadow-br-md">
+                  {searchDetail && (
+                    <Image
+                      src={baseUrl + searchDetail[0].detail[0].poster_path}
+                      layout="fill"
+                      alt="poster"
+                      className="rounded-xl"
+                      placeholder="blur"
+                      sizes="100%"
+                      blurDataURL={
+                        baseUrl + searchDetail[0].detail[0].poster_path
+                      }
+                      priority
+                    />
+                  )}
+                </div>
               </div>
-            </div>
-            <div className="flex justify-start items-center h-full w-full overflow-hidden">
-              {[searchDetail[0].detail[0]].map((e: any, i: any) => {
-                return (
-                  <div key={i}>
-                    <div className="p-5">
-                      <div className="text-4xl">{e.title}</div>
+              <div className="flex justify-start items-center h-full w-full overflow-hidden">
+                {[searchDetail[0].detail[0]].map((e: any, i: any) => {
+                  return (
+                    <div key={i}>
+                      <div className="p-5">
+                        <div className="text-4xl">{e.title}</div>
 
-                      <div className="text-base flex">
-                        {`${e.release_date} · ${e.genres.map(
-                          (e: any, i: any) => {
-                            return e.name;
-                          }
-                        )} · ${e.runtime}분 ·`}
-                        <div className="flex items-center pl-1 space-x-1">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                            className="w-[20px] h-[20px] text-[#d70000]"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                          <div>{e.vote_average.toFixed(1)}</div>
+                        <div className="text-base flex flex-col md:flex-row lg:flex-row">
+                          {`${e.release_date} · ${e.genres.map(
+                            (e: any, i: any) => {
+                              return e.name;
+                            }
+                          )} · ${e.runtime}분 ·`}
+                          <div className="flex items-center pl-1 space-x-1">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              fill="currentColor"
+                              className="w-[20px] h-[20px] text-[#d70000]"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                clipRule="evenodd"
+                              />
+                            </svg>
+                            <div>{e.vote_average.toFixed(1)}</div>
+                          </div>
                         </div>
-                      </div>
-                      <div></div>
-                      {e.tagline && (
-                        <div className="text-base italic my-[24px]">
-                          {`" ${e.tagline} "`}
-                        </div>
-                      )}
-
-                      <div className="text-xl font-bold">개요</div>
-                      <p className="mb-[30px] w-full h-[140px] leading-5 text-ellipsis whitespace-normal overflow-hidden line-clamp-5 block border">
-                        {e.overview}
-                      </p>
-                      <div
-                        className={`flex ${
-                          searchDetail[1].credit.directing.length === 0
-                            ? null
-                            : 'space-x-[185px]'
-                        }`}
-                      >
+                        <div></div>
+                        {e.tagline && (
+                          <div className="text-base italic my-[24px]">
+                            {`" ${e.tagline} "`}
+                          </div>
+                        )}
+                        {e.overview ? (
+                          <>
+                            <div className="text-xl font-bold">개요</div>
+                            <p className="mb-[30px] w-full h-[120px] line-clamp-5 block">
+                              {e.overview}
+                            </p>
+                          </>
+                        ) : (
+                          <div className="h-[20px]"></div>
+                        )}
                         <div
-                          className={`flex flex-col ${
-                            searchDetail[1].credit.directing.length === 0 &&
-                            'hidden'
+                          className={`flex ${
+                            searchDetail[1].credit.directing.length === 0
+                              ? null
+                              : 'space-x-[185px]'
                           }`}
                         >
-                          <div className="flex">
-                            {searchDetail[1].credit.directing.map(
+                          <div
+                            className={`flex flex-col ${
+                              searchDetail[1].credit.directing.length === 0 &&
+                              'hidden'
+                            }`}
+                          >
+                            <div className="flex">
+                              {searchDetail[1].credit.directing.map(
+                                (e: any, i: number) => {
+                                  return (
+                                    <p
+                                      key={i}
+                                      className="text-[15px] whitespace-nowrap font-semibold"
+                                    >
+                                      {e.name}
+                                      {i + 1 !==
+                                      searchDetail[1].credit.directing.length
+                                        ? ','
+                                        : null}
+                                      &nbsp;
+                                    </p>
+                                  );
+                                }
+                              )}
+                            </div>
+                            {searchDetail[1].credit.directing.length !== 0 ? (
+                              <p className="text-[12px]">Director</p>
+                            ) : null}
+                          </div>
+                          <div>
+                            {searchDetail[1].credit.writing.map(
                               (e: any, i: number) => {
                                 return (
                                   <p
@@ -179,7 +204,7 @@ function Detail() {
                                   >
                                     {e.name}
                                     {i + 1 !==
-                                    searchDetail[1].credit.directing.length
+                                    searchDetail[1].credit.writing.length
                                       ? ','
                                       : null}
                                     &nbsp;
@@ -187,81 +212,10 @@ function Detail() {
                                 );
                               }
                             )}
+                            {searchDetail[1].credit.writing.length !== 0 ? (
+                              <p className="text-[12px]">Writer</p>
+                            ) : null}
                           </div>
-                          {searchDetail[1].credit.directing.length !== 0 ? (
-                            <p className="text-[12px]">Director</p>
-                          ) : null}
-                        </div>
-                        <div>
-                          {searchDetail[1].credit.writing.map(
-                            (e: any, i: number) => {
-                              return (
-                                <p
-                                  key={i}
-                                  className="text-[15px] whitespace-nowrap font-semibold"
-                                >
-                                  {e.name}
-                                  {i + 1 !==
-                                  searchDetail[1].credit.writing.length
-                                    ? ','
-                                    : null}
-                                  &nbsp;
-                                </p>
-                              );
-                            }
-                          )}
-                          {searchDetail[1].credit.writing.length !== 0 ? (
-                            <p className="text-[12px]">Writer</p>
-                          ) : null}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-          <div className="h-[350px] p-10">
-            <div className="text-2xl mb-10">주요 출연진</div>
-            <div>
-              <div className="flex w-full h-[250px] pb-[20px] space-x-5 overflow-x-scroll">
-                {searchDetail[1].credit.acting.map((e: any, i: any) => {
-                  return (
-                    <div
-                      key={e.id}
-                      className="snap-center shrink-0 overflow-hidden w-[150px] rounded-lg bg-slate-700 drop-shadow-br-md"
-                    >
-                      <div className="relative h-[70%]">
-                        <div className="relative h-full w-full">
-                          {e.profile_path ? (
-                            <Image
-                              src={baseUrl + e.profile_path}
-                              layout="fill"
-                              alt="profile"
-                              sizes="100%"
-                              objectFit="cover"
-                              className="rounded-t-lg"
-                              placeholder="blur"
-                              blurDataURL={baseUrl + e.profile_path}
-                              priority
-                            />
-                          ) : (
-                            <Image
-                              src="/asset/image/noImg.svg"
-                              layout="fill"
-                              alt="profile"
-                              sizes="100%"
-                              objectFit="cover"
-                              className="rounded-t-lg"
-                              placeholder="blur"
-                              blurDataURL="/asset/image/noImg.svg"
-                              priority
-                            />
-                          )}
-                        </div>
-                        <div className="p-2">
-                          <div className="text-sm font-extrabold">{e.name}</div>
-                          <div className="text-sm">{e.character}</div>
                         </div>
                       </div>
                     </div>
@@ -269,33 +223,88 @@ function Detail() {
                 })}
               </div>
             </div>
-          </div>
-          <div className="h-[500px] p-10">
-            <div className=" text-2xl mb-10">예고편</div>
-            <div className="flex justify-center w-full h-[355px]">
-              <div className="flex w-[650px] h-full rounded-xl drop-shadow-br-md">
-                <BackgroundMovie currID={movieId} />
+            <div className="h-[350px] p-10">
+              <div className="text-2xl mb-10">주요 출연진</div>
+              <div>
+                <div className="flex w-full h-[250px] pb-[20px] space-x-5 overflow-x-scroll">
+                  {searchDetail[1].credit.acting.map((e: any, i: any) => {
+                    return (
+                      <div
+                        key={e.id}
+                        className="snap-center shrink-0 overflow-hidden w-[150px] rounded-lg bg-slate-700 drop-shadow-br-md"
+                      >
+                        <div className="relative h-[70%]">
+                          <div className="relative h-full w-full">
+                            {e.profile_path ? (
+                              <Image
+                                src={baseUrl + e.profile_path}
+                                layout="fill"
+                                alt="profile"
+                                sizes="100%"
+                                objectFit="cover"
+                                className="rounded-t-lg"
+                                placeholder="blur"
+                                blurDataURL={baseUrl + e.profile_path}
+                                priority
+                              />
+                            ) : (
+                              <Image
+                                src="/asset/image/noImg.svg"
+                                layout="fill"
+                                alt="profile"
+                                sizes="100%"
+                                objectFit="cover"
+                                className="rounded-t-lg"
+                                placeholder="blur"
+                                blurDataURL="/asset/image/noImg.svg"
+                                priority
+                              />
+                            )}
+                          </div>
+                          <div className="p-2">
+                            <div className="text-sm font-extrabold">
+                              {e.name}
+                            </div>
+                            <div className="text-sm">{e.character}</div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
-          </div>
-          <div className="p-10">
-            <div className=" text-2xl mb-10">댓글</div>
-            <Startreview
-              session={session}
-              userInfo={userInfo}
-              movieInfo={movieInfo}
-            />
-            <hr className="border-slate-400 border-2 rounded-lg my-5" />
-            {commentInfo && (
-              <Comment
-                commentInfo={commentInfo}
-                movieInfo={movieInfo}
+            <div className="h-[500px] p-10">
+              <div className=" text-2xl mb-10">예고편</div>
+              <div className="flex justify-center w-full h-[355px]">
+                <div className="flex w-[650px] h-full rounded-xl drop-shadow-br-md">
+                  <BackgroundMovie currID={movieId} />
+                </div>
+              </div>
+            </div>
+            <div className="p-10">
+              <div className=" text-2xl mb-10">댓글</div>
+              <Startreview
                 session={session}
+                userInfo={userInfo}
+                movieInfo={movieInfo}
               />
-            )}
+              <hr className="border-slate-400 border-2 rounded-lg my-5" />
+              {commentInfo && (
+                <Comment
+                  commentInfo={commentInfo}
+                  movieInfo={movieInfo}
+                  session={session}
+                />
+              )}
+            </div>
           </div>
-        </div>
-      ) : null}
+        ) : null
+      ) : (
+        <h3 className="flex mt-[15%] justify-center items-center">
+          🚨 서버와 연결을 확인해주세요.
+        </h3>
+      )}
     </>
   );
 }
