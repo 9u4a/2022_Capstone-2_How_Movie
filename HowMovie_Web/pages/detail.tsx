@@ -96,7 +96,7 @@ function Detail() {
 
             <div className="flex w-full h-full ">
               <div className="flex justify-center items-center  h-full w-[438px] ">
-                <div className="relative w-[220px] h-[300px] drop-shadow-br-md">
+                <div className="relative w-[200px] h-[300px] drop-shadow-br-md">
                   {searchDetail && (
                     <Image
                       src={baseUrl + searchDetail[0].detail[0].poster_path}

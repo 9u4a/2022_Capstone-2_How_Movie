@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
 function Genre() {
-  const baseUrl = 'https://image.tmdb.org/t/p/w500';
+  const baseUrl = 'https://image.tmdb.org/t/p/w154';
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error>();
