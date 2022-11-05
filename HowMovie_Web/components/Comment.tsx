@@ -28,7 +28,7 @@ function Comment(props: any) {
       {commentInfo ? (
         [...commentInfo.result].reverse().map((e: any, i: number) => {
           return (
-            <div className="h-[140px] p-5 bg-slate-800 mb-3" key={i}>
+            <div className="h-[140px] p-5 bg-slate-800 mb-3 rounded-xl" key={i}>
               <div className="flex text-sm mb-1 justify-between">
                 <div>{e.user_name}</div>
                 {session && session.data?.user.email === e.email ? (

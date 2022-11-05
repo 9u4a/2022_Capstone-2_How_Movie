@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import BackgroundMovie from './BackgroundMovie';
 import axios from 'axios';
-import testAPI from '../pages/api/testAPI.json';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 
