@@ -72,7 +72,6 @@ function Detail() {
     fetchDetailInfo();
     getCommentInfo();
   }, [router.query.movie_id, session]);
-  console.log(error);
   return (
     <>
       {!error ? (

@@ -26,7 +26,7 @@ const Home: NextPage = () => {
     };
     fetchPosters();
   }, []);
-  // console.log(error && error.code === 'ERR_NETWORK');
+
   return (
     <>
       {!error ? (

@@ -333,11 +333,6 @@ function Header() {
               </div>
             );
           })}
-          {/* <div>액션</div>
-          <div>액션</div>
-          <div>액션</div>
-          <div>액션</div>
-          <div>액션</div> */}
         </div>
       ) : null}
     </div>
