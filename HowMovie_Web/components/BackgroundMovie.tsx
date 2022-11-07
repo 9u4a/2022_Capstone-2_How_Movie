@@ -1,62 +1,60 @@
 import axios from 'axios';
 import Image from 'next/image';
+import { type } from 'os';
 import React, { useEffect, useState } from 'react';
 
 interface Props {
-  currID: number | undefined;
+  detailInfo: any;
+  type: string;
 }
 
-const BackgroundMovie = ({ currID }: Props) => {
+const BackgroundMovie = ({ detailInfo, type }: Props) => {
   const baseUrl = 'https://image.tmdb.org/t/p/original';
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<Error>();
-  const [moviePath, setMoviePath] = useState<any>('');
-  const [backDrop, setBackDrop] = useState<any>('');
 
-  useEffect(() => {
-    const fetchBackgroundPath = async () => {
-      try {
-        setLoading(true);
-        const res = await axios.get(
-          `http://localhost:8000/moviedetails?movie_id=${currID}`
-        );
-        setBackDrop(res.data.result[0].detail[0].backdrop_path);
-        setMoviePath(res.data.result[0].detail[0].video);
-      } catch (err) {
-        if (axios.isAxiosError(err)) {
-          setError(err);
-        }
-      }
-      setLoading(false);
-    };
-    fetchBackgroundPath();
-  }, [currID]);
-
-  loading && <div>로딩중</div>;
-  error && <div>에러 발생</div>;
-  !moviePath && null;
-
-  return moviePath ? (
+  return detailInfo ? (
     <>
-      {moviePath.length !== 0 ? (
+      {type === 'movieDetail' ? (
+        detailInfo.video.length !== 0 ? (
+          <div className="relative w-full max-w-[1000px] pb-[350px] bg-black rounded-xl">
+            <iframe
+              className="w-full h-full max-h-[350px] absolute rounded-xl"
+              src={`https://www.youtube.com/embed/${detailInfo.video}?fs=0&modestbranding=1&disablekb=1`}
+              title="YouTube video player"
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            ></iframe>
+          </div>
+        ) : detailInfo.backdrop_path !== '' ? (
+          <div className="relative w-full max-w-[1000px] pb-[350px] bg-black rounded-t-xl">
+            <Image
+              src={baseUrl + detailInfo.backdrop_path}
+              layout="fill"
+              alt="backDrop"
+              className="rounded-xl"
+              placeholder="blur"
+              objectFit="cover"
+              blurDataURL={baseUrl + detailInfo.backdrop_path}
+            />
+          </div>
+        ) : null
+      ) : detailInfo.video.length !== 0 ? (
         <div className="relative w-full max-w-[1000px] pb-[350px] bg-black rounded-xl">
           <iframe
             className="w-full h-full max-h-[350px] absolute rounded-xl"
-            src={`https://www.youtube.com/embed/${moviePath}?fs=0&modestbranding=1&disablekb=1`}
+            src={`https://www.youtube.com/embed/${detailInfo.video[0].video}?fs=0&modestbranding=1&disablekb=1`}
             title="YouTube video player"
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
           ></iframe>
         </div>
-      ) : backDrop !== '' ? (
+      ) : detailInfo.backdrop_path !== '' ? (
         <div className="relative w-full max-w-[1000px] pb-[350px] bg-black rounded-t-xl">
           <Image
-            src={baseUrl + backDrop}
+            src={baseUrl + detailInfo.backdrop_path}
             layout="fill"
             alt="backDrop"
             className="rounded-xl"
             placeholder="blur"
             objectFit="cover"
-            blurDataURL={baseUrl + backDrop}
+            blurDataURL={baseUrl + detailInfo.backdrop_path}
           />
         </div>
       ) : null}

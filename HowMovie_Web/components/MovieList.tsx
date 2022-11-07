@@ -19,8 +19,6 @@ export interface listType extends Array<detailListType> {
 }
 
 interface MovieDetailProps {
-  // setDetailOpen: (param: boolean) => void;
-  // setCurrID: (param: number) => void;
   type: any;
   listType: listType;
 }

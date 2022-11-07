@@ -28,7 +28,7 @@ function Detail() {
   useEffect(() => {
     const movieId = router.query.movie_id;
 
-    session
+    session.status === 'authenticated'
       ? setUserInfo({
           userName: session.data?.user?.name,
           userEmail: session.data?.user?.email,
@@ -68,9 +68,9 @@ function Detail() {
         }
       }
     };
-
-    fetchDetailInfo();
-    getCommentInfo();
+    session.status === 'authenticated'
+      ? (fetchDetailInfo(), getCommentInfo())
+      : null;
   }, [router.query.movie_id, session]);
   return (
     <>
@@ -277,7 +277,10 @@ function Detail() {
               <div className=" text-2xl mb-10">예고편</div>
               <div className="flex justify-center w-full h-[355px]">
                 <div className="flex w-[650px] h-full rounded-xl drop-shadow-br-md">
-                  <BackgroundMovie currID={movieId} />
+                  <BackgroundMovie
+                    detailInfo={searchDetail[0].detail[0]}
+                    type="detail"
+                  />
                 </div>
               </div>
             </div>

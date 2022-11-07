@@ -4,14 +4,9 @@ import axios from 'axios';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 
-interface detailInfoType {
-  detail: string[];
-  credit: string[];
-}
 interface MovieDetailProps {
   setDetailOpen: (param: boolean) => void;
   currID: number;
-  // detailInfo:;
 }
 
 function MovieDetail({ setDetailOpen, currID }: MovieDetailProps) {
@@ -26,12 +21,11 @@ function MovieDetail({ setDetailOpen, currID }: MovieDetailProps) {
         try {
           setDetailInfo(null);
           setLoading(true);
-          await axios
-            .get(`http://localhost:8000/moviedetails?movie_id=${currID}`)
-            .then((res) => {
-              setDetailInfo(res.data.result[0].detail[0]);
-              setCreditInfo(res.data.result[1].credit);
-            });
+          const res = await axios.get(
+            `http://localhost:8000/moviedetails?movie_id=${currID}`
+          );
+          setDetailInfo(res.data.result[0].detail[0]);
+          setCreditInfo(res.data.result[1].credit);
         } catch (err) {
           if (axios.isAxiosError(err)) {
             setError(err);
@@ -47,8 +41,6 @@ function MovieDetail({ setDetailOpen, currID }: MovieDetailProps) {
     setDetailOpen(false);
     document.body.style.overflow = 'unset';
   };
-  loading && <div>로딩중</div>;
-  error && <div>에러 발생</div>;
 
   return (
     <div className="flex justify-center items-center bg-black/80 w-full h-full fixed z-[200] top-0 overflow-none mt-[50px]">
@@ -64,7 +56,7 @@ function MovieDetail({ setDetailOpen, currID }: MovieDetailProps) {
         <div className="flex absolute flex-col items-end w-[80%] h-[80%] max-w-[1000px] max-h-[850px] bg-gray-900 rounded-xl top-[50%] translate-y-[-50%] overflow-scroll scrollbar-hide">
           <div className="w-full">
             <div className="w-full h-full max-h-[350px] rounded-t-xl">
-              <BackgroundMovie currID={currID} />
+              <BackgroundMovie detailInfo={detailInfo} type="movieDetail" />
             </div>
             <div className="w-full p-5 overflow-y-scroll">
               <h2>{detailInfo && detailInfo.title}</h2>

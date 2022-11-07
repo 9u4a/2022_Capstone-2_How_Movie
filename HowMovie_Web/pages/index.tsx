@@ -1,7 +1,6 @@
 import type { NextPage } from 'next';
 import axios, { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
-import MovieDetail from '../components/MovieDetail';
 import MainPosters from '../components/MainPosters';
 import MovieList from '../components/MovieList';
 import { useSession } from 'next-auth/react';
