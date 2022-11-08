@@ -25,7 +25,7 @@ const BackgroundMovie = ({ detailInfo, type }: Props) => {
             ></iframe>
           </div>
         ) : detailInfo.backdrop_path !== '' ? (
-          <div className="relative w-full max-w-[1000px] pb-[350px] bg-black rounded-t-xl">
+          <div className="relative w-full max-w-[1000px] pb-[350px] bg-black rounded-xl">
             <Image
               src={baseUrl + detailInfo.backdrop_path}
               layout="fill"
@@ -68,7 +68,7 @@ const BackgroundMovie = ({ detailInfo, type }: Props) => {
           ></iframe>
         </div>
       ) : detailInfo.backdrop_path !== '' ? (
-        <div className="relative w-full max-w-[650px] pb-[350px] bg-black rounded-t-xl">
+        <div className="relative w-full max-w-[650px] pb-[350px] bg-black rounded-xl">
           <Image
             src={baseUrl + detailInfo.backdrop_path}
             layout="fill"
