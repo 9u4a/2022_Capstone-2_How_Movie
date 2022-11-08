@@ -1,10 +1,10 @@
 import type { NextPage } from 'next';
 import axios, { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
-import MovieDetail from '../components/MovieDetail';
 import MainPosters from '../components/MainPosters';
 import MovieList from '../components/MovieList';
 import { useSession } from 'next-auth/react';
+import MainpageLoading from '../components/common/MainpageLoading';
 
 const Home: NextPage = () => {
   const [posters, setPosters] = useState<any>(null);
@@ -26,7 +26,7 @@ const Home: NextPage = () => {
     };
     fetchPosters();
   }, []);
-  // console.log(error && error.code === 'ERR_NETWORK');
+
   return (
     <>
       {!error ? (
@@ -47,32 +47,7 @@ const Home: NextPage = () => {
             </div>
           </div>
         ) : (
-          <div className="w-full h-screen">
-            <div className="flex w-full h-[50%] mt-[100px] justify-center px-10">
-              <div className="flex w-full space-x-20">
-                {[1, 2, 3, 4, 5].map((e, i) => {
-                  return (
-                    <div
-                      className="w-[500px] h-full animate-pulse bg-slate-900 rounded-xl"
-                      key={i}
-                    ></div>
-                  );
-                })}
-              </div>
-            </div>
-            <div className=" w-full h-[200px] px-10 mt-20 overflow-hidden">
-              <div className="flex  w-full h-full space-x-10">
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((e, i) => {
-                  return (
-                    <div
-                      className=" w-[120px] h-full animate-pulse bg-slate-900 rounded-xl"
-                      key={i}
-                    ></div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
+          <MainpageLoading />
         )
       ) : (
         <h3 className="flex mt-[15%] justify-center items-center">

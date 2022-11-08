@@ -205,7 +205,7 @@ function Header() {
                     <Link href={`/detail?movie_id=${e.id}`} key={i}>
                       <a className="flex items-center text-black px-2 py-1 cursor-pointer hover:font-semibold hover:bg-slate-100">
                         <div
-                          className={`w-[40px] h-[60px] mr-[10px] relative rounded-lg ${
+                          className={`w-[40px] h-[60px] mr-[10px] relative rounded-lg overflow-hidden ${
                             e.poster_path || 'border border-slate-200'
                           }`}
                         >
@@ -333,11 +333,6 @@ function Header() {
               </div>
             );
           })}
-          {/* <div>액션</div>
-          <div>액션</div>
-          <div>액션</div>
-          <div>액션</div>
-          <div>액션</div> */}
         </div>
       ) : null}
     </div>

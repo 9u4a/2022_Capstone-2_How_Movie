@@ -5,6 +5,8 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import BackgroundMovie from '../components/BackgroundMovie';
 import Comment from '../components/Comment';
+import LoadingSpinner from '../components/common/loadingSpinner';
+import MovieList from '../components/MovieList';
 import Startreview from '../components/Startreview';
 
 function Detail() {
@@ -17,7 +19,6 @@ function Detail() {
     movieId: '',
     movieName: '',
   });
-  const { movieId, movieName } = movieInfo;
   const baseUrl = 'https://image.tmdb.org/t/p/w500';
   const [userInfo, setUserInfo] = useState<any>({
     userName: '',
@@ -28,7 +29,7 @@ function Detail() {
   useEffect(() => {
     const movieId = router.query.movie_id;
 
-    session
+    session.status === 'authenticated'
       ? setUserInfo({
           userName: session.data?.user?.name,
           userEmail: session.data?.user?.email,
@@ -38,6 +39,7 @@ function Detail() {
     const fetchDetailInfo = async () => {
       if (movieId !== undefined) {
         try {
+          setLoading(true);
           const res = await axios.get(
             `http://localhost:8000/searchdetails?movie_id=${movieId}`
           );
@@ -52,6 +54,7 @@ function Detail() {
           }
         }
       }
+      setLoading(false);
     };
     const getCommentInfo = async () => {
       if (movieId !== undefined) {
@@ -68,14 +71,12 @@ function Detail() {
         }
       }
     };
-
-    fetchDetailInfo();
-    getCommentInfo();
+    session.status !== null ? (fetchDetailInfo(), getCommentInfo()) : null;
   }, [router.query.movie_id, session]);
-  console.log(error);
+
   return (
     <>
-      {!error ? (
+      {!loading ? (
         searchDetail ? (
           <div className="relative w-full h-[570px] bg-black/70">
             {searchDetail[0].detail[0].backdrop_path ? (
@@ -88,15 +89,13 @@ function Detail() {
                 className="opacity-20"
                 priority
                 placeholder="blur"
-                blurDataURL={`https://image.tmdb.org/t/p/original
-          ${searchDetail[0].detail[0].backdrop_path}
-        `}
+                blurDataURL={baseUrl + searchDetail[0].detail[0].backdrop_path}
               />
             ) : null}
 
-            <div className="flex w-full h-full ">
+            <div className="flex w-full h-full">
               <div className="flex justify-center items-center  h-full w-[438px] ">
-                <div className="relative w-[200px] h-[300px] drop-shadow-br-md">
+                <div className="relative w-[200px] h-[300px] drop-shadow-br-md overflow-hidden rounded-xl">
                   {searchDetail && (
                     <Image
                       src={baseUrl + searchDetail[0].detail[0].poster_path}
@@ -234,7 +233,7 @@ function Detail() {
                         className="snap-center shrink-0 overflow-hidden w-[150px] rounded-lg bg-slate-700 drop-shadow-br-md"
                       >
                         <div className="relative h-[70%]">
-                          <div className="relative h-full w-full">
+                          <div className="relative h-full w-full rounded-t-lg overflow-hidden">
                             {e.profile_path ? (
                               <Image
                                 src={baseUrl + e.profile_path}
@@ -242,7 +241,6 @@ function Detail() {
                                 alt="profile"
                                 sizes="100%"
                                 objectFit="cover"
-                                className="rounded-t-lg"
                                 placeholder="blur"
                                 blurDataURL={baseUrl + e.profile_path}
                                 priority
@@ -254,8 +252,8 @@ function Detail() {
                                 alt="profile"
                                 sizes="100%"
                                 objectFit="cover"
-                                className="rounded-t-lg"
                                 placeholder="blur"
+                                className="bg-white/5"
                                 blurDataURL="/asset/image/noImg.svg"
                                 priority
                               />
@@ -275,15 +273,31 @@ function Detail() {
               </div>
             </div>
             <div className="h-[500px] p-10">
-              <div className=" text-2xl mb-10">예고편</div>
+              {searchDetail[0].detail[0].video.length === 0 ? (
+                <div className=" text-2xl mb-10">포스터</div>
+              ) : (
+                <div className=" text-2xl mb-10">예고편</div>
+              )}
               <div className="flex justify-center w-full h-[355px]">
-                <div className="flex w-[650px] h-full rounded-xl drop-shadow-br-md">
-                  <BackgroundMovie currID={movieId} />
+                <div className="flex w-full h-full rounded-xl drop-shadow-br-md justify-center">
+                  <BackgroundMovie
+                    detailInfo={searchDetail[0].detail[0]}
+                    type="detail"
+                  />
                 </div>
               </div>
             </div>
+            {searchDetail[0].detail[0].recommendations.length !== 0 ? (
+              <div className="h-[400px]">
+                <div className=" text-2xl p-10">추천</div>
+                <MovieList
+                  type="recommendations"
+                  listType={searchDetail[0].detail[0].recommendations}
+                />
+              </div>
+            ) : null}
             <div className="p-10">
-              <div className=" text-2xl mb-10">댓글</div>
+              <div className=" text-2xl mb-5">댓글</div>
               <Startreview
                 session={session}
                 userInfo={userInfo}
@@ -300,10 +314,14 @@ function Detail() {
             </div>
           </div>
         ) : null
-      ) : (
+      ) : error ? (
         <h3 className="flex mt-[15%] justify-center items-center">
           🚨 서버와 연결을 확인해주세요.
         </h3>
+      ) : (
+        <div className="w-full h-screen flex justify-center items-center">
+          <LoadingSpinner />
+        </div>
       )}
     </>
   );

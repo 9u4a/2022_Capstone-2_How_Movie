@@ -7,12 +7,7 @@ import React, { useEffect, useLayoutEffect, useState } from 'react';
 function Login() {
   const session = useSession();
   const router = useRouter();
-  // useLayoutEffect(() => {
-  //   if (session.status === 'authenticated') {
-  //     router.replace('/');
-  //   }
-  // }, [session, router]);
-  // console.log(session);
+
   return (
     <div className="relative">
       <Image

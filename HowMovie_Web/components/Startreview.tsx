@@ -128,7 +128,8 @@ function Startreview(props: any) {
                   }),
                   setStarClick(0),
                   setStarHover(0),
-                  setUserComment(''))
+                  setUserComment(''),
+                  alert('댓글이 등록되었습니다.'))
             }
           >
             등록

@@ -9,7 +9,7 @@ interface PropsType {
 }
 
 function MainPosters({ listType }: PropsType) {
-  const baseUrl = 'https://image.tmdb.org/t/p/w342';
+  const baseUrl = 'https://image.tmdb.org/t/p/w780';
   var initialWidth = 0;
   if (typeof window !== 'undefined') {
     initialWidth = window.innerWidth;
