@@ -272,24 +272,44 @@ function Detail() {
                 </div>
               </div>
             </div>
-            <div className="h-[500px] p-10">
-              {searchDetail[0].detail[0].video.length === 0 ? (
-                <div className=" text-2xl mb-10">포스터</div>
-              ) : (
-                <div className=" text-2xl mb-10">예고편</div>
-              )}
-              <div className="flex justify-center w-full h-[355px]">
-                <div className="flex w-full h-full rounded-xl drop-shadow-br-md justify-center">
-                  <BackgroundMovie
-                    detailInfo={searchDetail[0].detail[0]}
-                    type="detail"
-                  />
+            <div
+              className={`${
+                searchDetail[0].detail[0].video.length !== 0 &&
+                searchDetail[0].detail[0].backdrop_path !== null
+                  ? 'h-[500px]'
+                  : null
+              } p-10`}
+            >
+              {searchDetail[0].detail[0].video.length !== 0 ? (
+                <div>
+                  <div className=" text-2xl mb-10">예고편</div>
+                  <div className="flex justify-center w-full h-[355px]">
+                    <div className="flex w-full h-full rounded-xl drop-shadow-br-md justify-center">
+                      <BackgroundMovie
+                        detailInfo={searchDetail[0].detail[0]}
+                        type="detail"
+                      />
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ) : searchDetail[0].detail[0].backdrop_path !== null ? (
+                <div>
+                  <div className=" text-2xl mb-10">포스터</div>
+
+                  <div className="flex justify-center w-full h-[355px]">
+                    <div className="flex w-full h-full rounded-xl drop-shadow-br-md justify-center">
+                      <BackgroundMovie
+                        detailInfo={searchDetail[0].detail[0]}
+                        type="detail"
+                      />
+                    </div>
+                  </div>
+                </div>
+              ) : null}
             </div>
             {searchDetail[0].detail[0].recommendations.length !== 0 ? (
               <div className="h-[400px]">
-                <div className=" text-2xl p-10">추천</div>
+                <div className=" text-2xl px-10 pt-10 pb-2">추천</div>
                 <MovieList
                   type="recommendations"
                   listType={searchDetail[0].detail[0].recommendations}
