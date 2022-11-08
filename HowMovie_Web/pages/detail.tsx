@@ -71,11 +71,9 @@ function Detail() {
         }
       }
     };
-    session.status === 'authenticated'
-      ? (fetchDetailInfo(), getCommentInfo())
-      : null;
+    session.status !== null ? (fetchDetailInfo(), getCommentInfo()) : null;
   }, [router.query.movie_id, session]);
-
+  console.log(session.status);
   return (
     <>
       {!loading ? (

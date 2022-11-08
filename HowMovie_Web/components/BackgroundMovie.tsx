@@ -25,7 +25,7 @@ const BackgroundMovie = ({ detailInfo, type }: Props) => {
               allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
             ></iframe>
           </div>
-        ) : detailInfo.backdrop_path !== '' ? (
+        ) : detailInfo.backdrop_path !== null ? (
           <div className="relative w-full max-w-[1000px] pb-[350px] bg-black rounded-xl">
             <Image
               src={baseUrl + detailInfo.backdrop_path}
@@ -37,7 +37,19 @@ const BackgroundMovie = ({ detailInfo, type }: Props) => {
               blurDataURL={baseUrl + detailInfo.backdrop_path}
             />
           </div>
-        ) : null
+        ) : (
+          <div className="relative w-full max-w-[1000px] pb-[350px] bg-white/5 rounded-xl">
+            <Image
+              src="/asset/image/noImg.svg"
+              layout="fill"
+              alt="backDrop"
+              className="rounded-xl"
+              placeholder="blur"
+              objectFit="contain"
+              blurDataURL="/asset/image/noImg.svg"
+            />
+          </div>
+        )
       ) : // searchDetail
       detailInfo.video.length > 1 ? (
         <div className="w-full flex overflow-x-scroll snap-x space-x-5 snap-mandatory">
@@ -69,15 +81,15 @@ const BackgroundMovie = ({ detailInfo, type }: Props) => {
           ></iframe>
         </div>
       ) : detailInfo.backdrop_path !== '' ? (
-        <div className="relative w-full max-w-[650px] pb-[350px] bg-black rounded-xl">
+        <div className="relative w-full max-w-[650px] pb-[350px] bg-white/10 rounded-xl">
           <Image
-            src={baseUrl + detailInfo.backdrop_path}
+            src="/asset/image/noImg.svg"
             layout="fill"
             alt="backDrop"
             className="rounded-xl"
             placeholder="blur"
-            objectFit="cover"
-            blurDataURL={baseUrl + detailInfo.backdrop_path}
+            objectFit="contain"
+            blurDataURL="/asset/image/noImg.svg"
           />
         </div>
       ) : null}
