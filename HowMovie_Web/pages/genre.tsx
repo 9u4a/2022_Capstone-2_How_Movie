@@ -89,13 +89,26 @@ function Genre() {
     },
   ];
   const [genreMovies, setGenreMovies] = useState<any>();
+  const [genrePage, setGenrePage] = useState<number>(1);
+  const nextPage = () => {
+    if (genrePage < 10) {
+      setGenrePage(genrePage + 1);
+      window.scrollTo(0, 0);
+    }
+  };
+  const prevPage = () => {
+    if (genrePage > 1) {
+      setGenrePage(genrePage - 1);
+      window.scrollTo(0, 0);
+    }
+  };
   useEffect(() => {
     if (router.query.genre_id !== undefined) {
       const fetchGenreMovie = async () => {
         try {
           setLoading(true);
           const res = await axios.get(
-            `http://localhost:8000/genre?genre=${router.query.genre_id}`
+            `http://localhost:8000/genre?genre=${router.query.genre_id}&page=${genrePage}`
           );
           setGenreMovies(res.data.result[0].genres);
         } catch (err) {
@@ -107,13 +120,13 @@ function Genre() {
       };
       fetchGenreMovie();
     }
-  }, [router.query.genre_id]);
+  }, [router.query.genre_id, genrePage]);
 
   return (
     <>
       {!error ? (
         <div>
-          <div className="space-y-5 p-5 border">
+          <div className="space-y-5 p-5">
             {!loading ? (
               genreMovies &&
               genreMovies.map((e: any, i: number) => {
@@ -177,19 +190,49 @@ function Genre() {
               <GenreLoading />
             )}
           </div>
-          <div className="flex border justify-center items-center w-full h-[50px]">
-            <div className="text-[18px] hover:cursor-pointer hover:font-semibold">
-              이전
-            </div>
+          <div className="flex justify-center items-center w-full h-[50px] mb-5">
+            {genrePage > 1 ? (
+              <div
+                className="text-[18px] hover:cursor-pointer hover:font-semibold hover:underline hover:decoration-1"
+                onClick={() => {
+                  prevPage();
+                }}
+              >
+                이전
+              </div>
+            ) : (
+              <div className="w-[31px]"></div>
+            )}
             <div className="flex space-x-3 mx-10">
               {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((e: any, i: number) => {
-                return <div key={i}>{e}</div>;
+                return (
+                  <div
+                    key={i}
+                    className={`hover:cursor-pointer hover:font-semibold hover:underline hover:decoration-1 ${
+                      genrePage === e ? 'text-white' : 'text-slate-600'
+                    }`}
+                    onClick={() => {
+                      setGenrePage(e);
+                      window.scrollTo(0, 0);
+                    }}
+                  >
+                    {e}
+                  </div>
+                );
               })}
             </div>
-
-            <div className="text-[18px] hover:cursor-pointer hover:font-semibold">
-              다음
-            </div>
+            {genrePage < 10 ? (
+              <div
+                className="text-[18px] hover:cursor-pointer hover:font-semibold hover:underline hover:decoration-1"
+                onClick={() => {
+                  nextPage();
+                }}
+              >
+                다음
+              </div>
+            ) : (
+              <div className="w-[31px]"></div>
+            )}
           </div>
         </div>
       ) : (
