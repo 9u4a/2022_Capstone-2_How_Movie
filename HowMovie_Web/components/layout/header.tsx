@@ -156,13 +156,12 @@ function Header() {
               <h4 className="ml-[5px] font-semibold">무비어때</h4>
             </a>
           </Link>
-          <div className="flex items-center">
-            <div
-              className="hover:cursor-pointer"
-              onClick={() => setGenreToggle(!isGenreToggle)}
-            >
-              장르
-            </div>
+          <div
+            className="flex items-center h-[50px]"
+            onMouseEnter={() => setGenreToggle(true)}
+            onMouseLeave={() => setGenreToggle(false)}
+          >
+            <div className="hover:cursor-pointer">장르</div>
           </div>
         </div>
 
@@ -276,9 +275,6 @@ function Header() {
                     {session.data.user.email}
                   </div>
                 </div>
-                {/* <div className="flex justify-center items-center  h-[30px] hover:cursor-pointer">
-                  찜 목록
-                </div> */}
                 <Link href="/myComment">
                   <a
                     className="flex justify-center items-center h-[30px] hover:cursor-pointe"
@@ -310,9 +306,11 @@ function Header() {
       {/* Genre list Box */}
       {isGenreToggle ? (
         <div
-          className={`flex flex-wrap absolute w-full ${
+          className={`flex flex-wrap absolute top-10 w-full ${
             isGenreToggle ? null : 'hidden'
           } bg-black  drop-shadow-bt-md duration-700`}
+          onMouseEnter={() => setGenreToggle(true)}
+          onMouseLeave={() => setGenreToggle(false)}
         >
           {genre.map((e, i) => {
             return (

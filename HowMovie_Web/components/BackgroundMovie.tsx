@@ -53,7 +53,7 @@ const BackgroundMovie = ({ detailInfo, type }: Props) => {
       ) : // searchDetail
       detailInfo.video.length > 1 ? (
         <div className="w-full flex overflow-x-scroll snap-x space-x-5 snap-mandatory">
-          <div className="w-full max-w-[325px] h-full shrink-0"></div>
+          <div className="w-full max-w-[650px] h-full shrink-0"></div>
           {detailInfo.video.map((e: any, i: number) => {
             return (
               <div
@@ -69,7 +69,7 @@ const BackgroundMovie = ({ detailInfo, type }: Props) => {
               </div>
             );
           })}
-          <div className="w-full max-w-[325px] h-full shrink-0"></div>
+          <div className="w-full max-w-[650px] h-full shrink-0"></div>
         </div>
       ) : detailInfo.video.length === 1 ? (
         <div className="relative w-full max-w-[650px] pb-[350px] bg-black rounded-xl">
@@ -80,16 +80,16 @@ const BackgroundMovie = ({ detailInfo, type }: Props) => {
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
           ></iframe>
         </div>
-      ) : detailInfo.backdrop_path !== '' ? (
+      ) : detailInfo.backdrop_path !== null ? (
         <div className="relative w-full max-w-[650px] pb-[350px] bg-white/10 rounded-xl">
           <Image
-            src="/asset/image/noImg.svg"
+            src={baseUrl + detailInfo.backdrop_path}
             layout="fill"
             alt="backDrop"
             className="rounded-xl"
             placeholder="blur"
-            objectFit="contain"
-            blurDataURL="/asset/image/noImg.svg"
+            objectFit="cover"
+            blurDataURL={baseUrl + detailInfo.backdrop_path}
           />
         </div>
       ) : null}
