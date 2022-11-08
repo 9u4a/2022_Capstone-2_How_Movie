@@ -1,8 +1,6 @@
-import axios from 'axios';
 import Image from 'next/image';
-import { type } from 'os';
-import React, { useEffect, useState } from 'react';
-import LoadingSpinner from './common/loadingSpinner';
+import React from 'react';
+import LoadingSpinner from './common/LoadingSpinner';
 
 interface Props {
   detailInfo: any;

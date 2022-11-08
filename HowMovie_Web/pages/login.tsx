@@ -1,13 +1,7 @@
-import { signIn, signOut, useSession } from 'next-auth/react';
-import { redirect } from 'next/dist/server/api-utils';
+import { signIn } from 'next-auth/react';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
-import React, { useEffect, useLayoutEffect, useState } from 'react';
 
 function Login() {
-  const session = useSession();
-  const router = useRouter();
-
   return (
     <div className="relative">
       <Image

@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import BackgroundMovie from '../components/BackgroundMovie';
 import Comment from '../components/Comment';
-import LoadingSpinner from '../components/common/loadingSpinner';
+import LoadingSpinner from '../components/common/LoadingSpinner';
 import MovieList from '../components/MovieList';
 import Startreview from '../components/Startreview';
 

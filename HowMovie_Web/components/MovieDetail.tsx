@@ -3,7 +3,7 @@ import BackgroundMovie from './BackgroundMovie';
 import axios from 'axios';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
-import LoadingSpinner from './common/loadingSpinner';
+import LoadingSpinner from './common/LoadingSpinner';
 
 interface MovieDetailProps {
   setDetailOpen: (param: boolean) => void;

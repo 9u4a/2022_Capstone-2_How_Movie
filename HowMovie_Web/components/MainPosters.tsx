@@ -1,7 +1,7 @@
 import Image from 'next/image';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
-import { detailListType, listType } from './MovieList';
+import { listType } from './MovieList';
 import Link from 'next/link';
 
 interface PropsType {
