@@ -16,7 +16,7 @@
 <table>
   <tr>
     <td align="center"><a href="https://github.com/9u4a"><img src="https://avatars.githubusercontent.com/u/81855010?v=4" width="100px;" alt="이미지"/><br /><sub><b>9u4a</b></sub></a><br />😿API Server</td>
-    <td align="center"><a href="https://github.com/Tasty-Programmer"><img src="https://avatars.githubusercontent.com/u/47372381?v=4" width="100px;" alt="이미지"/><br /><sub><b>Tasty-Programmer</b></sub></a><br />😿API Server</td>
+    <td align="center"><a href="https://github.com/Tasty-Programmer"><img src="https://avatars.githubusercontent.com/u/47372381?v=4" width="100px;" alt="이미지"/><br /><sub><b>Tasty-Programmer</b></sub></a><br />😿Login Server</td>
     <td align="center"><a href="https://github.com/UBamtol"><img src="https://avatars.githubusercontent.com/u/98325285?v=4" width="100px;" alt="이미지"/><br /><sub><b>UBamtol</b></sub></a><br />🦄Front-End</td>
     <td align="center"><a href="https://github.com/Mallang-Mallang"><img src="https://avatars.githubusercontent.com/u/70959328?v=4" width="100px;" alt="이미지"/><br /><sub><b>Mallang-Mallang</b></sub></a><br />🦄Front-End</td>
 
