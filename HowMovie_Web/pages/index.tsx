@@ -3,7 +3,6 @@ import axios, { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
 import MainPosters from '../components/MainPosters';
 import MovieList from '../components/MovieList';
-import { useSession } from 'next-auth/react';
 import MainpageLoading from '../components/common/MainpageLoading';
 
 const Home: NextPage = () => {
