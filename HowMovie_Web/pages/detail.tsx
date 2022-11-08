@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import BackgroundMovie from '../components/BackgroundMovie';
 import Comment from '../components/Comment';
+import LoadingSpinner from '../components/common/loadingSpinner';
 import MovieList from '../components/MovieList';
 import Startreview from '../components/Startreview';
 
@@ -90,9 +91,7 @@ function Detail() {
                 className="opacity-20"
                 priority
                 placeholder="blur"
-                blurDataURL={`https://image.tmdb.org/t/p/original
-          ${searchDetail[0].detail[0].backdrop_path}
-        `}
+                blurDataURL={baseUrl + searchDetail[0].detail[0].backdrop_path}
               />
             ) : null}
 
@@ -256,6 +255,7 @@ function Detail() {
                                 sizes="100%"
                                 objectFit="cover"
                                 placeholder="blur"
+                                className="bg-white/5"
                                 blurDataURL="/asset/image/noImg.svg"
                                 priority
                               />
@@ -316,12 +316,14 @@ function Detail() {
             </div>
           </div>
         ) : null
+      ) : error ? (
+        <h3 className="flex mt-[15%] justify-center items-center">
+          🚨 서버와 연결을 확인해주세요.
+        </h3>
       ) : (
-        error && (
-          <h3 className="flex mt-[15%] justify-center items-center">
-            🚨 서버와 연결을 확인해주세요.
-          </h3>
-        )
+        <div className="w-full h-screen flex justify-center items-center">
+          <LoadingSpinner />
+        </div>
       )}
     </>
   );
