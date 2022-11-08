@@ -50,7 +50,7 @@ function MovieList({ type, listType }: MovieDetailProps) {
               return (
                 <div key={i}>
                   <div
-                    className="relative snap-center shrink-0 md:w-[152px] md:h-[216px] w-[140px] h-[199px] duration-700 cursor-pointer rounded-lg overflow-hidden"
+                    className="relative  shrink-0 md:w-[152px] md:h-[216px] w-[140px] h-[199px] duration-700 cursor-pointer rounded-lg overflow-hidden"
                     onClick={() => {
                       showDetail();
                       setCurrID(e.id);
