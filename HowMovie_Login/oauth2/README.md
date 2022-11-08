@@ -32,15 +32,6 @@ http://localhost:8080/oauth2/authorization/{provider}
 로그인 후 
 CustomOAuth2UserService 분기처리 (kakao , Google , Naver ) 후 로그인 성공시 토큰 생성 후 response 로 넘겨줌.
 
-### response
-
-|     STATUS     |  response  |
-| :---------: | :-----: | 
-|   200   | OK  |
-|   400    |  err: BAD_REQUEST  |
-|   401   |  err: API_KEY ERROR   |
-|   404    |  err: NOT_FOUND   |
-
 </details>
 <details>
 <summary>yml</summary>
