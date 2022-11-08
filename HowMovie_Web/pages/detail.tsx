@@ -17,7 +17,6 @@ function Detail() {
     movieId: '',
     movieName: '',
   });
-  const { movieId, movieName } = movieInfo;
   const baseUrl = 'https://image.tmdb.org/t/p/w500';
   const [userInfo, setUserInfo] = useState<any>({
     userName: '',
@@ -276,7 +275,7 @@ function Detail() {
             <div className="h-[500px] p-10">
               <div className=" text-2xl mb-10">예고편</div>
               <div className="flex justify-center w-full h-[355px]">
-                <div className="flex w-[650px] h-full rounded-xl drop-shadow-br-md">
+                <div className="flex w-full h-full rounded-xl drop-shadow-br-md justify-center">
                   <BackgroundMovie
                     detailInfo={searchDetail[0].detail[0]}
                     type="detail"

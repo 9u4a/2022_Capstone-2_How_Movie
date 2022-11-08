@@ -13,6 +13,7 @@ const BackgroundMovie = ({ detailInfo, type }: Props) => {
 
   return detailInfo ? (
     <>
+      {/* movieDetail */}
       {type === 'movieDetail' ? (
         detailInfo.video.length !== 0 ? (
           <div className="relative w-full max-w-[1000px] pb-[350px] bg-black rounded-xl">
@@ -36,8 +37,29 @@ const BackgroundMovie = ({ detailInfo, type }: Props) => {
             />
           </div>
         ) : null
-      ) : detailInfo.video.length !== 0 ? (
-        <div className="relative w-full max-w-[1000px] pb-[350px] bg-black rounded-xl">
+      ) : // searchDetail
+      detailInfo.video.length > 1 ? (
+        <div className="w-full flex overflow-x-scroll snap-x space-x-5 snap-mandatory">
+          <div className="w-full max-w-[325px] h-full shrink-0"></div>
+          {detailInfo.video.map((e: any, i: number) => {
+            return (
+              <div
+                className="relative w-full max-w-[650px] pb-[350px] bg-black rounded-xl shrink-0 snap-center"
+                key={i}
+              >
+                <iframe
+                  className="w-full h-full max-h-[350px] absolute rounded-xl"
+                  src={`https://www.youtube.com/embed/${detailInfo.video[0].video}?fs=0&modestbranding=1&disablekb=1`}
+                  title="YouTube video player"
+                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                ></iframe>
+              </div>
+            );
+          })}
+          <div className="w-full max-w-[325px] h-full shrink-0"></div>
+        </div>
+      ) : detailInfo.video.length === 1 ? (
+        <div className="relative w-full max-w-[650px] pb-[350px] bg-black rounded-xl">
           <iframe
             className="w-full h-full max-h-[350px] absolute rounded-xl"
             src={`https://www.youtube.com/embed/${detailInfo.video[0].video}?fs=0&modestbranding=1&disablekb=1`}
@@ -46,7 +68,7 @@ const BackgroundMovie = ({ detailInfo, type }: Props) => {
           ></iframe>
         </div>
       ) : detailInfo.backdrop_path !== '' ? (
-        <div className="relative w-full max-w-[1000px] pb-[350px] bg-black rounded-t-xl">
+        <div className="relative w-full max-w-[650px] pb-[350px] bg-black rounded-t-xl">
           <Image
             src={baseUrl + detailInfo.backdrop_path}
             layout="fill"
