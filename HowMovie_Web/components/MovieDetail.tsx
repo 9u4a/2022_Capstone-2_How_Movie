@@ -61,7 +61,7 @@ function MovieDetail({ setDetailOpen, currID }: MovieDetailProps) {
                 <div className="w-full h-full max-h-[350px] rounded-t-xl">
                   <BackgroundMovie detailInfo={detailInfo} type="movieDetail" />
                 </div>
-                <div className="w-full p-5 overflow-y-scroll">
+                <div className="w-full p-5 overflow-y-scroll scrollbar-hide">
                   <h2>{detailInfo && detailInfo.title}</h2>
                   <div className="flex lg:flex-row md:flex-col flex-col lg:space-x-3 space-x-0 lg:text-base md:text-base text-[15px]">
                     <div className="flex space-x-3 items-center">
